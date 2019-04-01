@@ -42,7 +42,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.newServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +62,7 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newServerToolStripMenuItem,
             this.exportFilesToolStripMenuItem,
             this.creditsToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
@@ -71,16 +73,16 @@
             // exportFilesToolStripMenuItem
             // 
             this.exportFilesToolStripMenuItem.Name = "exportFilesToolStripMenuItem";
-            this.exportFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.Tab)));
-            this.exportFilesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.exportFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Space)));
+            this.exportFilesToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.exportFilesToolStripMenuItem.Text = "Export Files";
             this.exportFilesToolStripMenuItem.Click += new System.EventHandler(this.exportFilesToolStripMenuItem_Click);
             // 
             // creditsToolStripMenuItem
             // 
             this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
-            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.creditsToolStripMenuItem.Text = "Credits";
             this.creditsToolStripMenuItem.Click += new System.EventHandler(this.creditsToolStripMenuItem_Click);
             // 
@@ -143,8 +145,7 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel,
-            this.toolStripProgressBar1});
+            this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 834);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1844, 22);
@@ -157,11 +158,14 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // toolStripProgressBar1
+            // newServerToolStripMenuItem
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.newServerToolStripMenuItem.Name = "newServerToolStripMenuItem";
+            this.newServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.N)));
+            this.newServerToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.newServerToolStripMenuItem.Text = "New Server";
+            this.newServerToolStripMenuItem.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -200,7 +204,8 @@
         private System.Windows.Forms.ToolStripMenuItem closeAllWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem;
+        private System.DirectoryServices.DirectoryEntry directoryEntry1;
     }
 }
 

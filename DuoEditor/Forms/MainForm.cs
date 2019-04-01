@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.VisualBasic;
 namespace DuoEditor
 {
      
@@ -156,16 +157,25 @@ namespace DuoEditor
                     System.IO.Directory.CreateDirectory(fileName);
                     string DSsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\DuoServer\\DuoServer.exe");
                     string DSdestinationPath = System.IO.Path.Combine(fileName + "\\DuoServer.exe");
-                    FileSystem.CopyFile(DSsourcePath, DSdestinationPath, UIOption.AllDialogs);
+                    Microsoft.VisualBasic.FileIO.FileSystem.CopyFile(DSsourcePath, DSdestinationPath, UIOption.AllDialogs);
                     string wwwsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\"); ;
                     // Choose a destination for the copied files.
-                    string wwwdestinationPath = System.IO.Path.Combine( fileName+ "\\www\\"); 
-                    FileSystem.CopyDirectory(wwwsourcePath, wwwdestinationPath, UIOption.AllDialogs);
+                    string wwwdestinationPath = System.IO.Path.Combine( fileName+ "\\www\\");
+                Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(wwwsourcePath, wwwdestinationPath, UIOption.AllDialogs);
                 count++;
-                MessageBox.Show("Done! Copied To " + fileName +" Sucsessfully", "Coping Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Done! Copied To\n " + fileName +" \n Sucsessfully", "Coping Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
                 catch (Exception i) { MessageBox.Show("Something Gone Bad here are Some Info: "+i,"Opps Something went wrong",MessageBoxButtons.OK,MessageBoxIcon.Error); }
             
+        }
+
+        private void newServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
+            try
+            {
+                PublicVars.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
+            } catch (Exception i) { MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK,MessageBoxIcon.Error); }
         }
     }
 }

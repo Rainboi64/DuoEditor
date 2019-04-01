@@ -241,7 +241,7 @@ namespace DuoEditor
 
                 if (string.IsNullOrEmpty(filename))
                 {
-                    Console.WriteLine("Error: Filename.IsNullOrEmpty at " + DateTime.Now);
+                    Console.WriteLine( _port+ " : Error: Filename.IsNullOrEmpty at " + DateTime.Now);
                     foreach (string indexFile in _indexFiles)
                     {
                         if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
@@ -275,23 +275,23 @@ namespace DuoEditor
 
                         context.Response.StatusCode = (int)HttpStatusCode.OK;
                         context.Response.OutputStream.Flush();
-                        Console.WriteLine("Info: Request Served + Flushed at " + DateTime.Now);
+                        Console.WriteLine(_port + " : Info: Request Served + Flushed at " + DateTime.Now);
                     }
                     catch (Exception ex)
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        Console.WriteLine("Warning: Internal Server Error Code: " + ex + " " + DateTime.Now);
+                        Console.WriteLine(_port + " : Warning: Internal Server Error Code: " + ex + " " + DateTime.Now);
                     }
 
                 }
                 else
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    Console.WriteLine("Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
+                    Console.WriteLine(_port + " : Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
                 }
 
                 context.Response.OutputStream.Close();
-                Console.WriteLine("Info: Stream.Closed\n");
+                Console.WriteLine(_port + " : Info: Stream.Closed\n");
 
             }
 
@@ -303,16 +303,16 @@ namespace DuoEditor
                 Console.WriteLine("Loading DuoServer Alpha 1.1 DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
-                Console.WriteLine("Server Starting with parameters: " + _port + " " + _rootDirectory);
+                Console.WriteLine(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);
                 _serverThread = new Thread(this.Listen);
                 _serverThread.Start();
-                Console.WriteLine("Server Thread Started Succsesfully");
+                Console.WriteLine(_port + " : Server Thread Started Succsesfully");
                 Thread childThread = new Thread(childref);
                 childThread.Start();
 
                 void CallToChildThread()
                 {
-                    Console.WriteLine("Input Thread Started");
+                    Console.WriteLine(_port + " : Input Thread Started");
                     while (1 == 1)
                     {
                         string input = Console.ReadLine();

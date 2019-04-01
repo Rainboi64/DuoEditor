@@ -208,7 +208,7 @@ namespace DuoEditor
         //Prints WebBrowser
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NormalVeiwWB.Print();
+            NormalVeiwWB.ShowPrintDialog();
         }
         /// This is for the Live Browser
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
@@ -238,7 +238,7 @@ namespace DuoEditor
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            LiveBrowserWB.Print();
+            LiveBrowserWB.ShowPrintDialog();
         }
         #endregion
         #region RTB Commands
