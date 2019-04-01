@@ -83,7 +83,13 @@ namespace DuoEditor
 
                 }
             }
-            catch (Exception i) { Console.WriteLine(i); };
+            catch (Exception i) { Console.WriteLine(i);
+                Console.Clear();
+                SimpleHTTPServer myServer = new SimpleHTTPServer(args[1], Convert.ToInt32(args[2]));
+                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                ip = GetIP() + ":" + myServer.Port.ToString();
+            };
         }
         public readonly string GetIP = PublicVars.CleanIp;
 
