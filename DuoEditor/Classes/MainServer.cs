@@ -55,29 +55,35 @@ namespace DuoEditor
                 return addr[addr.Length - 1].ToString();
 
             }
-            if (args[1] == null || args[2] == null)
+            try
             {
+                if (args[1] == null || args[2] == null)
+                {
+                    try
+                    {
+                        string s = "www";
 
-                string s = "www";
+                        Console.Clear();
+                        SimpleHTTPServer myServer = new SimpleHTTPServer(s);
 
-                Console.Clear();
-                SimpleHTTPServer myServer = new SimpleHTTPServer(s);
+                        PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                        Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                        ip = GetIP() + ":" + myServer.Port.ToString();
+                    }
+                    catch (Exception i) { Console.WriteLine(i); }
+                }
+                else
+                {
+                    Console.Clear();
+                    SimpleHTTPServer myServer = new SimpleHTTPServer(args[1], Convert.ToInt32(args[2]));
+                    PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                    Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                    ip = GetIP() + ":" + myServer.Port.ToString();
 
-                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
-                ip = GetIP() + ":" + myServer.Port.ToString();
 
+                }
             }
-            else
-            {
-                Console.Clear();
-                SimpleHTTPServer myServer = new SimpleHTTPServer(args[1],Convert.ToInt32(args[2]));
-                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
-                ip = GetIP() + ":" + myServer.Port.ToString();
-
-
-            }
+            catch (Exception i) { Console.WriteLine(i); };
         }
         public readonly string GetIP = PublicVars.CleanIp;
 
