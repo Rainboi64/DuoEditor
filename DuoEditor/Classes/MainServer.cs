@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace DuoEditor
 {
@@ -337,6 +338,15 @@ namespace DuoEditor
                             Thread FormStarterThread = new Thread(FormStart_);
                             FormStarterThread.ApartmentState = ApartmentState.STA;
                             FormStarterThread.Start();
+                        }
+                        else if (input == "")
+                        {
+                            String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
+                            try
+                            {
+                                PublicVars.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
+                            }
+                            catch (Exception i) { MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
                         else
                         {
