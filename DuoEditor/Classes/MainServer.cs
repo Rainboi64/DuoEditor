@@ -339,7 +339,7 @@ namespace DuoEditor
                             FormStarterThread.ApartmentState = ApartmentState.STA;
                             FormStarterThread.Start();
                         }
-                        else if (input == "")
+                        else if (input == "nhost")
                         {
                             String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
                             try
