@@ -33,23 +33,6 @@ namespace DuoEditor
             Console.Title = "DuoServer Alpha 1.1 DE Edition";
             string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
             string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
-            if (!System.IO.Directory.Exists(File1))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n" + "Creating File" + File1 + "\n");
-                Console.ResetColor();
-
-                System.IO.Directory.CreateDirectory(File1);
-            }
-
-            if (!System.IO.Directory.Exists(File2))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n" + "Main Form : Creating File:" + File2 + "\n");
-                Console.ResetColor();
-
-                System.IO.Directory.CreateDirectory(File2);
-            }
                 ThreadStart FormStart_ = new ThreadStart(FormStarter);
           
             Console.WriteLine("In Main: Creating the Window");
@@ -71,17 +54,29 @@ namespace DuoEditor
                 return addr[addr.Length - 1].ToString();
 
             }
+            if (args[1] == null || args[2] == null)
+            {
+
+                string s = "www";
+
+                Console.Clear();
+                SimpleHTTPServer myServer = new SimpleHTTPServer(s);
+
+                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                ip = GetIP() + ":" + myServer.Port.ToString();
+
+            }
+            else
+            {
+                Console.Clear();
+                SimpleHTTPServer myServer = new SimpleHTTPServer(args[1],Convert.ToInt32(args[2]));
+                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                ip = GetIP() + ":" + myServer.Port.ToString();
 
 
-            string s = "www";
-
-            Console.Clear();
-            SimpleHTTPServer myServer = new SimpleHTTPServer(s);
-        
-            PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-            Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
-            ip = GetIP() + ":" + myServer.Port.ToString();
-
+            }
         }
         public readonly string GetIP = PublicVars.CleanIp;
 
