@@ -82,6 +82,12 @@
     <Compile Include="Forms\SubForms\BarCodeForm1.Designer.cs">
       <DependentUpon>BarCodeForm1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SubForms\FrameInserter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\FrameInserter.Designer.cs">
+      <DependentUpon>FrameInserter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SubForms\HeaderInserter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\BarCodeForm1.resx">
       <DependentUpon>BarCodeForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\FrameInserter.resx">
+      <DependentUpon>FrameInserter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\HeaderInserter.resx">
       <DependentUpon>HeaderInserter.cs</DependentUpon>

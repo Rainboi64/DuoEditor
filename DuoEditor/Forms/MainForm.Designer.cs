@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +44,6 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
-            this.newServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +69,15 @@
             this.newToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.newToolStripMenuItem.Text = "Main Tasks";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // newServerToolStripMenuItem
+            // 
+            this.newServerToolStripMenuItem.Name = "newServerToolStripMenuItem";
+            this.newServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.N)));
+            this.newServerToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.newServerToolStripMenuItem.Text = "New Server";
+            this.newServerToolStripMenuItem.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
             // 
             // exportFilesToolStripMenuItem
             // 
@@ -157,15 +166,6 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
-            // 
-            // newServerToolStripMenuItem
-            // 
-            this.newServerToolStripMenuItem.Name = "newServerToolStripMenuItem";
-            this.newServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.N)));
-            this.newServerToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.newServerToolStripMenuItem.Text = "New Server";
-            this.newServerToolStripMenuItem.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
             // 
             // MainForm
             // 

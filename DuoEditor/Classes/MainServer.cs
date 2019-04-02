@@ -35,12 +35,16 @@ namespace DuoEditor
             string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
             string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
                 ThreadStart FormStart_ = new ThreadStart(FormStarter);
-          
-            Console.WriteLine("In Main: Creating the Window");
+            if (!args.Contains("/h"))
+            {
+                Console.WriteLine("In Main: Creating the Window");
+                Thread FormStarterThread = new Thread(FormStart_);
+                FormStarterThread.ApartmentState = ApartmentState.STA;
+                FormStarterThread.Start();
 
-            Thread FormStarterThread = new Thread(FormStart_);
-            FormStarterThread.ApartmentState = ApartmentState.STA;
-            FormStarterThread.Start();
+            }
+
+
 
             string ip;
             string GetIP()
@@ -57,7 +61,7 @@ namespace DuoEditor
             }
             try
             {
-                if (args[1] == null || args[2] == null)
+                if (!(args.Length >= 1))
                 {
                     try
                     {
@@ -75,7 +79,9 @@ namespace DuoEditor
                 else
                 {
                     Console.Clear();
-                    SimpleHTTPServer myServer = new SimpleHTTPServer(args[1], Convert.ToInt32(args[2]));
+                    string path = args[0].ToString();
+                    int port = Convert.ToInt32(args[1].ToString());
+                    SimpleHTTPServer myServer = new SimpleHTTPServer(path, port);
                     PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
                     Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
                     ip = GetIP() + ":" + myServer.Port.ToString();
@@ -86,7 +92,7 @@ namespace DuoEditor
             catch (Exception i) { Console.WriteLine(i);
                 string s = "www";
 
-                Console.Clear();
+             
                 SimpleHTTPServer myServer = new SimpleHTTPServer(s);
 
                 PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
@@ -229,7 +235,7 @@ namespace DuoEditor
                 _listener = new HttpListener();
                 _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
                 _listener.Start();
-                Console.WriteLine("Listener Started at " + DateTime.Now);
+                Console.WriteLine(Port+ " : Listener Started at " + DateTime.Now);
                 while (true)
                 {
                     try
@@ -239,7 +245,9 @@ namespace DuoEditor
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Listener Error Catched: " + ex);
+                        Console.WriteLine(Port + " : Listener Error Catched: " + ex);
+                        _listener.Stop();
+                        _listener.Start();
                     }
                 }
             }
@@ -247,7 +255,7 @@ namespace DuoEditor
             private void Process(HttpListenerContext context)
             {
                 string filename = context.Request.Url.AbsolutePath;
-                Console.WriteLine("Requsted: " + filename);
+                Console.WriteLine(Port + " : Requsted: " + filename);
                 filename = filename.Substring(1);
 
                 if (string.IsNullOrEmpty(filename))
