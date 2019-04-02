@@ -158,7 +158,7 @@ namespace DuoEditor
                     string DSsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\DuoServer\\DuoServer.exe");
                     string DSdestinationPath = System.IO.Path.Combine(fileName + "\\DuoServer.exe");
                     Microsoft.VisualBasic.FileIO.FileSystem.CopyFile(DSsourcePath, DSdestinationPath, UIOption.AllDialogs);
-                    string wwwsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\"); ;
+                    string wwwsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\"); 
                     // Choose a destination for the copied files.
                     string wwwdestinationPath = System.IO.Path.Combine( fileName+ "\\www\\");
                 Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(wwwsourcePath, wwwdestinationPath, UIOption.AllDialogs);

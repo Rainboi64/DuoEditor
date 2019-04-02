@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using FastColoredTextBoxNS;
+using Microsoft.VisualBasic;
 #endregion
 namespace DuoEditor
 {
@@ -82,18 +83,12 @@ namespace DuoEditor
             {
                 if (Filename == null)
                 {
-                    SaveFileDialog savefile = new SaveFileDialog();
-                    savefile.Title = "Save file as..";
-                    savefile.Filter = "HTML|*.html|All Files|*.*";
-
-                    if (savefile.ShowDialog() == DialogResult.OK)
-                    {
-                        StreamWriter txtoutput = new StreamWriter(savefile.FileName);
-                        txtoutput.Write(HTMLCodeTextBox1.Text);
-                        txtoutput.Close();
-                    }
-                    Filename = savefile.FileName;
-                    SafeFilename = "/" + Path.GetFileName(savefile.FileName);
+                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\" + (Interaction.InputBox("Choose file name", "Save", "File", -1, -1) + ".html"));
+                    StreamWriter txtoutput = new StreamWriter(savefile);
+                    txtoutput.Write(HTMLCodeTextBox1.Text);
+                    txtoutput.Close();
+                    Filename = savefile;
+                    SafeFilename = "/" + Path.GetFileName(savefile);
                     URLTextBox1.Text = "http://" + PublicVars.CleanIp + SafeFilename;
                 }
                 else
