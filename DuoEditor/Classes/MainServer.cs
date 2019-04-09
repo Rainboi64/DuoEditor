@@ -26,7 +26,7 @@ namespace DuoEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
- 
+
         }
 
         static void Main(string[] args)
@@ -34,7 +34,7 @@ namespace DuoEditor
             Console.Title = "DuoServer Alpha 1.1 DE Edition";
             string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
             string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
-                ThreadStart FormStart_ = new ThreadStart(FormStarter);
+            ThreadStart FormStart_ = new ThreadStart(FormStarter);
             if (!args.Contains("/h"))
             {
                 Console.WriteLine("In Main: Creating the Window");
@@ -49,15 +49,35 @@ namespace DuoEditor
             string ip;
             string GetIP()
             {
+                
                 string strHostName = "";
                 strHostName = System.Net.Dns.GetHostName();
 
                 IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
 
                 IPAddress[] addr = ipEntry.AddressList;
+                String GetIpResult = addr[addr.Length - 1].ToString();
 
-                return addr[addr.Length - 1].ToString();
-
+                if ((args.Length >= 1)) 
+              
+                {
+                    try
+                    {
+                       return args[3];
+                    }
+                    catch (Exception i)
+                    {
+                        Console.WriteLine(" DuoServer Alpha 1.1 DE Edition" +
+                       " \n Looks like there was an error proccesing your arguments " +
+                       "\n This is some help..........." +
+                       "\n The First space is used to specify the file that is wanted to be hosted" +
+                       "\n The Second space is used to specify the port of the server" +
+                       "\n The Third space is to speicify the ip address" +
+                       "\n /h to stop the editor from launching." +
+                       "\n Here is the error you`ve made" + i);
+                    }
+                }
+                return GetIpResult;
             }
             try
             {
@@ -89,17 +109,18 @@ namespace DuoEditor
 
                 }
             }
-            catch (Exception i) { Console.WriteLine(i);
-                string s = "www";
-
-             
-                SimpleHTTPServer myServer = new SimpleHTTPServer(s);
-
-                PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-                Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
-                ip = GetIP() + ":" + myServer.Port.ToString();
+            catch (Exception i) {
+                Console.WriteLine(" DuoServer Alpha 1.1 DE Edition" +
+  " \n Looks like there was an error proccesing your arguments " +
+  "\n This is some help..........." +
+  "\n The First space is used to specify the file that is wanted to be hosted" +
+  "\n The Second space is used to specify the port of the server" +
+  "\n The Third space is to speicify the ip address" +
+  "\n /h to stop the editor from launching." +
+  "\n Here is the error you`ve made" + i
+);
             };
-        }
+        } 
         public readonly string GetIP = PublicVars.CleanIp;
 
 

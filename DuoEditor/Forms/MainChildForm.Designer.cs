@@ -578,6 +578,7 @@
             this.HTMLCodeTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.HTMLCodeTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.HTMLCodeTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HTMLCodeTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.HTMLCodeTextBox1.HighlightingRangeType = FastColoredTextBoxNS.HighlightingRangeType.AllTextRange;
             this.HTMLCodeTextBox1.IsReplaceMode = false;
             this.HTMLCodeTextBox1.Location = new System.Drawing.Point(0, 0);
@@ -592,6 +593,7 @@
             // 
             // documentMap1
             // 
+            this.documentMap1.BackColor = System.Drawing.SystemColors.Control;
             this.documentMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
             this.documentMap1.Location = new System.Drawing.Point(0, 0);
