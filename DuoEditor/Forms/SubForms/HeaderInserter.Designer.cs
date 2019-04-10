@@ -34,7 +34,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,21 +105,11 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 199);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(294, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Headers will always be at the end of the code , So be careful";
-            // 
-            // HInserter
+            // HeaderInserter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(609, 219);
-            this.Controls.Add(this.label3);
+            this.ClientSize = new System.Drawing.Size(609, 218);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
@@ -132,7 +121,7 @@
             this.MaximumSize = new System.Drawing.Size(625, 257);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(625, 257);
-            this.Name = "HInserter";
+            this.Name = "HeaderInserter";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Header Inserter";
@@ -151,6 +140,5 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label3;
     }
 }

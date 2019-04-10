@@ -17,6 +17,7 @@ namespace DuoEditor
 
     class MainServer
     {
+        
         [DllImport("kernel32.dll")]
    static extern IntPtr GetConsoleWindow();
 
@@ -25,7 +26,16 @@ namespace DuoEditor
 
       const int SW_HIDE = 0;
        const int SW_SHOW = 5;
-     
+        public static void SplashWork()
+        {
+            if (!File.Exists("Logs.DSLF"))
+            {
+                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+                txtoutput.Write("");
+                txtoutput.Close();
+            }
+            Thread.Sleep(3000);
+        }
         public static void Splash()
         {
             
@@ -34,7 +44,6 @@ namespace DuoEditor
             frm.BackgroundImage = Properties.Resources.SplashLogo;
             frm.BackgroundImageLayout = ImageLayout.Center;
             frm.Icon = Properties.Resources.SplashIcon;
-            frm.Font = new System.Drawing.Font("Tahoma",frm.Font.Size);
             frm.ShowInTaskbar = false;
             Application.Run(frm);
            
@@ -57,23 +66,17 @@ namespace DuoEditor
             Thread FormStarterThread1 = new Thread(FormStart1_);
             FormStarterThread1.SetApartmentState(ApartmentState.STA);
             FormStarterThread.Start();
-            if (!File.Exists("Logs.DSLF"))
-            {
-                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
-                txtoutput.Write("");
-                txtoutput.Close();
-            }
-            Thread.Sleep(5000);
+            SplashWork();
             FormStarterThread.Abort();
             FormStarterThread1.Start();
             Console.ResetColor();
         }
-       public static void ShowForm()
+       public static void ShowConsole()
         {
             var handle = GetConsoleWindow();
                 ShowWindow(handle, SW_SHOW);
         }
-        public static void HideForm()
+        public static void HideConsole()
         {
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
@@ -88,7 +91,7 @@ namespace DuoEditor
 
             }
             FormStarter();
-            Console.Title = "DuoServer Alpha 1.1 DE Edition";
+            Console.Title = "DuoServer Alpha 1.2 DE Edition";
             string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
             string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
           
@@ -116,7 +119,7 @@ namespace DuoEditor
                     catch (Exception i)
                     {
                         
-                   Logger.Log(" DuoServer Alpha 1.1 DE Edition" +
+                   Logger.Log(" DuoServer Alpha 1.2 DE Edition" +
                        " \n Looks like there was an error proccesing your arguments " +
                        "\n This is some help..........." +
                        "\n The First space is used to specify the file that is wanted to be hosted" +
@@ -161,7 +164,7 @@ namespace DuoEditor
             }
             catch (Exception i) {
              
-                Logger.Log(" DuoServer Alpha 1.1 DE Edition" +
+                Logger.Log(" DuoServer Alpha 1.2 DE Edition" +
   " \n Looks like there was an error proccesing your arguments " +
   "\n This is some help..........." +
   "\n The First space is used to specify the file that is wanted to be hosted" +

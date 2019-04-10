@@ -21,7 +21,7 @@ namespace DuoEditor
         public static void ClearLogs() => ClearLogsWorker();
         public static void CleanLogs() => CleanLogsWorker();
         public static void LogEx(Exception LogDetail) => LogExWorker(LogDetail);
-
+        public static void DoSaveLogs() => DoSaveLogsWorker();
 
         private static string LogBunk;
         private static void LogExWorker(Exception LogDetail_)
@@ -48,8 +48,8 @@ namespace DuoEditor
         {
             LogBunk = null;
         }
-        static String cLog = "Dummy Text";
-        public static void CleanLogsWorker()
+        static String cLog = String.Empty;
+      private static void CleanLogsWorker()
         {
             Log("Did a Log export at " + DateTime.Now + " Called " + Convert.ToString(DateTime.Now.Ticks + ".DSLF"));
             StreamWriter txt = new StreamWriter(Convert.ToString(DateTime.Now.Ticks) + ".DSLF");
@@ -58,6 +58,18 @@ namespace DuoEditor
             StreamWriter txt1 = new StreamWriter("Logs.DSLF");
             txt1.Write("");
             txt1.Close();
+        }
+        private static void DoSaveLogsWorker()
+        {
+            using (StreamReader sr = new StreamReader("Logs.DSLF"))
+            {
+                cLog = sr.ReadToEnd();
+                sr.Close();
+            }
+            StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+            txtoutput.Write(cLog + LogBunk);
+            txtoutput.Close();
+            ClearLogs();
         }
         private static void ProccesLogsWorker()
         {
@@ -73,16 +85,8 @@ namespace DuoEditor
                 while (true)
                 {
                     Thread.Sleep(30000);
-
-                    using (StreamReader sr = new StreamReader("Logs.DSLF"))
-                    {
-                        cLog = sr.ReadToEnd();
-                        sr.Close();
-                    }
-                    StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
-                    txtoutput.Write(cLog + LogBunk);
-                    txtoutput.Close();
-                    ClearLogs();
+                    
+                    DoSaveLogs(); 
                 }
             }
 

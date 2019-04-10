@@ -184,15 +184,45 @@ namespace DuoEditor
                 PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
             } catch (Exception i) { Logger.LogEx(i); }
         }
-
+        bool shwn = false;
         private void ShowHideServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainServer.ShowForm();
+            
+            if (shwn == false) { shwn = true; MainServer.ShowConsole(); } else { shwn = false; MainServer.HideConsole(); }
+           
+        }
+        private void EndToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(1);
         }
 
-        private void HideToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExportLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainServer.HideForm();
+            Logger.CleanLogs();
+        }
+
+        private void LogViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThreadStart Runner = new ThreadStart(Run);
+            Thread RunnerThread = new Thread(Run);
+            RunnerThread.SetApartmentState(ApartmentState.STA);
+            RunnerThread.Start();
+            void Run()
+            {
+                DuoEditor.Forms.SubForms.LogVeiwer frm = new Forms.SubForms.LogVeiwer();
+                frm.ShowDialog();
+            }
+        }
+        private void LogViewerOnlyConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThreadStart Runner = new ThreadStart(Run);
+            Thread RunnerThread = new Thread(Run);
+            RunnerThread.SetApartmentState(ApartmentState.STA);
+            RunnerThread.Start();
+            void Run(){
+                DuoEditor.Forms.SubForms.LogViewer2 frm = new Forms.SubForms.LogViewer2();
+                frm.ShowDialog();
+            }       
         }
     }
 }

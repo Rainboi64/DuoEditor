@@ -123,6 +123,12 @@
     <Compile Include="Forms\SubForms\LogVeiwer1.Designer.cs">
       <DependentUpon>LogVeiwer1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SubForms\LogViewer2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\LogViewer2.Designer.cs">
+      <DependentUpon>LogViewer2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SubForms\ParagraphInserter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\ImageInserter.resx">
       <DependentUpon>ImageInserter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\LogVeiwer1.resx">
+      <DependentUpon>LogVeiwer1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\LogViewer2.resx">
+      <DependentUpon>LogViewer2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\ParagraphInserter.resx">
       <DependentUpon>ParagraphInserter.cs</DependentUpon>
