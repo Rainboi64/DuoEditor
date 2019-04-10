@@ -25,6 +25,7 @@ namespace DuoEditor
     /// </summary>
     public partial class MainChildForm : Form
     {
+
         public MainChildForm()
         {
             InitializeComponent();

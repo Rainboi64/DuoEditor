@@ -11,13 +11,19 @@ using System.Threading;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.VisualBasic;
+using System.Runtime.InteropServices;
 namespace DuoEditor
 {
      
     public partial class MainForm : Form
     {
-     
-   
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        public const int SW_HIDE = 0;
+        public const int SW_SHOW = 5;
         public MainForm()
         {
             InitializeComponent();
@@ -27,7 +33,8 @@ namespace DuoEditor
   
         private void MainForm_Load(object sender, EventArgs e)
         {
-              Form EditorchildForm = new Form();
+        
+            Form EditorchildForm = new Form();
             MainChildForm newMDIChild = new MainChildForm();
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
@@ -176,6 +183,16 @@ namespace DuoEditor
             {
                 PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
             } catch (Exception i) { Logger.LogEx(i); }
+        }
+
+        private void ShowHideServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainServer.ShowForm();
+        }
+
+        private void HideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainServer.HideForm();
         }
     }
 }

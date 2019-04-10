@@ -18,13 +18,13 @@ namespace DuoEditor
     class MainServer
     {
         [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
+   static extern IntPtr GetConsoleWindow();
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        const int SW_HIDE = 0;
-        const int SW_SHOW = 5;
+      const int SW_HIDE = 0;
+       const int SW_SHOW = 5;
      
         public static void Splash()
         {
@@ -66,8 +66,18 @@ namespace DuoEditor
             Thread.Sleep(5000);
             FormStarterThread.Abort();
             FormStarterThread1.Start();
+            Console.ResetColor();
         }
-
+       public static void ShowForm()
+        {
+            var handle = GetConsoleWindow();
+                ShowWindow(handle, SW_SHOW);
+        }
+        public static void HideForm()
+        {
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
+        }
         static void Main(string[] args)
         {
             var handle = GetConsoleWindow();

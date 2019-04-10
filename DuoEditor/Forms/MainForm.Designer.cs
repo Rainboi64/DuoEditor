@@ -44,6 +44,8 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.showHideServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -62,11 +64,13 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showHideServerToolStripMenuItem,
+            this.hideToolStripMenuItem,
             this.newServerToolStripMenuItem,
             this.exportFilesToolStripMenuItem,
             this.creditsToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.newToolStripMenuItem.Text = "Main Tasks";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -167,10 +171,29 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // showHideServerToolStripMenuItem
+            // 
+            this.showHideServerToolStripMenuItem.Name = "showHideServerToolStripMenuItem";
+            this.showHideServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.showHideServerToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.showHideServerToolStripMenuItem.Text = "Show Server";
+            this.showHideServerToolStripMenuItem.Click += new System.EventHandler(this.ShowHideServerToolStripMenuItem_Click);
+            // 
+            // hideToolStripMenuItem
+            // 
+            this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
+            this.hideToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.H)));
+            this.hideToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.hideToolStripMenuItem.Text = "Hide Server";
+            this.hideToolStripMenuItem.Click += new System.EventHandler(this.HideToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(1844, 856);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
@@ -206,6 +229,8 @@
         private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem;
         private System.DirectoryServices.DirectoryEntry directoryEntry1;
+        private System.Windows.Forms.ToolStripMenuItem showHideServerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hideToolStripMenuItem;
     }
 }
 
