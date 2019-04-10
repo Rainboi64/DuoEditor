@@ -51,7 +51,7 @@ namespace DuoEditor
             NormalVeiwWB.ScriptErrorsSuppressed = true;
             LiveBrowserWB.ScriptErrorsSuppressed = true;
             ///This Code below Add Sets The Text Of URLTextBox1
-            URLTextBox1.Text = "http://" + PublicVars.CleanIp;
+            URLTextBox1.Text = "http://" + PublicFuncs.CleanIp;
             ///This Code below Reports Status to the Console
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\n" + " Form Report: A Child Form was launched" + "\n");
@@ -89,7 +89,7 @@ namespace DuoEditor
                     txtoutput.Close();
                     Filename = savefile;
                     SafeFilename = "/" + Path.GetFileName(savefile);
-                    URLTextBox1.Text = "http://" + PublicVars.CleanIp + SafeFilename;
+                    URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
                 }
                 else
                 {
@@ -97,11 +97,11 @@ namespace DuoEditor
                     txtoutput.Write(HTMLCodeTextBox1.Text);
                     txtoutput.Close();
                     SafeFilename = "/" + Path.GetFileName(Filename);
-                    URLTextBox1.Text = "http://" + PublicVars.CleanIp + SafeFilename;
+                    URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
                 }
                 this.NormalVeiwWB.Navigate(URLTextBox1.Text);
             }
-            catch (Exception i) { }
+            catch (Exception i) { Logger.LogEx(i); }
         }
 
         ///
@@ -110,7 +110,7 @@ namespace DuoEditor
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Wipes all parameters to look new
-            URLTextBox1.Text = "http://" + PublicVars.CleanIp;
+            URLTextBox1.Text = "http://" + PublicFuncs.CleanIp;
             SafeFilename = null;
             HTMLCodeTextBox1.Clear();
             Filename = null;
@@ -134,7 +134,7 @@ namespace DuoEditor
                     sr.Close();
                 }
                 SafeFilename = openfile.SafeFileName;
-                URLTextBox1.Text = "http://" + PublicVars.CleanIp + "/" + SafeFilename;
+                URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + "/" + SafeFilename;
                 this.NormalVeiwWB.Navigate(URLTextBox1.Text);
 
             }
@@ -159,10 +159,10 @@ namespace DuoEditor
                 }
                 Filename = savefile.FileName;
                 SafeFilename = "/" + Path.GetFileName(savefile.FileName);
-                URLTextBox1.Text = "http://" + PublicVars.CleanIp + SafeFilename;
+                URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
 
             }
-            catch (Exception i) { }
+            catch (Exception i) { Logger.LogEx(i); }
         }
 
         /// Could add Some Changes Later
@@ -404,18 +404,18 @@ namespace DuoEditor
         }
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            PublicVars.ip = URLTextBox1.Text;
+            PublicFuncs.ip = URLTextBox1.Text;
             DuoEditor.Forms.SubForms.BarCodeForm1 bc1 = new Forms.SubForms.BarCodeForm1();
             bc1.ShowDialog();
         }
 
         private void toolStripButton4_Click_1(object sender, EventArgs e)
         {
-            PublicVars.ip = URLTextBox1.Text;
+            PublicFuncs.ip = URLTextBox1.Text;
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            PublicVars.ip = URLTextBox1.Text;
+            PublicFuncs.ip = URLTextBox1.Text;
         }
         private void richTextBox3_TextChanged(object sender, EventArgs e)
         {
@@ -425,7 +425,7 @@ namespace DuoEditor
 
 
             }
-            catch (Exception) { }
+            catch (Exception i) { Logger.LogEx(i); }
         }
 
 
@@ -434,9 +434,14 @@ namespace DuoEditor
 
         private void Test_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(PublicVars.ip);
+            System.Diagnostics.Process.Start(PublicFuncs.ip);
         }
 
         #endregion
+
+        private void ClToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger.CleanLogs();
+        }
     }
 }

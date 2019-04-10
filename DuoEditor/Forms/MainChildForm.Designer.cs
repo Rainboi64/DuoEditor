@@ -44,6 +44,7 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compileRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.TabController = new System.Windows.Forms.TabControl();
             this.tabPageNView = new System.Windows.Forms.TabPage();
@@ -173,7 +174,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.fielToolStripMenuItem});
+            this.fielToolStripMenuItem,
+            this.clToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -242,6 +244,13 @@
             this.closeWindowToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.closeWindowToolStripMenuItem.Text = "Close Window";
             this.closeWindowToolStripMenuItem.Click += new System.EventHandler(this.closeWindowToolStripMenuItem_Click);
+            // 
+            // clToolStripMenuItem
+            // 
+            this.clToolStripMenuItem.Name = "clToolStripMenuItem";
+            this.clToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
+            this.clToolStripMenuItem.Text = "cl";
+            this.clToolStripMenuItem.Click += new System.EventHandler(this.ClToolStripMenuItem_Click);
             // 
             // splitContainer2
             // 
@@ -578,7 +587,6 @@
             this.HTMLCodeTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.HTMLCodeTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.HTMLCodeTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HTMLCodeTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.HTMLCodeTextBox1.HighlightingRangeType = FastColoredTextBoxNS.HighlightingRangeType.AllTextRange;
             this.HTMLCodeTextBox1.IsReplaceMode = false;
             this.HTMLCodeTextBox1.Location = new System.Drawing.Point(0, 0);
@@ -1005,6 +1013,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem clToolStripMenuItem;
     }
 
 }

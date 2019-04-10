@@ -90,7 +90,7 @@ namespace DuoEditor
             if (!System.IO.Directory.Exists(File1))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n"+"Creating File" + File1 + "\n");
+           Logger.Log("\n"+"Creating File" + File1 + "\n");
                 Console.ResetColor();
               
                 System.IO.Directory.CreateDirectory(File1);
@@ -98,14 +98,14 @@ namespace DuoEditor
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n"+" Main Form : File: \"{0}\" already exists."+"\n", File1);
+           Logger.Log("\n"+" Main Form : File: "+ File1 + " already exists."+"\n");
                 Console.ResetColor();
                
             }
             if (!System.IO.Directory.Exists(File2))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n" + "Main Form : Creating File:" + File2 + "\n");
+           Logger.Log("\n" + "Main Form : Creating File:" + File2 + "\n");
                 Console.ResetColor();
 
                 System.IO.Directory.CreateDirectory(File2);
@@ -113,7 +113,7 @@ namespace DuoEditor
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n" + "Main Form : File : " +File2+ " already exists."+"\n");
+           Logger.Log("\n" + "Main Form : File : " +File2+ " already exists."+"\n");
                 Console.ResetColor();
                 return;
             }
@@ -165,7 +165,7 @@ namespace DuoEditor
                 count++;
                 MessageBox.Show("Done! Copied To\n " + fileName +" \n Sucsessfully", "Coping Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-                catch (Exception i) { MessageBox.Show("Something Gone Bad here are Some Info: "+i,"Opps Something went wrong",MessageBoxButtons.OK,MessageBoxIcon.Error); }
+                catch (Exception i) { Logger.LogEx(i); }
             
         }
 
@@ -174,8 +174,8 @@ namespace DuoEditor
             String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
             try
             {
-                PublicVars.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
-            } catch (Exception i) { MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK,MessageBoxIcon.Error); }
+                PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
+            } catch (Exception i) { Logger.LogEx(i); }
         }
     }
 }

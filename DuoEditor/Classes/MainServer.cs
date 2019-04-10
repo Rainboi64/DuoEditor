@@ -10,42 +10,80 @@ using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using System.Runtime.InteropServices;
 
 namespace DuoEditor
 {
+
     class MainServer
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
 
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+     
+        public static void Splash()
+        {
+            
+            SplashScreen.SplashForm frm = new SplashScreen.SplashForm();
+            frm.AppName = "";
+            frm.BackgroundImage = Properties.Resources.SplashLogo;
+            frm.BackgroundImageLayout = ImageLayout.Center;
+            frm.Icon = Properties.Resources.SplashIcon;
+            frm.Font = new System.Drawing.Font("Tahoma",frm.Font.Size);
+            frm.ShowInTaskbar = false;
+            Application.Run(frm);
+           
+          
+        }
+        public static void MainFormStarter()
+        {
+            Application.Run(new MainForm());
+        }
         public static void FormStarter()
         {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-
-            Console.WriteLine("\n" + " Form Report: Main Form was launched" + "\n");
-
             Console.ResetColor();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            ThreadStart FormStart_ = new ThreadStart(Splash);
+            Thread FormStarterThread = new Thread(FormStart_);
+            FormStarterThread.SetApartmentState(ApartmentState.STA);
+            ThreadStart FormStart1_ = new ThreadStart(MainFormStarter);
+            Thread FormStarterThread1 = new Thread(FormStart1_);
+            FormStarterThread1.SetApartmentState(ApartmentState.STA);
+            FormStarterThread.Start();
+            if (!File.Exists("Logs.DSLF"))
+            {
+                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+                txtoutput.Write("");
+                txtoutput.Close();
+            }
+            Thread.Sleep(5000);
+            FormStarterThread.Abort();
+            FormStarterThread1.Start();
         }
 
         static void Main(string[] args)
         {
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
+            if (args.Contains("/h"))
+            {
+                ShowWindow(handle, SW_SHOW);
+
+            }
+            FormStarter();
             Console.Title = "DuoServer Alpha 1.1 DE Edition";
             string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
             string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
-            ThreadStart FormStart_ = new ThreadStart(FormStarter);
-            if (!args.Contains("/h"))
-            {
-                Console.WriteLine("In Main: Creating the Window");
-                Thread FormStarterThread = new Thread(FormStart_);
-                FormStarterThread.ApartmentState = ApartmentState.STA;
-                FormStarterThread.Start();
-
-            }
-
-
-
+          
+       
+            Logger.ProccesLogs();
             string ip;
             string GetIP()
             {
@@ -67,14 +105,16 @@ namespace DuoEditor
                     }
                     catch (Exception i)
                     {
-                        Console.WriteLine(" DuoServer Alpha 1.1 DE Edition" +
+                        
+                   Logger.Log(" DuoServer Alpha 1.1 DE Edition" +
                        " \n Looks like there was an error proccesing your arguments " +
                        "\n This is some help..........." +
                        "\n The First space is used to specify the file that is wanted to be hosted" +
                        "\n The Second space is used to specify the port of the server" +
                        "\n The Third space is to speicify the ip address" +
                        "\n /h to stop the editor from launching." +
-                       "\n Here is the error you`ve made" + i);
+                       "\n Here is the error you`ve made");
+                        Logger.LogEx(i);
                     }
                 }
                 return GetIpResult;
@@ -90,11 +130,11 @@ namespace DuoEditor
                         Console.Clear();
                         SimpleHTTPServer myServer = new SimpleHTTPServer(s);
 
-                        PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-                        Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                        PublicFuncs.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+                   Logger.Log("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
                         ip = GetIP() + ":" + myServer.Port.ToString();
                     }
-                    catch (Exception i) { Console.WriteLine(i); }
+                    catch (Exception i) { Logger.LogEx(i); }
                 }
                 else
                 {
@@ -102,26 +142,28 @@ namespace DuoEditor
                     string path = args[0].ToString();
                     int port = Convert.ToInt32(args[1].ToString());
                     SimpleHTTPServer myServer = new SimpleHTTPServer(path, port);
-                    PublicVars.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
-                    Console.WriteLine("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
+                    PublicFuncs.CleanIp = (GetIP() + ":" + myServer.Port.ToString());
+               Logger.Log("Server.Started On: " + GetIP() + ":" + myServer.Port.ToString() + "\n");
                     ip = GetIP() + ":" + myServer.Port.ToString();
 
 
                 }
             }
             catch (Exception i) {
-                Console.WriteLine(" DuoServer Alpha 1.1 DE Edition" +
+             
+                Logger.Log(" DuoServer Alpha 1.1 DE Edition" +
   " \n Looks like there was an error proccesing your arguments " +
   "\n This is some help..........." +
   "\n The First space is used to specify the file that is wanted to be hosted" +
   "\n The Second space is used to specify the port of the server" +
   "\n The Third space is to speicify the ip address" +
   "\n /h to stop the editor from launching." +
-  "\n Here is the error you`ve made" + i
+  "\n Here is the error you`ve made" 
 );
+                Logger.LogEx(i);
             };
         } 
-        public readonly string GetIP = PublicVars.CleanIp;
+        public readonly string GetIP = PublicFuncs.CleanIp;
 
 
 
@@ -206,7 +248,6 @@ namespace DuoEditor
         #endregion
     };
             private Thread _serverThread;
-            Thread InputThread;
             private string _rootDirectory;
             private HttpListener _listener;
             private int _port;
@@ -256,7 +297,7 @@ namespace DuoEditor
                 _listener = new HttpListener();
                 _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
                 _listener.Start();
-                Console.WriteLine(Port+ " : Listener Started at " + DateTime.Now);
+           Logger.Log(Port+ " : Listener Started at " + DateTime.Now);
                 while (true)
                 {
                     try
@@ -264,9 +305,10 @@ namespace DuoEditor
                         HttpListenerContext context = _listener.GetContext();
                         Process(context);
                     }
-                    catch (Exception ex)
+                    catch (Exception i)
                     {
-                        Console.WriteLine(Port + " : Listener Error Catched: " + ex);
+                        Logger.Log(Port + " : Listener Error Catched: ");
+                        Logger.LogEx(i);
                         _listener.Stop();
                         _listener.Start();
                     }
@@ -276,12 +318,12 @@ namespace DuoEditor
             private void Process(HttpListenerContext context)
             {
                 string filename = context.Request.Url.AbsolutePath;
-                Console.WriteLine(Port + " : Requsted: " + filename);
+           Logger.Log(Port + " : Requsted: " + filename);
                 filename = filename.Substring(1);
 
                 if (string.IsNullOrEmpty(filename))
                 {
-                    Console.WriteLine( _port+ " : Error: Filename.IsNullOrEmpty at " + DateTime.Now);
+               Logger.Log( _port+ " : Error: Filename.IsNullOrEmpty at " + DateTime.Now);
                     foreach (string indexFile in _indexFiles)
                     {
                         if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
@@ -315,23 +357,24 @@ namespace DuoEditor
 
                         context.Response.StatusCode = (int)HttpStatusCode.OK;
                         context.Response.OutputStream.Flush();
-                        Console.WriteLine(_port + " : Info: Request Served + Flushed at " + DateTime.Now);
+                   Logger.Log(_port + " : Info: Request Served + Flushed at " + DateTime.Now);
                     }
-                    catch (Exception ex)
+                    catch (Exception i)
                     {
+                        Logger.LogEx(i);
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        Console.WriteLine(_port + " : Warning: Internal Server Error Code: " + ex + " " + DateTime.Now);
+                   Logger.Log(_port + " : Warning: Internal Server Error Code: " +i+ " " + DateTime.Now);
                     }
 
                 }
                 else
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    Console.WriteLine(_port + " : Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
+               Logger.Log(_port + " : Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
                 }
 
                 context.Response.OutputStream.Close();
-                Console.WriteLine(_port + " : Info: Stream.Closed\n");
+           Logger.Log(_port + " : Info: Stream.Closed\n");
 
             }
 
@@ -340,19 +383,19 @@ namespace DuoEditor
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
            
-                Console.WriteLine("Loading DuoServer Alpha 1.1 DE Edition\n");
+           Logger.Log("Loading DuoServer Alpha 1.1 DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
-                Console.WriteLine(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);
+           Logger.Log(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);
                 _serverThread = new Thread(this.Listen);
                 _serverThread.Start();
-                Console.WriteLine(_port + " : Server Thread Started Succsesfully");
+           Logger.Log(_port + " : Server Thread Started Succsesfully");
                 Thread childThread = new Thread(childref);
                 childThread.Start();
 
                 void CallToChildThread()
                 {
-                    Console.WriteLine(_port + " : Input Thread Started");
+               Logger.Log(_port + " : Input Thread Started");
                     while (1 == 1)
                     {
                         string input = Console.ReadLine();
@@ -362,7 +405,7 @@ namespace DuoEditor
                         }
                         else if (input == "ip")
                         {
-                            Console.WriteLine(PublicVars.CleanIp);
+                       Logger.Log(PublicFuncs.CleanIp);
                         }
                         else if (input == "stop")
                         {
@@ -370,17 +413,17 @@ namespace DuoEditor
                         }
                         else if (input == "test")
                         {
-                            System.Diagnostics.Process.Start(@"http://" + PublicVars.CleanIp);
+                            System.Diagnostics.Process.Start(@"http://" + PublicFuncs.CleanIp);
                         }
                         else if (input == "starttime")
                         {
-                            Console.WriteLine(sw.Elapsed);
+                       Logger.Log(Convert.ToString(sw.Elapsed));
                         }
                         else if (input == "new")
                         {
                             ThreadStart FormStart_ = new ThreadStart(FormStarter);
                             Thread FormStarterThread = new Thread(FormStart_);
-                            FormStarterThread.ApartmentState = ApartmentState.STA;
+                            FormStarterThread.SetApartmentState ( ApartmentState.STA);
                             FormStarterThread.Start();
                         }
                         else if (input == "nhost")
@@ -388,13 +431,13 @@ namespace DuoEditor
                             String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
                             try
                             {
-                                PublicVars.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
+                                PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
                             }
-                            catch (Exception i) { MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                            catch (Exception i) { Logger.LogEx(i); MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
                         else
                         {
-                            Console.WriteLine("Not a Command. Check case sensitivity");
+                       Logger.Log("Not a Command. Check case sensitivity");
                         } 
                         
 
@@ -404,7 +447,7 @@ namespace DuoEditor
                 }
             }
 
-            public string Ip = PublicVars.CleanIp;
+            public string Ip = PublicFuncs.CleanIp;
         }
 
     }

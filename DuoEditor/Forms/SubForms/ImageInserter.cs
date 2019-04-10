@@ -43,7 +43,7 @@ namespace DuoEditor.Forms.SubForms
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
 
-            Console.WriteLine("\n" + " Form Report: Image Inserter was launched" + "\n");
+       Logger.Log("\n" + " Form Report: Image Inserter was launched" + "\n");
 
             Console.ResetColor();
         }
@@ -64,10 +64,10 @@ namespace DuoEditor.Forms.SubForms
                     textBox1.Text = "\\uploaded_images\\" + RawFilenameSafe;
                 }
                 else
-                { Console.WriteLine("Couldnt Copy Missing file"); Console.Beep(12000, 50); Console.Beep(12000, 50); Console.Beep(12000, 50); Console.Beep(12000, 50); }
+                { Logger.Log("Couldnt Copy Missing file"); Console.Beep(12000, 50); Console.Beep(12000, 50); Console.Beep(12000, 50); Console.Beep(12000, 50); }
             }
             
-            catch(Exception i) { Console.WriteLine("ImageInserter:FileBrowser:Error: " + i); }
+            catch(Exception i) { Logger.LogEx(i); }
             }
 
         private void radioButton1_Click(object sender, EventArgs e)

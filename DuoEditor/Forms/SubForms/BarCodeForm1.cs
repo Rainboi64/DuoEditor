@@ -20,13 +20,13 @@ namespace DuoEditor.Forms.SubForms
         private void BarCodeForm1_Load(object sender, EventArgs e)
         {
                 Zen.Barcode.CodeQrBarcodeDraw qrcode = Zen.Barcode.BarcodeDrawFactory.CodeQr;
-                pictureBox1.Image = qrcode.Draw(DuoEditor.PublicVars.ip, 500);
+                pictureBox1.Image = qrcode.Draw(DuoEditor.PublicFuncs.ip, 500);
         }
         
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(PublicVars.ip);
+            System.Diagnostics.Process.Start(PublicFuncs.ip);
         }
     }
 }

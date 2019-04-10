@@ -33,7 +33,7 @@ namespace DuoEditor.Forms.SubForms
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
 
-            Console.WriteLine("\n" + " Form Report: Paragraph Inserter was launched" + "\n");
+       Logger.Log("\n" + " Form Report: Paragraph Inserter was launched" + "\n");
 
             Console.ResetColor();
         }
