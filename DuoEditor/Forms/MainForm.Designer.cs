@@ -29,26 +29,29 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showHideServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.endToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.creditsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logViewerOnlyConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVeritcalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showHideConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newServerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.logVeiwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logVeiwerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportLogsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.exportFilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.endToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.creditsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
-            this.logViewerOnlyConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -56,76 +59,15 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.windowsToolStripMenuItem});
+            this.windowsToolStripMenuItem,
+            this.consoleToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1844, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showHideServerToolStripMenuItem,
-            this.newServerToolStripMenuItem,
-            this.exportLogsToolStripMenuItem,
-            this.exportFilesToolStripMenuItem,
-            this.endToolStripMenuItem,
-            this.creditsToolStripMenuItem});
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-            this.newToolStripMenuItem.Text = "Main Tasks";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // showHideServerToolStripMenuItem
-            // 
-            this.showHideServerToolStripMenuItem.Name = "showHideServerToolStripMenuItem";
-            this.showHideServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.showHideServerToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.showHideServerToolStripMenuItem.Text = "Show/Hide Console";
-            this.showHideServerToolStripMenuItem.Click += new System.EventHandler(this.ShowHideServerToolStripMenuItem_Click);
-            // 
-            // newServerToolStripMenuItem
-            // 
-            this.newServerToolStripMenuItem.Name = "newServerToolStripMenuItem";
-            this.newServerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.N)));
-            this.newServerToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.newServerToolStripMenuItem.Text = "New Server";
-            this.newServerToolStripMenuItem.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
-            // 
-            // exportLogsToolStripMenuItem
-            // 
-            this.exportLogsToolStripMenuItem.Name = "exportLogsToolStripMenuItem";
-            this.exportLogsToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.exportLogsToolStripMenuItem.Text = "Export Logs";
-            this.exportLogsToolStripMenuItem.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
-            // 
-            // exportFilesToolStripMenuItem
-            // 
-            this.exportFilesToolStripMenuItem.Name = "exportFilesToolStripMenuItem";
-            this.exportFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Space)));
-            this.exportFilesToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.exportFilesToolStripMenuItem.Text = "Export Files";
-            this.exportFilesToolStripMenuItem.Click += new System.EventHandler(this.exportFilesToolStripMenuItem_Click);
-            // 
-            // endToolStripMenuItem
-            // 
-            this.endToolStripMenuItem.Name = "endToolStripMenuItem";
-            this.endToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.endToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.endToolStripMenuItem.Text = "End";
-            this.endToolStripMenuItem.Click += new System.EventHandler(this.EndToolStripMenuItem_Click);
-            // 
-            // creditsToolStripMenuItem
-            // 
-            this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
-            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
-            this.creditsToolStripMenuItem.Text = "Credits";
-            this.creditsToolStripMenuItem.Click += new System.EventHandler(this.creditsToolStripMenuItem_Click);
+            this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MenuStrip_ItemClicked);
+            this.menuStrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MenuStrip_MouseMove);
             // 
             // windowsToolStripMenuItem
             // 
@@ -157,6 +99,13 @@
             this.logViewerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.logViewerToolStripMenuItem.Text = "Log Viewer";
             this.logViewerToolStripMenuItem.Click += new System.EventHandler(this.LogViewerToolStripMenuItem_Click);
+            // 
+            // logViewerOnlyConsoleToolStripMenuItem
+            // 
+            this.logViewerOnlyConsoleToolStripMenuItem.Name = "logViewerOnlyConsoleToolStripMenuItem";
+            this.logViewerOnlyConsoleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.logViewerOnlyConsoleToolStripMenuItem.Text = "Log Viewer (Live Console)";
+            this.logViewerOnlyConsoleToolStripMenuItem.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
             // 
             // cascadeToolStripMenuItem
             // 
@@ -192,28 +141,101 @@
             this.closeAllWindowsToolStripMenuItem.Text = "Close All Windows";
             this.closeAllWindowsToolStripMenuItem.Click += new System.EventHandler(this.closeAllWindowsToolStripMenuItem_Click);
             // 
+            // consoleToolStripMenuItem
+            // 
+            this.consoleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showHideConsoleToolStripMenuItem,
+            this.newServerToolStripMenuItem1,
+            this.logVeiwerToolStripMenuItem,
+            this.logVeiwerToolStripMenuItem1,
+            this.exportLogsToolStripMenuItem1});
+            this.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
+            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
+            this.consoleToolStripMenuItem.Text = "Server Console";
+            // 
+            // showHideConsoleToolStripMenuItem
+            // 
+            this.showHideConsoleToolStripMenuItem.Name = "showHideConsoleToolStripMenuItem";
+            this.showHideConsoleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.showHideConsoleToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.showHideConsoleToolStripMenuItem.Text = "Show/Hide Console";
+            this.showHideConsoleToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // newServerToolStripMenuItem1
+            // 
+            this.newServerToolStripMenuItem1.Name = "newServerToolStripMenuItem1";
+            this.newServerToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.newServerToolStripMenuItem1.Text = "New Server";
+            this.newServerToolStripMenuItem1.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
+            // 
+            // logVeiwerToolStripMenuItem
+            // 
+            this.logVeiwerToolStripMenuItem.Name = "logVeiwerToolStripMenuItem";
+            this.logVeiwerToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.logVeiwerToolStripMenuItem.Text = "Log Veiwer";
+            this.logVeiwerToolStripMenuItem.Click += new System.EventHandler(this.LogViewerToolStripMenuItem_Click);
+            // 
+            // logVeiwerToolStripMenuItem1
+            // 
+            this.logVeiwerToolStripMenuItem1.Name = "logVeiwerToolStripMenuItem1";
+            this.logVeiwerToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.logVeiwerToolStripMenuItem1.Text = "Log Veiwer (Live Console)";
+            this.logVeiwerToolStripMenuItem1.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
+            // 
+            // exportLogsToolStripMenuItem1
+            // 
+            this.exportLogsToolStripMenuItem1.Name = "exportLogsToolStripMenuItem1";
+            this.exportLogsToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.exportLogsToolStripMenuItem1.Text = "Export Logs";
+            this.exportLogsToolStripMenuItem1.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
+            // 
             // statusStrip
             // 
+            this.statusStrip.Dock = System.Windows.Forms.DockStyle.Top;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 834);
+            this.toolStripSplitButton1});
+            this.statusStrip.Location = new System.Drawing.Point(0, 24);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1844, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
-            // toolStripStatusLabel
+            // toolStripSplitButton1
             // 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatusLabel.Text = "Status";
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportFilesToolStripMenuItem1,
+            this.endToolStripMenuItem1,
+            this.creditsToolStripMenuItem1});
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
+            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
             // 
-            // logViewerOnlyConsoleToolStripMenuItem
+            // exportFilesToolStripMenuItem1
             // 
-            this.logViewerOnlyConsoleToolStripMenuItem.Name = "logViewerOnlyConsoleToolStripMenuItem";
-            this.logViewerOnlyConsoleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.logViewerOnlyConsoleToolStripMenuItem.Text = "Log Viewer (Live Console)";
-            this.logViewerOnlyConsoleToolStripMenuItem.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
+            this.exportFilesToolStripMenuItem1.Name = "exportFilesToolStripMenuItem1";
+            this.exportFilesToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Space)));
+            this.exportFilesToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
+            this.exportFilesToolStripMenuItem1.Text = "Export Files";
+            this.exportFilesToolStripMenuItem1.Click += new System.EventHandler(this.exportFilesToolStripMenuItem_Click);
+            // 
+            // endToolStripMenuItem1
+            // 
+            this.endToolStripMenuItem1.Name = "endToolStripMenuItem1";
+            this.endToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.endToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
+            this.endToolStripMenuItem1.Text = "End";
+            this.endToolStripMenuItem1.Click += new System.EventHandler(this.EndToolStripMenuItem_Click);
+            // 
+            // creditsToolStripMenuItem1
+            // 
+            this.creditsToolStripMenuItem1.Name = "creditsToolStripMenuItem1";
+            this.creditsToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
+            this.creditsToolStripMenuItem1.Text = "Credits";
+            this.creditsToolStripMenuItem1.Click += new System.EventHandler(this.creditsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -223,13 +245,16 @@
             this.ClientSize = new System.Drawing.Size(1844, 856);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DuoEditor Parent";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -243,24 +268,26 @@
 
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tileVeritcalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllWindowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportFilesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem;
         private System.DirectoryServices.DirectoryEntry directoryEntry1;
-        private System.Windows.Forms.ToolStripMenuItem showHideServerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logViewerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logViewerOnlyConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showHideConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem logVeiwerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logVeiwerToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exportLogsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exportFilesToolStripMenuItem1;
     }
 }
 

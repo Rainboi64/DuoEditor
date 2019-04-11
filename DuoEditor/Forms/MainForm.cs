@@ -17,6 +17,10 @@ namespace DuoEditor
      
     public partial class MainForm : Form
     {
+        private bool mouseDown;
+        private Point lastLocation;
+
+
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
 
@@ -223,6 +227,36 @@ namespace DuoEditor
                 DuoEditor.Forms.SubForms.LogViewer2 frm = new Forms.SubForms.LogViewer2();
                 frm.ShowDialog();
             }       
+        }
+
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void MenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+           
+  
+        }
+
+        private void MenuStrip_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+                if (mouseDown)
+                {
+                    this.Location = new Point(
+                        (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                    this.Update();
+                }
+            
+        }
+
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }
