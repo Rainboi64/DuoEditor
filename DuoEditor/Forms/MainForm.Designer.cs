@@ -33,8 +33,6 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logViewerOnlyConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVeritcalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +49,6 @@
             this.endToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.creditsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -66,15 +63,11 @@
             this.menuStrip.Size = new System.Drawing.Size(1844, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
-            this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MenuStrip_ItemClicked);
-            this.menuStrip.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MenuStrip_MouseMove);
             // 
             // windowsToolStripMenuItem
             // 
             this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newWindowToolStripMenuItem,
-            this.logViewerToolStripMenuItem,
-            this.logViewerOnlyConsoleToolStripMenuItem,
             this.cascadeToolStripMenuItem,
             this.dToolStripMenuItem,
             this.tileVeritcalToolStripMenuItem,
@@ -82,7 +75,6 @@
             this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
             this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.windowsToolStripMenuItem.Text = "Windows";
-            this.windowsToolStripMenuItem.Click += new System.EventHandler(this.windowsToolStripMenuItem_Click);
             // 
             // newWindowToolStripMenuItem
             // 
@@ -92,20 +84,6 @@
             this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.newWindowToolStripMenuItem.Text = "New Window";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
-            // 
-            // logViewerToolStripMenuItem
-            // 
-            this.logViewerToolStripMenuItem.Name = "logViewerToolStripMenuItem";
-            this.logViewerToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.logViewerToolStripMenuItem.Text = "Log Viewer";
-            this.logViewerToolStripMenuItem.Click += new System.EventHandler(this.LogViewerToolStripMenuItem_Click);
-            // 
-            // logViewerOnlyConsoleToolStripMenuItem
-            // 
-            this.logViewerOnlyConsoleToolStripMenuItem.Name = "logViewerOnlyConsoleToolStripMenuItem";
-            this.logViewerOnlyConsoleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.logViewerOnlyConsoleToolStripMenuItem.Text = "Log Viewer (Live Console)";
-            this.logViewerOnlyConsoleToolStripMenuItem.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
             // 
             // cascadeToolStripMenuItem
             // 
@@ -159,7 +137,7 @@
             this.showHideConsoleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
             this.showHideConsoleToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.showHideConsoleToolStripMenuItem.Text = "Show/Hide Console";
-            this.showHideConsoleToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.showHideConsoleToolStripMenuItem.Click += new System.EventHandler(this.ShowHideServerToolStripMenuItem_Click);
             // 
             // newServerToolStripMenuItem1
             // 
@@ -245,16 +223,14 @@
             this.ClientSize = new System.Drawing.Size(1844, 856);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DuoEditor Parent";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -275,9 +251,6 @@
         private System.Windows.Forms.ToolStripMenuItem tileVeritcalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllWindowsToolStripMenuItem;
-        private System.DirectoryServices.DirectoryEntry directoryEntry1;
-        private System.Windows.Forms.ToolStripMenuItem logViewerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logViewerOnlyConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem1;

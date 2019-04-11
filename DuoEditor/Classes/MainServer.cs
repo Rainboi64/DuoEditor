@@ -54,6 +54,7 @@ namespace DuoEditor
             {
                 Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\"+ DateTime.Now.Day +"_"+ DateTime.Now.DayOfWeek + "\\"));
             }
+            Logger.ProccesLogs();
             Thread.Sleep(3000);
         }
         public static void Splash()
@@ -113,11 +114,6 @@ namespace DuoEditor
             }
             FormStarter();
             Console.Title = "DuoServer Alpha 1.2 DE Edition";
-            string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\");
-            string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
-          
-       
-            Logger.ProccesLogs();
             string ip;
             string GetIP()
             {

@@ -47,28 +47,7 @@ namespace DuoEditor
      
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-         
-        
-
-        }
-
-        private void splitter1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void windowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
+     
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(System.Windows.Forms.MdiLayout.Cascade);
@@ -87,11 +66,6 @@ namespace DuoEditor
         private void arrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(System.Windows.Forms.MdiLayout.ArrangeIcons);
-        }
-
-        private void wipeTheProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void fileSetupToolStripMenuItem_Click(object sender, EventArgs e)
@@ -229,34 +203,5 @@ namespace DuoEditor
             }       
         }
 
-        private void MainForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            mouseDown = true;
-            lastLocation = e.Location;
-        }
-
-        private void MenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-           
-  
-        }
-
-        private void MenuStrip_MouseMove(object sender, MouseEventArgs e)
-        {
-            
-                if (mouseDown)
-                {
-                    this.Location = new Point(
-                        (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
-
-                    this.Update();
-                }
-            
-        }
-
-        private void MainForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            mouseDown = false;
-        }
     }
 }
