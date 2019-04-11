@@ -51,8 +51,10 @@ namespace DuoEditor
         static String cLog = String.Empty;
       private static void CleanLogsWorker()
         {
-            Log("Did a Log export at " + DateTime.Now + " Called " + Convert.ToString(DateTime.Now.Ticks + ".DSLF"));
-            StreamWriter txt = new StreamWriter(Convert.ToString(DateTime.Now.Ticks) + ".DSLF");
+            
+            string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath)  +"\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
+            Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
+            StreamWriter txt = new StreamWriter(FileLocation);
             txt.Write(cLog);
             txt.Close();
             StreamWriter txt1 = new StreamWriter("Logs.DSLF");

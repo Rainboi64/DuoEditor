@@ -26,6 +26,10 @@ namespace DuoEditor
 
       const int SW_HIDE = 0;
        const int SW_SHOW = 5;
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            Logger.CleanLogs();
+        }
         public static void SplashWork()
         {
             if (!File.Exists("Logs.DSLF"))
@@ -33,6 +37,22 @@ namespace DuoEditor
                 StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
                 txtoutput.Write("");
                 txtoutput.Close();
+            }
+            if (!File.Exists("Logs"))
+            {
+                Directory.CreateDirectory("Logs");
+            }
+            if (!File.Exists(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\")))
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\"));
+            }
+            if (!File.Exists(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month)))
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month+"\\"));
+            }
+            if (!File.Exists(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month+"\\"+DateTime.Now.DayOfWeek+"\\")))
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\"+ DateTime.Now.Day +"_"+ DateTime.Now.DayOfWeek + "\\"));
             }
             Thread.Sleep(3000);
         }
@@ -83,6 +103,7 @@ namespace DuoEditor
         }
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
             if (args.Contains("/h"))
