@@ -435,7 +435,7 @@ namespace DuoEditor
                         }
                         else if (input == "ip")
                         {
-                       Logger.Log(PublicFuncs.CleanIp);
+                            Logger.Log(PublicFuncs.CleanIp);
                         }
                         else if (input == "stop")
                         {
@@ -447,13 +447,13 @@ namespace DuoEditor
                         }
                         else if (input == "starttime")
                         {
-                       Logger.Log(Convert.ToString(sw.Elapsed));
+                            Logger.Log(Convert.ToString(sw.Elapsed));
                         }
                         else if (input == "new")
                         {
                             ThreadStart FormStart_ = new ThreadStart(FormStarter);
                             Thread FormStarterThread = new Thread(FormStart_);
-                            FormStarterThread.SetApartmentState ( ApartmentState.STA);
+                            FormStarterThread.SetApartmentState(ApartmentState.STA);
                             FormStarterThread.Start();
                         }
                         else if (input == "nhost")
@@ -465,9 +465,22 @@ namespace DuoEditor
                             }
                             catch (Exception i) { Logger.LogEx(i); MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK, MessageBoxIcon.Error); }
                         }
+                        else if (input == "clb")
+                        {
+                            Logger.ClearLogs();
+                            Logger.Log("Cleaned Log Bunk");
+                        }
+                        else if (input =="export")
+                        {
+                            Logger.CleanLogs();
+                        }
+                        else if(input == "vlb")
+                        {
+                            Console.Write(Logger.GetLogs);
+                        }
                         else
                         {
-                       Logger.Log("Not a Command. Check case sensitivity");
+                            Logger.Log("Not a Command. Check case sensitivity");
                         } 
                         
 
