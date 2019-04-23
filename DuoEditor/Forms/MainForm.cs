@@ -29,9 +29,20 @@ namespace DuoEditor
         public MainForm()
         {
             InitializeComponent();
-         
-        }
+            FormClosing += form_FormClosing;
 
+        }
+        private void form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {   // User clicked 'X' button
+                var x = MessageBox.Show("Do you really want to exit?","DuoEditor 1.3",MessageBoxButtons.YesNo);
+                if (x == DialogResult.Yes)
+                {
+                    Environment.Exit(1);
+                } e.Cancel = true;             // Disable Form closing
+            }
+        }
         private void tabControl1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             foreach (MainChildForm childForm in this.MdiChildren)
@@ -250,5 +261,7 @@ namespace DuoEditor
                 this.ActiveMdiChild.Text = NewTabname;
             }
         }
+    
     }
+
 }
