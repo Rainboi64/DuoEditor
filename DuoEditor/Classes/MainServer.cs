@@ -104,16 +104,24 @@ namespace DuoEditor
         }
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-            var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_HIDE);
-            if (args.Contains("/h"))
+            try
             {
-                ShowWindow(handle, SW_SHOW);
+                AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+                var handle = GetConsoleWindow();
+                ShowWindow(handle, SW_HIDE);
+                if (args.Contains("/h"))
+                {
+                    ShowWindow(handle, SW_SHOW);
 
+                }
+                FormStarter();
+                Console.Title = "DuoServer Alpha 1.3 DE Edition";
             }
-            FormStarter();
-            Console.Title = "DuoServer Alpha 1.2 DE Edition";
+            catch (Exception i)
+            {
+                Logger.LogEx(i);
+                throw;
+            }
             string ip;
             string GetIP()
             {
@@ -136,7 +144,7 @@ namespace DuoEditor
                     catch (Exception i)
                     {
                         
-                   Logger.Log(" DuoServer Alpha 1.2 DE Edition" +
+                   Logger.Log(" DuoServer Alpha 1.3 DE Edition" +
                        " \n Looks like there was an error proccesing your arguments " +
                        "\n This is some help..........." +
                        "\n The First space is used to specify the file that is wanted to be hosted" +
@@ -181,7 +189,7 @@ namespace DuoEditor
             }
             catch (Exception i) {
              
-                Logger.Log(" DuoServer Alpha 1.2 DE Edition" +
+                Logger.Log(" DuoServer Alpha 1.3 DE Edition" +
   " \n Looks like there was an error proccesing your arguments " +
   "\n This is some help..........." +
   "\n The First space is used to specify the file that is wanted to be hosted" +
@@ -413,7 +421,7 @@ namespace DuoEditor
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
            
-           Logger.Log("Loading DuoServer Alpha 1.1 DE Edition\n");
+           Logger.Log("Loading DuoServer Alpha 1.3 DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
            Logger.Log(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);
@@ -428,7 +436,7 @@ namespace DuoEditor
                Logger.Log(_port + " : Input Thread Started");
                     while (1 == 1)
                     {
-                        string input = Console.ReadLine();
+                        var input = Console.ReadLine();
                         if (input == "clear")
                         {
                             Console.Clear();

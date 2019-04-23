@@ -25,7 +25,37 @@ namespace DuoEditor
     /// </summary>
     public partial class MainChildForm : Form
     {
+        private TabControl tabCtrl;
+        private TabPage tabPag;
+        public TabPage TabPag
+        {
+            get
+            {
+                return tabPag;
+            }
+            set
+            {
+                tabPag = value;
+            }
+        }
+        private void ActiveMdiChild_FormClosed(object sender,
+                                    FormClosedEventArgs e)
+        {
+            this.tabPag.Dispose();
 
+            //If no Tabpage left
+            if (!tabCtrl.HasChildren)
+            {
+                tabCtrl.Visible = false;
+            }
+        }
+        public TabControl TabCtrl
+        {
+            set
+            {
+                tabCtrl = value;
+            }
+        }
         public MainChildForm()
         {
             InitializeComponent();
@@ -42,10 +72,11 @@ namespace DuoEditor
             /// <summary>
             /// This is the prelaunch setup
             /// </summary>
+            timer1.Start();
             ///This Code below loads the highlighting config to the HTMLCodeTextBox1
             HTMLCodeTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "/Files/htmlDesc.xml");
             ///This Code below Adds The Dummy Text To The HTMLCodeTextBox1
-            HTMLCodeTextBox1.Text = "<! DuoEditor Version Alpha 1.1 \n Credits: Main Tasks Then Credits>";
+            HTMLCodeTextBox1.Text = "<! DuoEditor Version Alpha 1.3 \n Credits: Main Tasks Then Credits>";
             ///This Code below Assigns The DocumentMap1 To The HTMLCodeTextBox1
             documentMap1.Target = HTMLCodeTextBox1;
             ///This Code below Disables WebBrowsers Script Errors
@@ -84,7 +115,9 @@ namespace DuoEditor
             {
                 if (Filename == null)
                 {
-                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\" + (Interaction.InputBox("Choose file name", "Save", "File", -1, -1) + ".html"));
+                    string safefileName = Interaction.InputBox("Choose file name", "Save", "File", -1, -1);
+                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\" + safefileName + ".html");
+                    if (!(safefileName == "")) { 
                     StreamWriter txtoutput = new StreamWriter(savefile);
                     txtoutput.Write(HTMLCodeTextBox1.Text);
                     txtoutput.Close();
@@ -92,6 +125,7 @@ namespace DuoEditor
                     SafeFilename = "/" + Path.GetFileName(savefile);
                     URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
                 }
+            }
                 else
                 {
                     StreamWriter txtoutput = new StreamWriter(Filename);
@@ -209,6 +243,7 @@ namespace DuoEditor
         /// This is for the Live Browser
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
             LiveBrowserWB.Refresh();
         }
 
@@ -317,7 +352,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnParagraph);
                 }
             }
-
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -331,6 +366,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnHyperLink);
                 }
             }
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -344,6 +380,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnImage);
                 }
             }
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
         private void headerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -356,6 +393,7 @@ namespace DuoEditor
               
                 }
             }
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
 
         private void paragraphToolStripMenuItem_Click(object sender, EventArgs e)
@@ -369,7 +407,7 @@ namespace DuoEditor
               
                 }
             }
-
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
 
         private void hyperLinkToolStripMenuItem_Click(object sender, EventArgs e)
@@ -383,6 +421,7 @@ namespace DuoEditor
                  
                 }
             }
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
 
         private void imageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -396,12 +435,13 @@ namespace DuoEditor
           
                 }
             }
+            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
         }
         #endregion
         #region Misc
         private void richTextBox31_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            
         }
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
@@ -429,7 +469,17 @@ namespace DuoEditor
             catch (Exception i) { Logger.LogEx(i); }
         }
 
+        private void MDIChild_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        { 
+            //Destroy the corresponding Tabpage when closing MDI child form
+            this.tabPag.Dispose();
 
+            //If no Tabpage left
+            if (!tabCtrl.HasChildren)
+            {
+                tabCtrl.Visible = false;
+            }
+        }
 
 
 
@@ -443,6 +493,95 @@ namespace DuoEditor
         private void ClToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.CleanLogs();
+        }
+
+        private void MainChildForm_Activated(object sender, EventArgs e)
+        {
+            if ((splitContainer1.Panel1Collapsed == false))
+            {
+                menuStrip1.Visible = false;
+                URLTextBox1.Font = new Font(URLTextBox1.Font.FontFamily, 27, FontStyle.Regular);
+            }
+        }
+        private void MainChildForm_Deactivate(object sender, EventArgs e)
+        {
+            if (splitContainer1.Panel1Collapsed == false)
+            {
+                splitContainer1.Panel1.Visible = true;
+                menuStrip1.Visible = true;
+                URLTextBox1.Font = new Font(URLTextBox1.Font.FontFamily, 8.25f, FontStyle.Regular);
+            }
+        }
+        private void HTMLCodeTextBox1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            }
+            catch (Exception) { }
+            }
+        private void MainChildForm_Click(object sender, EventArgs e)
+        {
+  
+        }
+
+        private void URLTextBox1_DoubleClick(object sender, EventArgs e)
+        {
+ 
+        }
+
+        private void ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+        bool URLhidden = true;
+        private void HideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (URLhidden == false)
+            {
+                splitContainer1.Panel1Collapsed = URLhidden;
+                URLhidden = true;
+            }
+            else
+            {
+                splitContainer1.Panel1Collapsed = URLhidden;
+                URLhidden = false;
+            }
+        }
+        bool Toolbarhidden = true;
+        private void HideShowToolbarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Toolbarhidden == false)
+            {
+                splitContainer3.Panel2Collapsed = Toolbarhidden;
+                Toolbarhidden = true;
+            }
+            else
+            {
+                splitContainer3.Panel2Collapsed = Toolbarhidden;
+                Toolbarhidden = false;
+            }
+        }
+        bool PreviewTabhidden = true;
+        private void HideShowPreviewTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (PreviewTabhidden == false)
+            {
+                timer1.Start();
+                splitContainer2.Panel1Collapsed = PreviewTabhidden;
+                PreviewTabhidden = true;
+            }
+            else
+            {
+                timer1.Stop();
+                splitContainer2.Panel1Collapsed = PreviewTabhidden;
+                PreviewTabhidden = false;
+            }
         }
     }
 }

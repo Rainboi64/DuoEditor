@@ -26,12 +26,20 @@ namespace DuoEditor
         private static string LogBunk;
         private static void LogExWorker(Exception LogDetail_)
         {
-          string LogDetail = Convert.ToString(LogDetail_);
-            Log( LogDetail);
-            using (EventLog eventLog = new EventLog("DuoEditor"))
+            try
             {
-                eventLog.Source = "DuoEditor";
-                eventLog.WriteEntry(LogDetail, EventLogEntryType.Error, 101, 1);
+                string LogDetail = Convert.ToString(LogDetail_);
+                Log(LogDetail);
+                using (EventLog eventLog = new EventLog("DuoEditor"))
+                {
+                    eventLog.Source = "DuoEditor";
+                    eventLog.WriteEntry(LogDetail, EventLogEntryType.Error, 101, 1);
+                }
+            }
+            catch (Exception i)
+            {
+                LogEx(i);
+                throw;
             }
         }
         private static void LogWorker(string LogDetail)
@@ -42,56 +50,89 @@ namespace DuoEditor
             {
                 LogBunk = LogBunk + LogDetail + Environment.NewLine;
             }
-            catch (Exception i) { LogBunk = LogBunk + i; }
+            catch (Exception) { throw; }
         }
         private static void ClearLogsWorker()
         {
-            LogBunk = null;
+            try
+            {
+                LogBunk = null;
+            }
+            catch (Exception i)
+            {
+                LogEx(i);
+                throw;
+            }
         }
         static String cLog = String.Empty;
       private static void CleanLogsWorker()
         {
-            
-            string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath)  +"\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
-            Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
-            StreamWriter txt = new StreamWriter(FileLocation);
-            txt.Write(cLog);
-            txt.Close();
-            StreamWriter txt1 = new StreamWriter("Logs.DSLF");
-            txt1.Write("");
-            txt1.Close();
+
+            try
+            {
+                string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
+                Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
+                StreamWriter txt = new StreamWriter(FileLocation);
+                txt.Write(cLog);
+                txt.Close();
+                StreamWriter txt1 = new StreamWriter("Logs.DSLF");
+                txt1.Write("");
+                txt1.Close();
+            }
+            catch (Exception i)
+            {
+
+                LogEx(i);
+                throw;
+            }
         }
         private static void DoSaveLogsWorker()
         {
-            using (StreamReader sr = new StreamReader("Logs.DSLF"))
+            try
             {
-                cLog = sr.ReadToEnd();
-                sr.Close();
+                using (StreamReader sr = new StreamReader("Logs.DSLF"))
+                {
+                    cLog = sr.ReadToEnd();
+                    sr.Close();
+                }
+                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+                txtoutput.Write(cLog + LogBunk);
+                txtoutput.Close();
+                ClearLogs();
             }
-            StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
-            txtoutput.Write(cLog + LogBunk);
-            txtoutput.Close();
-            ClearLogs();
+            catch (Exception i)
+            {
+                LogEx(i);
+            }
         }
         private static void ProccesLogsWorker()
         {
-            if (cLog.Length >= 10000)
+            try
             {
-                CleanLogs();
-            }
-            Thread childThread = new Thread(childref);
-            childThread.Start();
 
-            void childref()
-            {
-                while (true)
+                if (cLog.Length >= 10000)
                 {
-                    Thread.Sleep(30000);
-                    
-                    DoSaveLogs(); 
+                    CleanLogs();
                 }
-            }
+                Thread childThread = new Thread(childref);
+                childThread.Start();
 
+                void childref()
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(30000);
+
+                        DoSaveLogs();
+                    }
+                }
+
+            }
+            catch (Exception i)
+            {
+                LogEx(i);
+                throw;
+            }
         }
 
     }

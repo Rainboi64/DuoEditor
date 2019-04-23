@@ -17,10 +17,8 @@ namespace DuoEditor
      
     public partial class MainForm : Form
     {
-        private bool mouseDown;
-        private Point lastLocation;
 
-
+        int WindowCount = 0;
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
 
@@ -34,17 +32,43 @@ namespace DuoEditor
          
         }
 
-  
+        private void tabControl1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            foreach (MainChildForm childForm in this.MdiChildren)
+            {
+                //Check for its corresponding MDI child form
+                if (childForm.TabPag.Equals(tabForms.SelectedTab))
+                {
+                    //Activate the MDI child form
+                    childForm.Select();
+                }
+            }
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
-        
-            Form EditorchildForm = new Form();
+         
+            WindowCount++;
+            Form childForm = new Form();
             MainChildForm newMDIChild = new MainChildForm();
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
             newMDIChild.Show();
-     
+            newMDIChild.TabCtrl = tabForms;
+            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+            //Add a Tabpage and enables it
+            TabPage tp = new TabPage();
+            tp.Parent = tabForms;
+            tp.Text = newMDIChild.Text;
+            tp.Show();
+
+            //child Form will now hold a reference value to a tabpage
+            newMDIChild.TabPag = tp;
+
+
+            //Activate the newly created Tabpage
+            tabForms.SelectedTab = tp;
+
         }
 
      
@@ -103,15 +127,29 @@ namespace DuoEditor
                 return;
             }
         }
-
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            WindowCount++;
             Form childForm = new Form();
             MainChildForm newMDIChild = new MainChildForm();
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
             newMDIChild.Show();
+            newMDIChild.TabCtrl = tabForms;
+            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+            //Add a Tabpage and enables it
+            TabPage tp = new TabPage();
+            tp.Parent = tabForms;
+            tp.Text = newMDIChild.Text;
+            tp.Show();
+
+            //child Form will now hold a reference value to a tabpage
+            newMDIChild.TabPag = tp;
+
+
+            //Activate the newly created Tabpage
+            tabForms.SelectedTab = tp;
         }
 
         private void closeAllWindowsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,5 +241,14 @@ namespace DuoEditor
             }       
         }
 
+        private void TabForms_DoubleClick(object sender, EventArgs e)
+        {
+            string NewTabname = Interaction.InputBox("Enter a new name for your tab please:\nNote: Changing this wont effect any outcome.", "Change The Tab's name.", tabForms.SelectedTab.Text);
+            if (!(NewTabname == ""))
+            {
+                tabForms.SelectedTab.Text = NewTabname;
+                this.ActiveMdiChild.Text = NewTabname;
+            }
+        }
     }
 }
