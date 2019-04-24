@@ -35,13 +35,14 @@
             this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.liveLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopLoggingInspectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SyncTimer = new System.Windows.Forms.Timer(this.components);
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decryptSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -116,11 +117,20 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem});
+            this.saveToolStripMenuItem,
+            this.decryptSaveToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.FileToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // liveLogToolStripMenuItem
             // 
@@ -166,16 +176,15 @@
             // 
             // SyncTimer
             // 
-            this.SyncTimer.Interval = 500;
+            this.SyncTimer.Interval = 1000;
             this.SyncTimer.Tick += new System.EventHandler(this.SyncTimer_Tick);
             // 
-            // saveToolStripMenuItem
+            // decryptSaveToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            this.decryptSaveToolStripMenuItem.Name = "decryptSaveToolStripMenuItem";
+            this.decryptSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.decryptSaveToolStripMenuItem.Text = "Decrypt && Save";
+            this.decryptSaveToolStripMenuItem.Click += new System.EventHandler(this.DecryptSaveToolStripMenuItem_Click);
             // 
             // LogViewer2
             // 
@@ -213,5 +222,6 @@
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decryptSaveToolStripMenuItem;
     }
 }

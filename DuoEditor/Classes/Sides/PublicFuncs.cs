@@ -16,6 +16,7 @@ namespace DuoEditor
         public static string CleanIp { get; set; }
         public static void Host(string Dir, int Port) => HostWorker(Dir,Port);
 
+        public static bool shwn = false;
         #endregion
 
         #region Workers
@@ -28,4 +29,6 @@ namespace DuoEditor
       
         #endregion
     }
+
+
 }

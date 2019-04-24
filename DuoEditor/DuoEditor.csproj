@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Sides\Encrypt.cs" />
     <Compile Include="Classes\Sides\JsonWorkers.cs" />
     <Compile Include="Forms\MainChildForm.cs">
       <SubType>Form</SubType>

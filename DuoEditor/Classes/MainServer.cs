@@ -24,14 +24,26 @@ namespace DuoEditor
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-      const int SW_HIDE = 0;
+        const int SW_HIDE = 0;
        const int SW_SHOW = 5;
+        private const int MF_BYCOMMAND = 0x00000000;
+        public const int SC_CLOSE = 0xF060;
+
+        [DllImport("user32.dll")]
+        public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+
+
         static void OnProcessExit(object sender, EventArgs e)
         {
             Logger.CleanLogs();
         }
         public static void SplashWork()
         {
+
             if (!File.Exists("Logs.DSLF"))
             {
                 StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
@@ -92,7 +104,10 @@ namespace DuoEditor
             FormStarterThread1.Start();
             Console.ResetColor();
         }
-       public static void ShowConsole()
+     
+
+
+        public static void ShowConsole()
         {
             var handle = GetConsoleWindow();
                 ShowWindow(handle, SW_SHOW);
@@ -102,8 +117,12 @@ namespace DuoEditor
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
         }
+
+     
         static void Main(string[] args)
         {
+            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
+
             try
             {
                 AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
@@ -120,8 +139,10 @@ namespace DuoEditor
             catch (Exception i)
             {
                 Logger.LogEx(i);
-                throw;
+                
+
             }
+
             string ip;
             string GetIP()
             {
@@ -202,10 +223,6 @@ namespace DuoEditor
             };
         } 
         public readonly string GetIP = PublicFuncs.CleanIp;
-
-
-
-
         public class SimpleHTTPServer
         {
 
@@ -434,9 +451,16 @@ namespace DuoEditor
                 void CallToChildThread()
                 {
                Logger.Log(_port + " : Input Thread Started");
+                    
                     while (1 == 1)
                     {
-                        var input = Console.ReadLine();
+
+                       
+                        string _input()
+                        {
+                           return Console.ReadLine();
+                        }
+                        string input = _input();
                         if (input == "clear")
                         {
                             Console.Clear();
@@ -466,25 +490,34 @@ namespace DuoEditor
                         }
                         else if (input == "nhost")
                         {
-                            String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
-                            try
-                            {
-                                PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
-                            }
-                            catch (Exception i) { Logger.LogEx(i); MessageBox.Show("Opps Somthing Bad Happend Here is info: " + i, "Opps Somthing Bad Happend", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                            Console.Write("Enter a Directory Name: ");
+                                string dir = Console.ReadLine();
+                            Console.Write("->Enter a port: ");
+                            int _port = Convert.ToInt32(Console.ReadLine());
+                            PublicFuncs.Host(dir,_port);
+                           
                         }
-                        else if (input == "clb")
+                        else if (input == "cleanlogbunk")
                         {
                             Logger.ClearLogs();
                             Logger.Log("Cleaned Log Bunk");
                         }
-                        else if (input =="export")
+                        else if (input == "export")
                         {
                             Logger.CleanLogs();
                         }
-                        else if(input == "vlb")
+                        else if (input == "viewlogbunk")
                         {
                             Console.Write(Logger.GetLogs);
+                        }
+                        else if (input == "hide")
+                        {
+                            HideConsole();
+                            PublicFuncs.shwn = false;
+                        }
+                        else if (input == "viewlogfile")
+                        {
+                            Console.WriteLine(Logger.ViewLogfile());
                         }
                         else
                         {

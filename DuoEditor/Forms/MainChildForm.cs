@@ -583,5 +583,15 @@ namespace DuoEditor
                 PreviewTabhidden = false;
             }
         }
+
+        private void CloseFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void HideWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

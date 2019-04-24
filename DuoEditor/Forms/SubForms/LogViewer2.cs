@@ -23,7 +23,7 @@ namespace DuoEditor.Forms.SubForms
             using (StreamReader sr = new StreamReader("Logs.DSLF"))
             {
                 fastColoredTextBox1.Clear();
-                fastColoredTextBox1.Text = fastColoredTextBox1.Text + sr.ReadToEnd();
+                fastColoredTextBox1.Text = fastColoredTextBox1.Text + DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
                 sr.Close();
                 fastColoredTextBox1.GoEnd();
             }
@@ -67,6 +67,20 @@ namespace DuoEditor.Forms.SubForms
             SaveFileDialog savefile = new SaveFileDialog();
             savefile.Title = "Save file as..";
             savefile.Filter = "DuoServer Log File|*.DSLF|All Files|*.*";
+
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter txtoutput = new StreamWriter(savefile.FileName);
+                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(fastColoredTextBox1.Text));
+                txtoutput.Close();
+            }
+        }
+
+        private void DecryptSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.Title = "Save file as..";
+            savefile.Filter = "Text File|*.txt|All Files|*.*";
 
             if (savefile.ShowDialog() == DialogResult.OK)
             {

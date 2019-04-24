@@ -20,6 +20,7 @@ namespace DuoEditor
         public static string GetLogs = LogBunk;
         public static void ClearLogs() => ClearLogsWorker();
         public static void CleanLogs() => CleanLogsWorker();
+        public static string ViewLogfile() => ViewLogfileWorker();
         public static void LogEx(Exception LogDetail) => LogExWorker(LogDetail);
         public static void DoSaveLogs() => DoSaveLogsWorker();
 
@@ -41,6 +42,16 @@ namespace DuoEditor
                 LogEx(i);
                 throw;
             }
+        }
+        private static string ViewLogfileWorker()
+        {
+            string logfilecontents = string.Empty;
+            using (StreamReader sr = new StreamReader("Logs.DSLF"))
+            {
+                logfilecontents = DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
+                sr.Close();
+            }
+            return logfilecontents;
         }
         private static void LogWorker(string LogDetail)
         {
@@ -73,7 +84,7 @@ namespace DuoEditor
                 string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 StreamWriter txt = new StreamWriter(FileLocation);
-                txt.Write(cLog);
+                txt.Write(DSLogVeiwer.Encryption.Encrypt(cLog));
                 txt.Close();
                 StreamWriter txt1 = new StreamWriter("Logs.DSLF");
                 txt1.Write("");
@@ -92,11 +103,11 @@ namespace DuoEditor
             {
                 using (StreamReader sr = new StreamReader("Logs.DSLF"))
                 {
-                    cLog = sr.ReadToEnd();
+               cLog = DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
                     sr.Close();
                 }
                 StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
-                txtoutput.Write(cLog + LogBunk);
+                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(cLog + LogBunk));
                 txtoutput.Close();
                 ClearLogs();
             }
@@ -110,7 +121,7 @@ namespace DuoEditor
             try
             {
 
-                if (cLog.Length >= 10000)
+                if (cLog.Length >= 1000)
                 {
                     CleanLogs();
                 }

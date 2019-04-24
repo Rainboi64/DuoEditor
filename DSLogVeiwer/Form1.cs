@@ -8,21 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-namespace DuoEditor.Forms.SubForms
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+namespace DSLogVeiwer
 {
-    public partial class LogVeiwer : Form
+    public partial class DSLogVeiwer : Form
     {
-        public LogVeiwer()
+    public static string _input;
+        public DSLogVeiwer(string input)
         {
-            InitializeComponent();
+            InitializeComponent()
+                ;
+            _input = input;
         }
 
-        private void SplitContainer5_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-      
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openfile = new OpenFileDialog();
@@ -33,41 +32,15 @@ namespace DuoEditor.Forms.SubForms
                 HTMLCodeTextBox1.Clear();
                 using (StreamReader sr = new StreamReader(openfile.FileName))
                 {
-                    HTMLCodeTextBox1.Text = DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
+                    HTMLCodeTextBox1.Text = global::DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
                     sr.Close();
                 }
-                
 
-            
-        }
-    }
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog savefile = new SaveFileDialog();
-            savefile.Title = "Save file as..";
-            savefile.Filter = "DuoServer Log File|*.DSLF|All Files|*.*";
-
-            if (savefile.ShowDialog() == DialogResult.OK)
-            {
-                StreamWriter txtoutput = new StreamWriter(savefile.FileName);
-                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(HTMLCodeTextBox1.Text));
-                txtoutput.Close();
             }
         }
 
-        private void SplitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void LogVeiwer_Load(object sender, EventArgs e)
-        {
-
-            HTMLCodeTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "/Files/logDesc.xml");
-        }
-
-        private void DecryptToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExctractToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog savefile = new SaveFileDialog();
             savefile.Title = "Save file as..";
@@ -80,5 +53,30 @@ namespace DuoEditor.Forms.SubForms
                 txtoutput.Close();
             }
         }
+
+        private void DSLogVeiwer_Load(object sender, EventArgs e)
+        {
+            using (StreamReader sr = new StreamReader(_input))
+            {
+                HTMLCodeTextBox1.Text = global::DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
+                sr.Close();
+            }
+            HTMLCodeTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\logDesc.xml");
+            
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savefile = new SaveFileDialog();
+            savefile.Title = "Save file as..";
+            savefile.Filter = "Text File|*.txt|All Files|*.*";
+
+            if (savefile.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter txtoutput = new StreamWriter(savefile.FileName);
+                txtoutput.Write(global::DSLogVeiwer.Encryption.Encrypt(HTMLCodeTextBox1.Text));
+                txtoutput.Close();
+            }
+        }
     }
-}
+    }

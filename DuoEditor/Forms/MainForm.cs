@@ -211,11 +211,11 @@ namespace DuoEditor
                 PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
             } catch (Exception i) { Logger.LogEx(i); }
         }
-        bool shwn = false;
+        
         private void ShowHideServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            if (shwn == false) { shwn = true; MainServer.ShowConsole(); } else { shwn = false; MainServer.HideConsole(); }
+            if (PublicFuncs.shwn == false) { PublicFuncs.shwn = true; MainServer.ShowConsole(); } else { PublicFuncs.shwn = false; MainServer.HideConsole(); }
            
         }
         private void EndToolStripMenuItem_Click(object sender, EventArgs e)
