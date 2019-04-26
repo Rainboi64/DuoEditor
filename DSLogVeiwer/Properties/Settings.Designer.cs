@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DSLogVeiwer.Properties
+namespace DuoEditor.Properties
 {
 
 

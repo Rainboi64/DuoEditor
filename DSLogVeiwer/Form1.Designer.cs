@@ -1,4 +1,4 @@
-﻿namespace DSLogVeiwer
+﻿namespace DuoEditor
 {
     partial class DSLogVeiwer
     {
@@ -34,14 +34,14 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.ruler1 = new FastColoredTextBoxNS.Ruler();
             this.HTMLCodeTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
-            this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exctractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exctractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.documentMap1 = new FastColoredTextBoxNS.DocumentMap();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -94,7 +94,7 @@
             // 
             this.ruler1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ruler1.Location = new System.Drawing.Point(0, 24);
-            this.ruler1.MaximumSize = new System.Drawing.Size(1073741823, 24);
+            this.ruler1.MaximumSize = new System.Drawing.Size(1073741824, 24);
             this.ruler1.MinimumSize = new System.Drawing.Size(0, 24);
             this.ruler1.Name = "ruler1";
             this.ruler1.Size = new System.Drawing.Size(940, 24);
@@ -132,17 +132,6 @@
             this.HTMLCodeTextBox1.TabIndex = 0;
             this.HTMLCodeTextBox1.Zoom = 100;
             // 
-            // documentMap1
-            // 
-            this.documentMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
-            this.documentMap1.Location = new System.Drawing.Point(0, 0);
-            this.documentMap1.Name = "documentMap1";
-            this.documentMap1.Size = new System.Drawing.Size(200, 640);
-            this.documentMap1.TabIndex = 0;
-            this.documentMap1.Target = this.HTMLCodeTextBox1;
-            this.documentMap1.Text = "documentMap1";
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -152,11 +141,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(940, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // fileToolStripMenuItem
             // 
@@ -172,29 +156,45 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // exctractToolStripMenuItem
-            // 
-            this.exctractToolStripMenuItem.Name = "exctractToolStripMenuItem";
-            this.exctractToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exctractToolStripMenuItem.Text = "Decrypt && Extract";
-            this.exctractToolStripMenuItem.Click += new System.EventHandler(this.ExctractToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // exctractToolStripMenuItem
+            // 
+            this.exctractToolStripMenuItem.Name = "exctractToolStripMenuItem";
+            this.exctractToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exctractToolStripMenuItem.Text = "Decrypt && Extract";
+            this.exctractToolStripMenuItem.Click += new System.EventHandler(this.ExctractToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // documentMap1
+            // 
+            this.documentMap1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.documentMap1.ForeColor = System.Drawing.Color.Maroon;
+            this.documentMap1.Location = new System.Drawing.Point(0, 0);
+            this.documentMap1.Name = "documentMap1";
+            this.documentMap1.Size = new System.Drawing.Size(200, 640);
+            this.documentMap1.TabIndex = 0;
+            this.documentMap1.Target = this.HTMLCodeTextBox1;
+            this.documentMap1.Text = "documentMap1";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // DSLogVeiwer
             // 

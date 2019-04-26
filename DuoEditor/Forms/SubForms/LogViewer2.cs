@@ -23,7 +23,7 @@ namespace DuoEditor.Forms.SubForms
             using (StreamReader sr = new StreamReader("Logs.DSLF"))
             {
                 fastColoredTextBox1.Clear();
-                fastColoredTextBox1.Text = fastColoredTextBox1.Text + DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
+                fastColoredTextBox1.Text = fastColoredTextBox1.Text + DuoEditor.Encryption.Decrypt( sr.ReadToEnd());
                 sr.Close();
                 fastColoredTextBox1.GoEnd();
             }
@@ -71,7 +71,7 @@ namespace DuoEditor.Forms.SubForms
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter txtoutput = new StreamWriter(savefile.FileName);
-                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(fastColoredTextBox1.Text));
+                txtoutput.Write(DuoEditor.Encryption.Encrypt(fastColoredTextBox1.Text));
                 txtoutput.Close();
             }
         }

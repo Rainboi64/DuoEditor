@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-namespace DSLogVeiwer
+namespace DuoEditor
 {
     public partial class DSLogVeiwer : Form
     {
@@ -32,7 +32,7 @@ namespace DSLogVeiwer
                 HTMLCodeTextBox1.Clear();
                 using (StreamReader sr = new StreamReader(openfile.FileName))
                 {
-                    HTMLCodeTextBox1.Text = global::DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
+                    HTMLCodeTextBox1.Text = global::DuoEditor.Encryption.Decrypt(sr.ReadToEnd());
                     sr.Close();
                 }
 
@@ -56,10 +56,13 @@ namespace DSLogVeiwer
 
         private void DSLogVeiwer_Load(object sender, EventArgs e)
         {
-            using (StreamReader sr = new StreamReader(_input))
+            if (_input != "")
             {
-                HTMLCodeTextBox1.Text = global::DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
-                sr.Close();
+                using (StreamReader sr = new StreamReader(_input))
+                {
+                    HTMLCodeTextBox1.Text = global::DuoEditor.Encryption.Decrypt(sr.ReadToEnd());
+                    sr.Close();
+                }
             }
             HTMLCodeTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\logDesc.xml");
             
@@ -74,7 +77,7 @@ namespace DSLogVeiwer
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter txtoutput = new StreamWriter(savefile.FileName);
-                txtoutput.Write(global::DSLogVeiwer.Encryption.Encrypt(HTMLCodeTextBox1.Text));
+                txtoutput.Write(global::DuoEditor.Encryption.Encrypt(HTMLCodeTextBox1.Text));
                 txtoutput.Close();
             }
         }

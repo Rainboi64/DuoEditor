@@ -19,6 +19,8 @@ namespace DuoEditor
     {
 
         int WindowCount = 0;
+
+        int JSWindowCount = 0;
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
 
@@ -45,16 +47,39 @@ namespace DuoEditor
         }
         private void tabControl1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            foreach (MainChildForm childForm in this.MdiChildren)
+
+            try
             {
-                //Check for its corresponding MDI child form
-                if (childForm.TabPag.Equals(tabForms.SelectedTab))
+                foreach (Forms.MainJSEditor childForm in this.MdiChildren.OfType<Forms.MainJSEditor>())
                 {
-                    //Activate the MDI child form
-                    childForm.Select();
+                    //Check for its corresponding MDI child form
+                    if (childForm.TabPag.Equals(tabForms.SelectedTab))
+                    {
+                        //Activate the MDI child form
+                        childForm.Select();
+                    }
                 }
             }
-        }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                foreach (MainChildForm childForm in this.MdiChildren.OfType<MainChildForm>())
+                {
+                    //Check for its corresponding MDI child form
+                    if (childForm.TabPag.Equals(tabForms.SelectedTab))
+                    {
+                        //Activate the MDI child form
+                        childForm.Select();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            
+            }
         private void MainForm_Load(object sender, EventArgs e)
         {
          
@@ -251,7 +276,9 @@ namespace DuoEditor
                 frm.ShowDialog();
             }       
         }
-
+    
+     
+     
         private void TabForms_DoubleClick(object sender, EventArgs e)
         {
             string NewTabname = Interaction.InputBox("Enter a new name for your tab please:\nNote: Changing this wont effect any outcome.", "Change The Tab's name.", tabForms.SelectedTab.Text);
@@ -261,7 +288,31 @@ namespace DuoEditor
                 this.ActiveMdiChild.Text = NewTabname;
             }
         }
-    
+
+        private void NewJavaScriptEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JSWindowCount++;
+            Form childForm = new Form();
+            Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor();
+            // Set the Parent Form of the Child window.  
+            newMDIChild.MdiParent = this;
+            // Display the new form.  
+            newMDIChild.Show();
+            newMDIChild.TabCtrl = tabForms;
+            newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+            //Add a Tabpage and enables it
+            TabPage tp = new TabPage();
+            tp.Parent = tabForms;
+            tp.Text = newMDIChild.Text;
+            tp.Show();
+
+            //child Form will now hold a reference value to a tabpage
+            newMDIChild.TabPag = tp;
+
+
+            //Activate the newly created Tabpage
+            tabForms.SelectedTab = tp;
+        }
     }
 
 }

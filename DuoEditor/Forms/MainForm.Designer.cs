@@ -57,6 +57,7 @@
             this.logsVeiwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsVeiwerLiveConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newJavaScriptEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -77,6 +78,7 @@
             // 
             this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newWindowToolStripMenuItem,
+            this.newJavaScriptEditorToolStripMenuItem,
             this.cascadeToolStripMenuItem,
             this.dToolStripMenuItem,
             this.tileVeritcalToolStripMenuItem,
@@ -293,6 +295,13 @@
             this.clearLogsToolStripMenuItem.Text = "Export Logs";
             this.clearLogsToolStripMenuItem.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
             // 
+            // newJavaScriptEditorToolStripMenuItem
+            // 
+            this.newJavaScriptEditorToolStripMenuItem.Name = "newJavaScriptEditorToolStripMenuItem";
+            this.newJavaScriptEditorToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.newJavaScriptEditorToolStripMenuItem.Text = "New JavaScript Editor";
+            this.newJavaScriptEditorToolStripMenuItem.Click += new System.EventHandler(this.NewJavaScriptEditorToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,6 +359,7 @@
         private System.Windows.Forms.ToolStripMenuItem logsVeiwerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logsVeiwerLiveConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newJavaScriptEditorToolStripMenuItem;
     }
 }
 

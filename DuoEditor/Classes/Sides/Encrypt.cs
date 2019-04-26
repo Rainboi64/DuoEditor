@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
-namespace DSLogVeiwer
+namespace DuoEditor
 {
     class Encryption
     {

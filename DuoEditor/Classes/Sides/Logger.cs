@@ -48,7 +48,7 @@ namespace DuoEditor
             string logfilecontents = string.Empty;
             using (StreamReader sr = new StreamReader("Logs.DSLF"))
             {
-                logfilecontents = DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
+                logfilecontents = DuoEditor.Encryption.Decrypt( sr.ReadToEnd());
                 sr.Close();
             }
             return logfilecontents;
@@ -84,7 +84,7 @@ namespace DuoEditor
                 string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 StreamWriter txt = new StreamWriter(FileLocation);
-                txt.Write(DSLogVeiwer.Encryption.Encrypt(cLog));
+                txt.Write(DuoEditor.Encryption.Encrypt(cLog));
                 txt.Close();
                 StreamWriter txt1 = new StreamWriter("Logs.DSLF");
                 txt1.Write("");
@@ -103,11 +103,11 @@ namespace DuoEditor
             {
                 using (StreamReader sr = new StreamReader("Logs.DSLF"))
                 {
-               cLog = DSLogVeiwer.Encryption.Decrypt( sr.ReadToEnd());
+               cLog = DuoEditor.Encryption.Decrypt( sr.ReadToEnd());
                     sr.Close();
                 }
                 StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
-                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(cLog + LogBunk));
+                txtoutput.Write(DuoEditor.Encryption.Encrypt(cLog + LogBunk));
                 txtoutput.Close();
                 ClearLogs();
             }

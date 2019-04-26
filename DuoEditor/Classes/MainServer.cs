@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Runtime.InteropServices;
-
+using Microsoft.Win32;
 namespace DuoEditor
 {
 
@@ -35,11 +35,34 @@ namespace DuoEditor
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
-
+        [DllImport("Shell32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern void SHChangeNotify(uint wEventId, uint uFlags, IntPtr dwItem1, IntPtr dwItem2);
 
         static void OnProcessExit(object sender, EventArgs e)
         {
+            try
+            {
+                File.Delete("tempbat.bat");
+            }
+            catch (Exception) { }
             Logger.CleanLogs();
+        }
+        public static bool IsAssociated()
+        {
+            return (Registry.CurrentUser.OpenSubKey("Software\\Classes\\.DSLF", false) == null);
+        }
+        public static void Associate()
+        {
+            RegistryKey FileReg = Registry.CurrentUser.CreateSubKey("Software\\Classes\\.DSLF");
+            RegistryKey AppReg = Registry.CurrentUser.CreateSubKey("Software\\Classes\\Applications\\DSLogViewer.exe");
+            RegistryKey AppAssoc = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.DSLF");
+            FileReg.CreateSubKey("DefaultIcon").SetValue("", System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\DSFLIcon.ico"));
+            FileReg.CreateSubKey("PreceivedType").SetValue("", "Text");
+            AppReg.CreateSubKey("shell\\Open\\command").SetValue("", "\"" + Application.ExecutablePath + "\"%1");
+            AppReg.CreateSubKey("shell\\View\\command").SetValue("", "\"" + Application.ExecutablePath + "\"%1");
+            AppReg.CreateSubKey("DefaultIcon").SetValue("", System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\DSFLIcon.ico"));
+            AppAssoc.CreateSubKey("UserChoice").SetValue("Progid", "Applications\\DSLogViewer");
+            SHChangeNotify(0x000000, 0x0000, IntPtr.Zero, IntPtr.Zero);
         }
         public static void SplashWork()
         {
@@ -66,6 +89,11 @@ namespace DuoEditor
             {
                 Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\"+ DateTime.Now.Day +"_"+ DateTime.Now.DayOfWeek + "\\"));
             }
+            if (IsAssociated())
+            {
+                Associate();
+            }
+
             Logger.ProccesLogs();
             Thread.Sleep(3000);
         }
@@ -78,9 +106,10 @@ namespace DuoEditor
             frm.BackgroundImageLayout = ImageLayout.Center;
             frm.Icon = Properties.Resources.SplashIcon;
             frm.ShowInTaskbar = false;
+            Thread.Sleep(20);
             Application.Run(frm);
-           
-          
+       
+
         }
         public static void MainFormStarter()
         {
@@ -121,13 +150,13 @@ namespace DuoEditor
      
         static void Main(string[] args)
         {
+            
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
-
+            var handle = GetConsoleWindow();
+            ShowWindow(handle, SW_HIDE);
             try
             {
                 AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-                var handle = GetConsoleWindow();
-                ShowWindow(handle, SW_HIDE);
                 if (args.Contains("/h"))
                 {
                     ShowWindow(handle, SW_SHOW);
@@ -139,10 +168,7 @@ namespace DuoEditor
             catch (Exception i)
             {
                 Logger.LogEx(i);
-                
-
             }
-
             string ip;
             string GetIP()
             {
@@ -437,7 +463,6 @@ namespace DuoEditor
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
-           
            Logger.Log("Loading DuoServer Alpha 1.3 DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
@@ -447,15 +472,16 @@ namespace DuoEditor
            Logger.Log(_port + " : Server Thread Started Succsesfully");
                 Thread childThread = new Thread(childref);
                 childThread.Start();
-
                 void CallToChildThread()
                 {
                Logger.Log(_port + " : Input Thread Started");
-                    
                     while (1 == 1)
                     {
-
-                       
+                        do
+                        {
+                            HideConsole();
+                            PublicFuncs.shwn = false;
+                        } while (Console.ReadKey(true).Key == ConsoleKey.Insert);
                         string _input()
                         {
                            return Console.ReadLine();
@@ -495,7 +521,6 @@ namespace DuoEditor
                             Console.Write("->Enter a port: ");
                             int _port = Convert.ToInt32(Console.ReadLine());
                             PublicFuncs.Host(dir,_port);
-                           
                         }
                         else if (input == "cleanlogbunk")
                         {
@@ -523,14 +548,9 @@ namespace DuoEditor
                         {
                             Logger.Log("Not a Command. Check case sensitivity");
                         } 
-                        
-
                     }
-
-
                 }
             }
-
             public string Ip = PublicFuncs.CleanIp;
         }
 

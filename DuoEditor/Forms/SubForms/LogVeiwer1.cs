@@ -33,7 +33,7 @@ namespace DuoEditor.Forms.SubForms
                 HTMLCodeTextBox1.Clear();
                 using (StreamReader sr = new StreamReader(openfile.FileName))
                 {
-                    HTMLCodeTextBox1.Text = DSLogVeiwer.Encryption.Decrypt(sr.ReadToEnd());
+                    HTMLCodeTextBox1.Text = DuoEditor.Encryption.Decrypt(sr.ReadToEnd());
                     sr.Close();
                 }
                 
@@ -51,7 +51,7 @@ namespace DuoEditor.Forms.SubForms
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter txtoutput = new StreamWriter(savefile.FileName);
-                txtoutput.Write(DSLogVeiwer.Encryption.Encrypt(HTMLCodeTextBox1.Text));
+                txtoutput.Write(DuoEditor.Encryption.Encrypt(HTMLCodeTextBox1.Text));
                 txtoutput.Close();
             }
         }
