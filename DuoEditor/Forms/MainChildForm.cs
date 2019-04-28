@@ -25,6 +25,10 @@ namespace DuoEditor
     /// </summary>
     public partial class MainChildForm : Form
     {
+        #region Vars
+        string Filename;
+        string SafeFilename;
+        #endregion
         private TabControl tabCtrl;
         private TabPage tabPag;
         public TabPage TabPag
@@ -56,16 +60,14 @@ namespace DuoEditor
                 tabCtrl = value;
             }
         }
-        public MainChildForm()
+      public static string ReceivedFileName;
+        public MainChildForm(string filename)
         {
             InitializeComponent();
-
+            ReceivedFileName = filename;
 
         }
-        #region Vars
-        string Filename;
-        string SafeFilename;
-#endregion
+   
 
         private void MainChildForm_Load(object sender, EventArgs e)
         {
@@ -76,7 +78,7 @@ namespace DuoEditor
             ///This Code below loads the highlighting config to the HTMLCodeTextBox1
             HTMLCodeTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "/Files/htmlDesc.xml");
             ///This Code below Adds The Dummy Text To The HTMLCodeTextBox1
-            HTMLCodeTextBox1.Text = "<! DuoEditor Version Alpha 1.3 \n Credits: Main Tasks Then Credits>";
+            HTMLCodeTextBox1.Text = "<! DuoEditor Version Alpha "+PublicFuncs.APPVERSION+" \n Credits: Main Tasks Then Credits>";
             ///This Code below Assigns The DocumentMap1 To The HTMLCodeTextBox1
             documentMap1.Target = HTMLCodeTextBox1;
             ///This Code below Disables WebBrowsers Script Errors
@@ -88,6 +90,19 @@ namespace DuoEditor
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\n" + " Form Report: A Child Form was launched" + "\n");
             Console.ResetColor();
+            if (ReceivedFileName != null)
+            {
+
+                using (StreamReader sr = new StreamReader(ReceivedFileName))
+                {
+                    HTMLCodeTextBox1.Text = sr.ReadToEnd();
+                    sr.Close();
+                }
+                Filename = ReceivedFileName;
+                SafeFilename = "/" + Path.GetFileName(Filename);
+                URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
+                this.NormalVeiwWB.Navigate(URLTextBox1.Text);
+            }
         }
 
 

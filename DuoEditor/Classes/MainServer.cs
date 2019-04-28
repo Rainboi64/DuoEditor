@@ -163,7 +163,7 @@ namespace DuoEditor
 
                 }
                 FormStarter();
-                Console.Title = "DuoServer Alpha 1.3 DE Edition";
+                Console.Title = "DuoServer Alpha "+PublicFuncs.APPVERSION+" DE Edition";
             }
             catch (Exception i)
             {
@@ -191,7 +191,7 @@ namespace DuoEditor
                     catch (Exception i)
                     {
                         
-                   Logger.Log(" DuoServer Alpha 1.3 DE Edition" +
+                   Logger.Log(" DuoServer Alpha "+PublicFuncs.APPVERSION+" DE Edition" +
                        " \n Looks like there was an error proccesing your arguments " +
                        "\n This is some help..........." +
                        "\n The First space is used to specify the file that is wanted to be hosted" +
@@ -236,7 +236,7 @@ namespace DuoEditor
             }
             catch (Exception i) {
              
-                Logger.Log(" DuoServer Alpha 1.3 DE Edition" +
+                Logger.Log(" DuoServer Alpha "+PublicFuncs.APPVERSION+" DE Edition" +
   " \n Looks like there was an error proccesing your arguments " +
   "\n This is some help..........." +
   "\n The First space is used to specify the file that is wanted to be hosted" +
@@ -463,7 +463,7 @@ namespace DuoEditor
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
-           Logger.Log("Loading DuoServer Alpha 1.3 DE Edition\n");
+           Logger.Log("Loading DuoServer Alpha "+PublicFuncs.APPVERSION+"+DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
            Logger.Log(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);

@@ -17,7 +17,7 @@ namespace DuoEditor
      
     public partial class MainForm : Form
     {
-
+        public static string WORKINGFILENAME =Path.Combine( Path.GetDirectoryName(Application.ExecutablePath)+"\\www\\");
         int WindowCount = 0;
 
         int JSWindowCount = 0;
@@ -38,7 +38,7 @@ namespace DuoEditor
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {   // User clicked 'X' button
-                var x = MessageBox.Show("Do you really want to exit?","DuoEditor 1.3",MessageBoxButtons.YesNo);
+                var x = MessageBox.Show("Do you really want to exit?","DuoEditor "+PublicFuncs.APPVERSION,MessageBoxButtons.YesNo);
                 if (x == DialogResult.Yes)
                 {
                     Environment.Exit(1);
@@ -82,10 +82,11 @@ namespace DuoEditor
             }
         private void MainForm_Load(object sender, EventArgs e)
         {
-         
+        
+            ListDirectory(treeView1,WORKINGFILENAME);
             WindowCount++;
             Form childForm = new Form();
-            MainChildForm newMDIChild = new MainChildForm();
+            MainChildForm newMDIChild = new MainChildForm(null);
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
@@ -106,7 +107,39 @@ namespace DuoEditor
             tabForms.SelectedTab = tp;
 
         }
+        ImageList myImageList = new ImageList();
+        Icon icon = DuoEditor.Properties.Resources.FileIcon;
+        private void ListDirectory(TreeView treeView, string Path)
+        {
+            treeView.Nodes.Clear();
+            var rootDirectoryInfo = new DirectoryInfo(Path);
+          var  _ = treeView.Nodes.Add(this.CreateDirectoryNode(rootDirectoryInfo));
+            myImageList.Images.Add(icon);
+            treeView.ImageList = myImageList;
+        }
+    
+        private TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
+        {
+         
+            myImageList.Images.Clear();
+            var directorynode = new TreeNode(directoryInfo.Name);
+            foreach (var directory in directoryInfo.GetDirectories())
+            {
+              var _directorynode = directorynode.Nodes.Add(CreateDirectoryNode(directory));
+                string filename = directory.FullName;
+     
+    
+            }
+            foreach (var file in directoryInfo.GetFiles())
+            {
+                string filename = file.FullName;
+                Icon _icon = System.Drawing.Icon.ExtractAssociatedIcon(filename);
+                directorynode.Nodes.Add(new TreeNode(file.Name));
 
+            }
+
+            return directorynode;
+        }
      
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -167,7 +200,7 @@ namespace DuoEditor
         {
             WindowCount++;
             Form childForm = new Form();
-            MainChildForm newMDIChild = new MainChildForm();
+            MainChildForm newMDIChild = new MainChildForm(null);
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
@@ -192,8 +225,7 @@ namespace DuoEditor
         {
             {
                 foreach (Form frm in this.MdiChildren)
-                {
-                    if (frm != Parent)
+                {                    if (frm != Parent)
                     {
                         frm.Close();
                     }
@@ -293,7 +325,7 @@ namespace DuoEditor
         {
             JSWindowCount++;
             Form childForm = new Form();
-            Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor();
+            Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(null);
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
@@ -312,6 +344,63 @@ namespace DuoEditor
 
             //Activate the newly created Tabpage
             tabForms.SelectedTab = tp;
+        }
+
+        private void TreeView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                string TreeNodeNameAndParents = treeView1.SelectedNode.FullPath;
+                if (System.IO.Path.GetExtension(TreeNodeNameAndParents) == ".js")
+                {
+                    JSWindowCount++;
+                    Form childForm = new Form();
+                    Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(Path.Combine(TreeNodeNameAndParents));
+                    // Set the Parent Form of the Child window.  
+                    newMDIChild.MdiParent = this;
+                    // Display the new form.  
+                    newMDIChild.Show();
+                    newMDIChild.TabCtrl = tabForms;
+                    newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+                    //Add a Tabpage and enables it
+                    TabPage tp = new TabPage();
+                    tp.Parent = tabForms;
+                    tp.Text = newMDIChild.Text;
+                    tp.Show();
+
+                    //child Form will now hold a reference value to a tabpage
+                    newMDIChild.TabPag = tp;
+
+
+                    //Activate the newly created Tabpage
+                    tabForms.SelectedTab = tp;
+                }
+                else if (System.IO.Path.GetExtension(TreeNodeNameAndParents) == ".html")
+                {
+                    WindowCount++;
+                    Form childForm = new Form();
+                    MainChildForm newMDIChild = new MainChildForm(Path.Combine(TreeNodeNameAndParents));
+                    // Set the Parent Form of the Child window.  
+                    newMDIChild.MdiParent = this;
+                    // Display the new form.  
+                    newMDIChild.Show();
+                    newMDIChild.TabCtrl = tabForms;
+                    newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                    //Add a Tabpage and enables it
+                    TabPage tp = new TabPage();
+                    tp.Parent = tabForms;
+                    tp.Text = newMDIChild.Text;
+                    tp.Show();
+
+                    //child Form will now hold a reference value to a tabpage
+                    newMDIChild.TabPag = tp;
+
+
+                    //Activate the newly created Tabpage
+                    tabForms.SelectedTab = tp;
+                }
+            }
+            catch (Exception) { }
         }
     }
 

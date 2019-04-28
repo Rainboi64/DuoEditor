@@ -18,8 +18,8 @@ namespace DuoEditor.Forms
         Process DebugProcces;
         Process NodeProcess;
         Process CMDProcess;
-        string RequsterPath = System.IO.Path.Combine(Application.StartupPath + "\\NodeRequester.exe");
-        string CMDPath = System.IO.Path.Combine(Application.StartupPath + "\\CMDRequester.exe");
+        string RequsterPath = System.IO.Path.Combine(Application.StartupPath + "\\Requester.exe");
+        string CMDPath = System.IO.Path.Combine(Application.StartupPath + "\\Requester.exe");
         private TabControl tabCtrl;
         private TabPage tabPag;
         bool CreatedFirstPanel = false;
@@ -39,11 +39,20 @@ namespace DuoEditor.Forms
         private void ActiveMdiChild_FormClosed(object sender,
                                     FormClosedEventArgs e)
         {
-            CMDProcess.Kill();
-            NodeProcess.Kill();
-            DebugProcces.Kill();
-            this.tabPag.Dispose();
-
+            try
+            {
+                CMDProcess.Kill();
+                NodeProcess.Kill();
+                DebugProcces.Kill();
+                this.tabPag.Dispose();
+            }
+            catch (Exception)
+            {
+                if (!tabCtrl.HasChildren)
+                {
+                    tabCtrl.Visible = false;
+                }
+            }
             //If no Tabpage left
             if (!tabCtrl.HasChildren)
             {
@@ -57,9 +66,18 @@ namespace DuoEditor.Forms
                 tabCtrl = value;
             }
         }
-        public MainJSEditor()
+        public MainJSEditor(string filename)
         {
             InitializeComponent();
+            if (filename != null)
+            {
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    fastColoredTextBox1.Text = sr.ReadToEnd();
+                    sr.Close();
+                }
+                SafeFileName = filename;
+            }
         }
         [DllImport("user32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -81,6 +99,7 @@ namespace DuoEditor.Forms
                 NodeProcess = Process.Start(new ProcessStartInfo()
                 {
                     FileName =RequsterPath,
+                    Arguments = ("node"),
                     WindowStyle = ProcessWindowStyle.Minimized
                 });
                 Thread.Sleep(500);
@@ -101,18 +120,18 @@ namespace DuoEditor.Forms
 
         private void SplitContainer6_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWNORMAL);
-            ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWNORMAL);
             try
             {
+                ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWNORMAL);
+            ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWNORMAL);
                 ShowWindowAsync(DebugProcces.MainWindowHandle, SW_SHOWNORMAL);
             }
             catch (Exception) { }
             Thread.Sleep(100);
-            ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
-            ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
             try
             {
+                ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
+            ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
                 ShowWindowAsync(DebugProcces.MainWindowHandle, SW_SHOWMAXIMIZED);
             }
             catch(Exception) { }
@@ -126,9 +145,10 @@ namespace DuoEditor.Forms
                 CMDProcess = Process.Start(new ProcessStartInfo()
                 {
                     FileName = CMDPath,
+                    Arguments = ("cmd"),
                     WindowStyle = ProcessWindowStyle.Minimized
                 });
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 SetParent(CMDProcess.MainWindowHandle, splitContainer6.Panel2.Handle);
                 ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
             }
@@ -141,12 +161,14 @@ namespace DuoEditor.Forms
             SaveFileDialog savefile = new SaveFileDialog();
             savefile.Title = "Save file as..";
             savefile.Filter = "JavaScript File|*.js|All Files|*.*";
+            savefile.InitialDirectory = "www\\";
 
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter txtoutput = new StreamWriter(savefile.FileName);
                 txtoutput.Write(fastColoredTextBox1.Text);
                 txtoutput.Close();
+                SafeFileName = savefile.FileName;
             }
         }
 
@@ -182,7 +204,7 @@ namespace DuoEditor.Forms
                 SaveFileDialog savefile = new SaveFileDialog();
                 savefile.Title = "Save file as..";
                 savefile.Filter = "JavaScript File|*.js|All Files|*.*";
-
+                savefile.InitialDirectory = "www\\";
                 if (savefile.ShowDialog() == DialogResult.OK)
                 {
                     StreamWriter txtoutput = new StreamWriter(savefile.FileName);
@@ -190,7 +212,7 @@ namespace DuoEditor.Forms
                     txtoutput.Close();
                     SafeFileName = savefile.FileName;
                 }
-
+               
             }
             else
             {
@@ -198,17 +220,10 @@ namespace DuoEditor.Forms
                 txtoutput.Write(fastColoredTextBox1.Text);
                 txtoutput.Close();
             }
-            System.IO.StreamWriter _txtoutput = new System.IO.StreamWriter("tempbat.bat");
-            _txtoutput.Write("@echo off" +
-                "\n cd www" +
-                "\n title Node Debug (Ported) " +
-                "\n node " + SafeFileName +
-                "\n echo End Of File Reached.." +
-                "\n pause");
-            _txtoutput.Close();
             DebugProcces = Process.Start(new ProcessStartInfo()
             {
-                FileName = "tempbat.bat",
+                FileName = "Requester",
+                Arguments = "node " + SafeFileName + " " + "1200",
                 WindowStyle = ProcessWindowStyle.Minimized
             });
             Thread.Sleep(1000);
@@ -220,7 +235,9 @@ namespace DuoEditor.Forms
         {
             OpenFileDialog openfile = new OpenFileDialog();
             openfile.Title = "Open File";
-            openfile.Filter = "HTML|*.html|All Files|*.*";
+            openfile.Filter = "JavaScript File|*.js|All Files|*.*";
+            openfile.InitialDirectory = "www\\";
+
             if (openfile.ShowDialog() == DialogResult.OK)
             {
                 fastColoredTextBox1.Clear();
@@ -237,6 +254,115 @@ namespace DuoEditor.Forms
         {
             SafeFileName = null;
             fastColoredTextBox1.Clear();
+        }
+
+        private void SdaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void foldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            fastColoredTextBox1.CollapseBlock(fastColoredTextBox1.Selection.Start.iLine,
+              fastColoredTextBox1.Selection.End.iLine);
+
+        }
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Redo();
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.SelectAll();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Copy();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Cut();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Paste();
+        }
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.ShowFindDialog();
+        }
+
+        private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.ShowReplaceDialog();
+        }
+
+        private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Zoom = fastColoredTextBox1.Zoom + 10;
+        }
+
+        private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Zoom = fastColoredTextBox1.Zoom - 10;
+        }
+
+        private void PrintToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fastColoredTextBox1.Print();
+        }
+
+        private void PrintPreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void EnableNodeJSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enableNodeJSToolStripMenuItem.Checked == true)
+            {
+                splitContainer1.Panel2Collapsed = true;
+                enableNodeJSToolStripMenuItem.Checked = false;
+            }
+            else
+            {
+                splitContainer1.Panel2Collapsed = false;
+                enableNodeJSToolStripMenuItem.Checked = true;
+            
+            }
+        }
+
+        private void SplitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            try
+            {
+                ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWNORMAL);
+                ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWNORMAL);
+                ShowWindowAsync(DebugProcces.MainWindowHandle, SW_SHOWNORMAL);
+            }
+            catch (Exception) { }
+            Thread.Sleep(100);
+            try
+            {
+                ShowWindowAsync(NodeProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
+                ShowWindowAsync(CMDProcess.MainWindowHandle, SW_SHOWMAXIMIZED);
+                ShowWindowAsync(DebugProcces.MainWindowHandle, SW_SHOWMAXIMIZED);
+            }
+            catch (Exception) { }
         }
     }
 }

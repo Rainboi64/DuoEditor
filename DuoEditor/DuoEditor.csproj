@@ -234,6 +234,7 @@
   <ItemGroup>
     <Content Include="FormatFactoryDuologoblackback.ico" />
     <Content Include="FormatFactoryDuologoNoBack.ico" />
+    <None Include="Resources\Icon1.ico" />
     <None Include="Resources\Untitled.png" />
     <None Include="Resources\DuologoNoBack.png" />
   </ItemGroup>

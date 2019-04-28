@@ -655,7 +655,6 @@
             this.HTMLCodeTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.HTMLCodeTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.HTMLCodeTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HTMLCodeTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.HTMLCodeTextBox1.HighlightingRangeType = FastColoredTextBoxNS.HighlightingRangeType.AllTextRange;
             this.HTMLCodeTextBox1.IsReplaceMode = false;
             this.HTMLCodeTextBox1.Location = new System.Drawing.Point(0, 0);
@@ -1116,7 +1115,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainChildForm";
             this.ShowIcon = false;
-            this.Text = "DuoEditor Child";
+            this.Text = "HTML Editor ";
             this.Activated += new System.EventHandler(this.MainChildForm_Activated);
             this.Deactivate += new System.EventHandler(this.MainChildForm_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ActiveMdiChild_FormClosed);

@@ -33,6 +33,7 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newJavaScriptEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVeritcalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,9 @@
             this.logsVeiwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsVeiwerLiveConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newJavaScriptEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.newJavaScriptEditorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -90,11 +93,16 @@
             // newWindowToolStripMenuItem
             // 
             this.newWindowToolStripMenuItem.Name = "newWindowToolStripMenuItem";
-            this.newWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.N)));
             this.newWindowToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.newWindowToolStripMenuItem.Text = "New Window";
+            this.newWindowToolStripMenuItem.Text = "New HTML Editor";
             this.newWindowToolStripMenuItem.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
+            // 
+            // newJavaScriptEditorToolStripMenuItem
+            // 
+            this.newJavaScriptEditorToolStripMenuItem.Name = "newJavaScriptEditorToolStripMenuItem";
+            this.newJavaScriptEditorToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.newJavaScriptEditorToolStripMenuItem.Text = "New JavaScript Editor";
+            this.newJavaScriptEditorToolStripMenuItem.Click += new System.EventHandler(this.NewJavaScriptEditorToolStripMenuItem_Click);
             // 
             // cascadeToolStripMenuItem
             // 
@@ -241,22 +249,21 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newWindowToolStripMenuItem1,
+            this.newJavaScriptEditorToolStripMenuItem1,
             this.newServerToolStripMenuItem,
             this.showConsoleToolStripMenuItem,
             this.logsVeiwerToolStripMenuItem,
             this.logsVeiwerLiveConsoleToolStripMenuItem,
             this.clearLogsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 158);
             this.contextMenuStrip1.Text = "DuoEditor Parent";
             // 
             // newWindowToolStripMenuItem1
             // 
             this.newWindowToolStripMenuItem1.Name = "newWindowToolStripMenuItem1";
-            this.newWindowToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.N)));
             this.newWindowToolStripMenuItem1.Size = new System.Drawing.Size(214, 22);
-            this.newWindowToolStripMenuItem1.Text = "New Window";
+            this.newWindowToolStripMenuItem1.Text = "New HTML Editor";
             this.newWindowToolStripMenuItem1.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // newServerToolStripMenuItem
@@ -295,12 +302,29 @@
             this.clearLogsToolStripMenuItem.Text = "Export Logs";
             this.clearLogsToolStripMenuItem.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
             // 
-            // newJavaScriptEditorToolStripMenuItem
+            // treeView1
             // 
-            this.newJavaScriptEditorToolStripMenuItem.Name = "newJavaScriptEditorToolStripMenuItem";
-            this.newJavaScriptEditorToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.newJavaScriptEditorToolStripMenuItem.Text = "New JavaScript Editor";
-            this.newJavaScriptEditorToolStripMenuItem.Click += new System.EventHandler(this.NewJavaScriptEditorToolStripMenuItem_Click);
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.treeView1.Location = new System.Drawing.Point(1693, 69);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(151, 787);
+            this.treeView1.TabIndex = 6;
+            this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TreeView1_MouseDoubleClick);
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter1.Location = new System.Drawing.Point(1690, 69);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 787);
+            this.splitter1.TabIndex = 7;
+            this.splitter1.TabStop = false;
+            // 
+            // newJavaScriptEditorToolStripMenuItem1
+            // 
+            this.newJavaScriptEditorToolStripMenuItem1.Name = "newJavaScriptEditorToolStripMenuItem1";
+            this.newJavaScriptEditorToolStripMenuItem1.Size = new System.Drawing.Size(214, 22);
+            this.newJavaScriptEditorToolStripMenuItem1.Text = "New JavaScript Editor";
             // 
             // MainForm
             // 
@@ -309,6 +333,8 @@
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(1844, 856);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.tabForms);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
@@ -360,6 +386,9 @@
         private System.Windows.Forms.ToolStripMenuItem logsVeiwerLiveConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newJavaScriptEditorToolStripMenuItem;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.ToolStripMenuItem newJavaScriptEditorToolStripMenuItem1;
     }
 }
 
