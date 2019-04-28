@@ -463,7 +463,7 @@ namespace DuoEditor
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
-           Logger.Log("Loading DuoServer Alpha "+PublicFuncs.APPVERSION+"+DE Edition\n");
+           Logger.Log("Loading DuoServer Alpha "+PublicFuncs.APPVERSION+" DE Edition\n");
                 this._rootDirectory = path;
                 this._port = port;
            Logger.Log(_port + " : Server Starting with parameters: " + _port + " " + _rootDirectory);
@@ -471,17 +471,26 @@ namespace DuoEditor
                 _serverThread.Start();
            Logger.Log(_port + " : Server Thread Started Succsesfully");
                 Thread childThread = new Thread(childref);
+                Thread insertThread = new Thread(w84insert);
                 childThread.Start();
+                insertThread.Start();
+                void w84insert()
+                {
+                    while (true)
+                    {
+                        while (Console.ReadKey(true).Key == ConsoleKey.Insert) 
+                        {
+                            HideConsole();
+                            PublicFuncs.shwn = false;
+                        }
+                    }
+                }
                 void CallToChildThread()
                 {
                Logger.Log(_port + " : Input Thread Started");
                     while (1 == 1)
                     {
-                        do
-                        {
-                            HideConsole();
-                            PublicFuncs.shwn = false;
-                        } while (Console.ReadKey(true).Key == ConsoleKey.Insert);
+           
                         string _input()
                         {
                            return Console.ReadLine();
