@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{38BDD688-8D50-4E89-8148-5EF3C98F2AE8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>DuoEditor</RootNamespace>
     <AssemblyName>DuoEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -45,6 +45,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConsoleControl, Version=1.2.1.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleControl.1.2.1\lib\net40-client\ConsoleControl.dll</HintPath>
+    </Reference>
+    <Reference Include="ConsoleControlAPI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=7c86b8a36b9c33e2, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConsoleControlAPI.1.2.1\lib\net40\ConsoleControlAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DuoServerLib">
+      <HintPath>C:\Users\Yaman\source\repos\DuoServerLib\DuoServerLib\bin\Debug\netstandard2.0\DuoServerLib.dll</HintPath>
+    </Reference>
     <Reference Include="FastColoredTextBox">
       <HintPath>..\..\..\..\DSold\DuoEditor\DuoEditor\bin\Debug\FastColoredTextBox.dll</HintPath>
     </Reference>
@@ -88,6 +97,12 @@
   <ItemGroup>
     <Compile Include="Classes\Sides\Encrypt.cs" />
     <Compile Include="Classes\Sides\JsonWorkers.cs" />
+    <Compile Include="Forms\MainCSSEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainCSSEditor.Designer.cs">
+      <DependentUpon>MainCSSEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainChildForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,54 +128,73 @@
     <Compile Include="Forms\SubForms\BarCodeForm1.Designer.cs">
       <DependentUpon>BarCodeForm1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\FrameInserter.cs">
+    <Compile Include="Forms\SubForms\Inserters\FrameInserter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\FrameInserter.Designer.cs">
+    <Compile Include="Forms\SubForms\Inserters\FrameInserter.Designer.cs">
       <DependentUpon>FrameInserter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\HeaderInserter.cs">
+    <Compile Include="Forms\SubForms\Inserters\HeaderInserter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\HeaderInserter.Designer.cs">
+    <Compile Include="Forms\SubForms\Inserters\HeaderInserter.Designer.cs">
       <DependentUpon>HeaderInserter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\HyperLinkInserter.cs">
+    <Compile Include="Forms\SubForms\Inserters\HyperLinkInserter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\HyperLinkInserter.Designer.cs">
+    <Compile Include="Forms\SubForms\Inserters\HyperLinkInserter.Designer.cs">
       <DependentUpon>HyperLinkInserter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\ImageInserter.cs">
+    <Compile Include="Forms\SubForms\Inserters\ImageInserter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\ImageInserter.Designer.cs">
+    <Compile Include="Forms\SubForms\Inserters\ImageInserter.Designer.cs">
       <DependentUpon>ImageInserter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\LogVeiwer1.cs">
+    <Compile Include="Forms\SubForms\LogViewers\LogVeiwer1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\LogVeiwer1.Designer.cs">
+    <Compile Include="Forms\SubForms\LogViewers\LogVeiwer1.Designer.cs">
       <DependentUpon>LogVeiwer1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\LogViewer2.cs">
+    <Compile Include="Forms\SubForms\LogViewers\LogViewer2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\LogViewer2.Designer.cs">
+    <Compile Include="Forms\SubForms\LogViewers\LogViewer2.Designer.cs">
       <DependentUpon>LogViewer2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SubForms\ParagraphInserter.cs">
+    <Compile Include="Forms\SubForms\Inserters\ParagraphInserter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SubForms\ParagraphInserter.Designer.cs">
+    <Compile Include="Forms\SubForms\Inserters\ParagraphInserter.Designer.cs">
       <DependentUpon>ParagraphInserter.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Sides\Logger.cs" />
+    <Compile Include="Forms\MainBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainBrowserForm.Designer.cs">
+      <DependentUpon>MainBrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SubForms\OptionDialogs\MainConfigs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\OptionDialogs\MainConfigs.Designer.cs">
+      <DependentUpon>MainConfigs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Sides\PublicFuncs.cs" />
+    <Compile Include="Classes\Settings.cs" />
+    <EmbeddedResource Include="Forms\MainBrowserForm.resx">
+      <DependentUpon>MainBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainChildForm.resx">
       <DependentUpon>MainChildForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainCSSEditor.resx">
+      <DependentUpon>MainCSSEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -171,26 +205,29 @@
     <EmbeddedResource Include="Forms\SubForms\BarCodeForm1.resx">
       <DependentUpon>BarCodeForm1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\FrameInserter.resx">
+    <EmbeddedResource Include="Forms\SubForms\Inserters\FrameInserter.resx">
       <DependentUpon>FrameInserter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\HeaderInserter.resx">
+    <EmbeddedResource Include="Forms\SubForms\Inserters\HeaderInserter.resx">
       <DependentUpon>HeaderInserter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\HyperLinkInserter.resx">
+    <EmbeddedResource Include="Forms\SubForms\Inserters\HyperLinkInserter.resx">
       <DependentUpon>HyperLinkInserter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\ImageInserter.resx">
+    <EmbeddedResource Include="Forms\SubForms\Inserters\ImageInserter.resx">
       <DependentUpon>ImageInserter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\LogVeiwer1.resx">
+    <EmbeddedResource Include="Forms\SubForms\LogViewers\LogVeiwer1.resx">
       <DependentUpon>LogVeiwer1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\LogViewer2.resx">
+    <EmbeddedResource Include="Forms\SubForms\LogViewers\LogViewer2.resx">
       <DependentUpon>LogViewer2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SubForms\ParagraphInserter.resx">
+    <EmbeddedResource Include="Forms\SubForms\Inserters\ParagraphInserter.resx">
       <DependentUpon>ParagraphInserter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\OptionDialogs\MainConfigs.resx">
+      <DependentUpon>MainConfigs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -230,8 +267,14 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="C:\Users\Yaman\source\repos\DuoDatabase\DuoDatabase\DuoDatabase.csproj">
+      <Project>{2d12183b-7054-4061-b169-4029db4ed5d0}</Project>
+      <Name>DuoDatabase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Console.ico" />
     <Content Include="FormatFactoryDuologoblackback.ico" />
     <Content Include="FormatFactoryDuologoNoBack.ico" />
     <None Include="Resources\Icon1.ico" />

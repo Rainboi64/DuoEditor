@@ -45,7 +45,14 @@ namespace DuoEditor
         private void ActiveMdiChild_FormClosed(object sender,
                                     FormClosedEventArgs e)
         {
-            this.tabPag.Dispose();
+
+            try
+            {
+                DuoDatabase.WRITE.CreateData(Filename, "\\LastOpened\\", "MainChildForm");
+            }
+            catch (Exception)
+            {
+            }            this.tabPag.Dispose();
 
             //If no Tabpage left
             if (!tabCtrl.HasChildren)
@@ -92,7 +99,7 @@ namespace DuoEditor
             Console.ResetColor();
             if (ReceivedFileName != null)
             {
-
+                Thread.Sleep(500);
                 using (StreamReader sr = new StreamReader(ReceivedFileName))
                 {
                     HTMLCodeTextBox1.Text = sr.ReadToEnd();
@@ -131,7 +138,7 @@ namespace DuoEditor
                 if (Filename == null)
                 {
                     string safefileName = Interaction.InputBox("Choose file name", "Save", "File", -1, -1);
-                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\" + safefileName + ".html");
+                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\"+Settings.StartDirectory+"\\" + safefileName + ".html");
                     if (!(safefileName == "")) { 
                     StreamWriter txtoutput = new StreamWriter(savefile);
                     txtoutput.Write(HTMLCodeTextBox1.Text);
@@ -607,6 +614,16 @@ namespace DuoEditor
         private void HideWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
+        }
+
+        private void HTMLCodeTextBox1_TextChangedDelayed(object sender, TextChangedEventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void HTMLCodeTextBox1_TextChanging(object sender, TextChangingEventArgs e)
+        {
+            timer1.Stop();
         }
     }
 }

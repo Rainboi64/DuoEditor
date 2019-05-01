@@ -23,7 +23,6 @@ namespace DuoEditor
         public static string ViewLogfile() => ViewLogfileWorker();
         public static void LogEx(Exception LogDetail) => LogExWorker(LogDetail);
         public static void DoSaveLogs() => DoSaveLogsWorker();
-
         private static string LogBunk;
         private static void LogExWorker(Exception LogDetail_)
         {

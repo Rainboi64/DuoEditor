@@ -36,9 +36,15 @@ namespace DuoEditor.Forms
                 tabPag = value;
             }
         }
-        private void ActiveMdiChild_FormClosed(object sender,
-                                    FormClosedEventArgs e)
+        private void ActiveMdiChild_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
+                DuoDatabase.WRITE.CreateData(SafeFileName, "\\LastOpened\\", "MainJSEditor");
+            }
+            catch (Exception)
+            {
+            }
             try
             {
                 CMDProcess.Kill();
@@ -161,7 +167,7 @@ namespace DuoEditor.Forms
             SaveFileDialog savefile = new SaveFileDialog();
             savefile.Title = "Save file as..";
             savefile.Filter = "JavaScript File|*.js|All Files|*.*";
-            savefile.InitialDirectory = "www\\";
+            savefile.InitialDirectory = Settings.StartDirectory+"\\";
 
             if (savefile.ShowDialog() == DialogResult.OK)
             {
@@ -204,7 +210,7 @@ namespace DuoEditor.Forms
                 SaveFileDialog savefile = new SaveFileDialog();
                 savefile.Title = "Save file as..";
                 savefile.Filter = "JavaScript File|*.js|All Files|*.*";
-                savefile.InitialDirectory = "www\\";
+                savefile.InitialDirectory = Settings.StartDirectory+"\\";
                 if (savefile.ShowDialog() == DialogResult.OK)
                 {
                     StreamWriter txtoutput = new StreamWriter(savefile.FileName);
@@ -236,7 +242,7 @@ namespace DuoEditor.Forms
             OpenFileDialog openfile = new OpenFileDialog();
             openfile.Title = "Open File";
             openfile.Filter = "JavaScript File|*.js|All Files|*.*";
-            openfile.InitialDirectory = "www\\";
+            openfile.InitialDirectory = Settings.StartDirectory+"\\";
 
             if (openfile.ShowDialog() == DialogResult.OK)
             {

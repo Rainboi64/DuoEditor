@@ -15,6 +15,7 @@ namespace DuoEditor
         public static string APPVERSION = "0.1.3";
         public static string ip { get; set; }
         public static string CleanIp { get; set; }
+        public static string port { get; set; }
         public static void Host(string Dir, int Port) => HostWorker(Dir,Port);
 
         public static bool shwn = false;
@@ -24,7 +25,7 @@ namespace DuoEditor
 
         private static void HostWorker(string Dir_,int Port_)
         {
-            MainServer.SimpleHTTPServer MS = new MainServer.SimpleHTTPServer(Dir_, Port_);
+            DuoServerLib.Serve.HTTPServer hTTPServer = new DuoServerLib.Serve.HTTPServer(Dir_, Port_);
         }
         
       

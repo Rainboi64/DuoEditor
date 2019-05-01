@@ -666,6 +666,8 @@
             this.HTMLCodeTextBox1.TabIndex = 6;
             this.HTMLCodeTextBox1.Zoom = 100;
             this.HTMLCodeTextBox1.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.richTextBox31_TextChanged);
+            this.HTMLCodeTextBox1.TextChanging += new System.EventHandler<FastColoredTextBoxNS.TextChangingEventArgs>(this.HTMLCodeTextBox1_TextChanging);
+            this.HTMLCodeTextBox1.TextChangedDelayed += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.HTMLCodeTextBox1_TextChangedDelayed);
             this.HTMLCodeTextBox1.Load += new System.EventHandler(this.HTMLCodeTextBox1_Load);
             // 
             // contextMenuStrip1

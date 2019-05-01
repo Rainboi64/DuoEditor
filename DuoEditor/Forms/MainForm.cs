@@ -17,7 +17,7 @@ namespace DuoEditor
      
     public partial class MainForm : Form
     {
-        public static string WORKINGFILENAME =Path.Combine( Path.GetDirectoryName(Application.ExecutablePath)+"\\www\\");
+        public static string WORKINGFILENAME =Path.Combine( Path.GetDirectoryName(Application.ExecutablePath)+"\\"+Settings.StartDirectory+"\\");
         int WindowCount = 0;
 
         int JSWindowCount = 0;
@@ -47,7 +47,22 @@ namespace DuoEditor
         }
         private void tabControl1_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-
+            try
+            {
+                foreach (MainBrowserForm childForm in this.MdiChildren.OfType<MainBrowserForm>())
+                {
+                    //Check for its corresponding MDI child form
+                    if (childForm.TabPag.Equals(tabForms.SelectedTab))
+                    {
+                        //Activate the MDI child form
+                        childForm.Select();
+                        
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
             try
             {
                 foreach (Forms.MainJSEditor childForm in this.MdiChildren.OfType<Forms.MainJSEditor>())
@@ -82,30 +97,61 @@ namespace DuoEditor
             }
         private void MainForm_Load(object sender, EventArgs e)
         {
-        
-            ListDirectory(treeView1,WORKINGFILENAME);
-            WindowCount++;
-            Form childForm = new Form();
-            MainChildForm newMDIChild = new MainChildForm(null);
-            // Set the Parent Form of the Child window.  
-            newMDIChild.MdiParent = this;
-            // Display the new form.  
-            newMDIChild.Show();
-            newMDIChild.TabCtrl = tabForms;
-            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
-            //Add a Tabpage and enables it
-            TabPage tp = new TabPage();
-            tp.Parent = tabForms;
-            tp.Text = newMDIChild.Text;
-            tp.Show();
+            string ReadData;
+            consoleControl1.StartProcess("DuoServer.exe","");
+            try
+            {
+                ReadData = DuoDatabase.READ.ReadData("\\LastOpened\\", "MainChildForm");
+                ListDirectory(treeView1, WORKINGFILENAME);
+                WindowCount++;
+                Form childForm = new Form();
+                MainChildForm newMDIChild = new MainChildForm(ReadData);
+                // Set the Parent Form of the Child window.  
+                newMDIChild.MdiParent = this;
+                // Display the new form.  
+                newMDIChild.Show();
+                newMDIChild.TabCtrl = tabForms;
+                newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                //Add a Tabpage and enables it 
+                TabPage tp = new TabPage();
+                tp.Parent = tabForms;
+                tp.Text = newMDIChild.Text;
+                tp.Show();
 
-            //child Form will now hold a reference value to a tabpage
-            newMDIChild.TabPag = tp;
+                //child Form will now hold a reference value to a tabpage
+                newMDIChild.TabPag = tp;
 
 
-            //Activate the newly created Tabpage
-            tabForms.SelectedTab = tp;
+                //Activate the newly created Tabpage
+                tabForms.SelectedTab = tp;
 
+            }
+            catch (Exception)
+            {
+                ListDirectory(treeView1, WORKINGFILENAME);
+                WindowCount++;
+                Form childForm = new Form();
+                MainChildForm newMDIChild = new MainChildForm(null);
+                // Set the Parent Form of the Child window.  
+                newMDIChild.MdiParent = this;
+                // Display the new form.  
+                newMDIChild.Show();
+                newMDIChild.TabCtrl = tabForms;
+                newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                //Add a Tabpage and enables it
+                TabPage tp = new TabPage();
+                tp.Parent = tabForms;
+                tp.Text = newMDIChild.Text;
+                tp.Show();
+
+                //child Form will now hold a reference value to a tabpage
+                newMDIChild.TabPag = tp;
+
+
+                //Activate the newly created Tabpage
+                tabForms.SelectedTab = tp;
+
+            }
         }
         ImageList myImageList = new ImageList();
         Icon icon = DuoEditor.Properties.Resources.FileIcon;
@@ -163,8 +209,8 @@ namespace DuoEditor
 
         private void fileSetupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) +"\\www\\") ;
-            string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\uploaded_images");
+           string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) +"\\"+Settings.StartDirectory+"\\") ;
+            string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\"+Settings.StartDirectory+"\\uploaded_images");
             if (!System.IO.Directory.Exists(File1))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -249,10 +295,10 @@ namespace DuoEditor
                     string DSsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Files\\DuoServer\\DuoServer.exe");
                     string DSdestinationPath = System.IO.Path.Combine(fileName + "\\DuoServer.exe");
                     Microsoft.VisualBasic.FileIO.FileSystem.CopyFile(DSsourcePath, DSdestinationPath, UIOption.AllDialogs);
-                    string wwwsourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\www\\"); 
+                    string sourcePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Settings.StartDirectory\\"); 
                     // Choose a destination for the copied files.
-                    string wwwdestinationPath = System.IO.Path.Combine( fileName+ "\\www\\");
-                Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(wwwsourcePath, wwwdestinationPath, UIOption.AllDialogs);
+                    string destinationPath = System.IO.Path.Combine( fileName+ "\\"+Settings.StartDirectory+"\\");
+                Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(sourcePath, destinationPath, UIOption.AllDialogs);
                 count++;
                 MessageBox.Show("Done! Copied To\n " + fileName +" \n Sucsessfully", "Coping Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -262,7 +308,7 @@ namespace DuoEditor
 
         private void newServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server", "www", -1, -1);
+            String Dir = Interaction.InputBox("Enter The Location you want to host", "Host A Server",Settings.StartDirectory, -1, -1);
             try
             {
                 PublicFuncs.Host(Dir, Convert.ToInt32(Interaction.InputBox("Enter The Host Port", "Host A Server", "8080", -1, -1)));
@@ -272,7 +318,7 @@ namespace DuoEditor
         private void ShowHideServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            if (PublicFuncs.shwn == false) { PublicFuncs.shwn = true; MainServer.ShowConsole(); } else { PublicFuncs.shwn = false; MainServer.HideConsole(); }
+
            
         }
         private void EndToolStripMenuItem_Click(object sender, EventArgs e)
@@ -323,9 +369,17 @@ namespace DuoEditor
 
         private void NewJavaScriptEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string FILENAME = null;
+            try
+            {
+              FILENAME = DuoDatabase.READ.ReadData("\\LastOpened\\", "MainJSEditor");
+            }
+            catch (Exception)
+            {
+            }
             JSWindowCount++;
             Form childForm = new Form();
-            Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(null);
+            Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(FILENAME);
             // Set the Parent Form of the Child window.  
             newMDIChild.MdiParent = this;
             // Display the new form.  
@@ -401,6 +455,30 @@ namespace DuoEditor
                 }
             }
             catch (Exception) { }
+        }
+
+        private void NewWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form childForm = new Form();
+            MainBrowserForm newMDIChild = new MainBrowserForm(null);
+            // Set the Parent Form of the Child window.  
+            newMDIChild.MdiParent = this;
+            // Display the new form.  
+            newMDIChild.Show();
+            newMDIChild.TabCtrl = tabForms;
+            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+            //Add a Tabpage and enables it
+            TabPage tp = new TabPage();
+            tp.Parent = tabForms;
+            tp.Text = newMDIChild.Text;
+            tp.Show();
+
+            //child Form will now hold a reference value to a tabpage
+            newMDIChild.TabPag = tp;
+
+
+            //Activate the newly created Tabpage
+            tabForms.SelectedTab = tp;
         }
     }
 

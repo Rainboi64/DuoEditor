@@ -56,7 +56,7 @@ namespace DuoEditor.Forms.SubForms
                 ofd.ShowDialog();
                 string Rawfilename = ofd.FileName;
                 string RawFilenameSafe = ofd.SafeFileName;
-                string DestinationFilename = "\\www\\uploaded_images\\";
+                string DestinationFilename = "\\"+Settings.StartDirectory+"\\uploaded_images\\";
                 if (System.IO.File.Exists(Rawfilename) & System.IO.Directory.Exists(DestinationFilename))
                 {
                     FilenameSafe = (System.IO.Path.Combine(DestinationFilename + RawFilenameSafe));
