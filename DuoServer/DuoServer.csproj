@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\DuoEditor\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,6 +49,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>DuoServer.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -66,8 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DuoLogger\DuoLogger.csproj">
+      <Project>{05a2adb6-8a32-4351-bb59-239e06eddee0}</Project>
+      <Name>DuoLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\Yaman\source\repos\DuoDatabase\DuoDatabase\DuoDatabase.csproj">
       <Project>{2d12183b-7054-4061-b169-4029db4ed5d0}</Project>
       <Name>DuoDatabase</Name>

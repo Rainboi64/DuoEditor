@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
 
-namespace DuoEditor
+
+namespace DuoLogger
 {
-    class Logger
+   public class Logger
     {
         public static void Log(string logdetail) => LogWorker(logdetail);
         public static void ProccesLogs() => ProccesLogsWorker();
@@ -47,7 +41,7 @@ namespace DuoEditor
             string logfilecontents = string.Empty;
             using (StreamReader sr = new StreamReader("Logs.DSLF"))
             {
-                logfilecontents = DuoEditor.Encryption.Decrypt( sr.ReadToEnd());
+                logfilecontents = DuoEditor.Encryption.Decrypt(sr.ReadToEnd());
                 sr.Close();
             }
             return logfilecontents;
@@ -55,7 +49,7 @@ namespace DuoEditor
         private static void LogWorker(string LogDetail)
         {
             Console.WriteLine(LogDetail);
-            
+
             try
             {
                 LogBunk = LogBunk + LogDetail + Environment.NewLine;
@@ -75,12 +69,12 @@ namespace DuoEditor
             }
         }
         static String cLog = String.Empty;
-      private static void CleanLogsWorker()
+        private static void CleanLogsWorker()
         {
 
             try
             {
-                string FileLocation = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
+                string FileLocation = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 StreamWriter txt = new StreamWriter(FileLocation);
                 txt.Write(DuoEditor.Encryption.Encrypt(cLog));
@@ -93,7 +87,6 @@ namespace DuoEditor
             {
 
                 LogEx(i);
-                throw;
             }
         }
         private static void DoSaveLogsWorker()
@@ -102,7 +95,7 @@ namespace DuoEditor
             {
                 using (StreamReader sr = new StreamReader("Logs.DSLF"))
                 {
-               cLog = DuoEditor.Encryption.Decrypt( sr.ReadToEnd());
+                    cLog = DuoEditor.Encryption.Decrypt(sr.ReadToEnd());
                     sr.Close();
                 }
                 StreamWriter txtoutput = new StreamWriter("Logs.DSLF");

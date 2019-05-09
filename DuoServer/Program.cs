@@ -15,14 +15,14 @@ namespace DuoServer
     {
         static void Main(string[] args)
         {
-
+            DuoLogger.Logger.ProccesLogs();
             string GetIP = READ.ReadData("//Configuration//", "StartIP");
             string GetPort = READ.ReadData("//Configuration//", "StartPort");
             string StartDirectory = READ.ReadData("//Configuration//", "StartDirectory");
 
             SimpleHTTPServer myServer = new SimpleHTTPServer(StartDirectory,Convert.ToInt32(GetPort));
             Console.Title = (GetIP + ":" + myServer.Port.ToString());
-            Console.WriteLine("Server.Started On: " + GetIP + ":" + myServer.Port.ToString() + "\n");
+            DuoLogger.Logger.Log("Server.Started On: " + GetIP + ":" + myServer.Port.ToString() + "\n");
         }
 
         public class SimpleHTTPServer
@@ -139,7 +139,7 @@ namespace DuoServer
                 _listener = new HttpListener();
                 _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
                 _listener.Start();
-                Console.WriteLine("Listener Started at " + DateTime.Now);
+                DuoLogger.Logger.Log("Listener Started at " + DateTime.Now);
                 while (true)
                 {
                     try
@@ -149,7 +149,7 @@ namespace DuoServer
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Listener Error Catched: " + ex);
+                        DuoLogger.Logger.Log("Listener Error Catched: " + ex);
                     }
                 }
             }
@@ -157,12 +157,12 @@ namespace DuoServer
             private void Process(HttpListenerContext context)
             {
                 string filename = context.Request.Url.AbsolutePath;
-                Console.WriteLine("Requsted: " + filename);
+                DuoLogger.Logger.Log("Requsted: " + filename);
                 filename = filename.Substring(1);
 
                 if (string.IsNullOrEmpty(filename))
                 {
-                    Console.WriteLine("Error: Filename.IsNullOrEmpty at " + DateTime.Now);
+                    DuoLogger.Logger.Log("Error: Filename.IsNullOrEmpty at " + DateTime.Now);
                     foreach (string indexFile in _indexFiles)
                     {
                         if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
@@ -196,23 +196,23 @@ namespace DuoServer
 
                         context.Response.StatusCode = (int)HttpStatusCode.OK;
                         context.Response.OutputStream.Flush();
-                        Console.WriteLine("Info: Request Served + Flushed at " + DateTime.Now);
+                        DuoLogger.Logger.Log("Info: Request Served + Flushed at " + DateTime.Now);
                     }
                     catch (Exception ex)
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        Console.WriteLine("Warning: Internal Server Error Code: " + ex + " " + DateTime.Now);
+                        DuoLogger.Logger.Log("Warning: Internal Server Error Code: " + ex + " " + DateTime.Now);
                     }
 
                 }
                 else
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    Console.WriteLine("Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
+                    DuoLogger.Logger.Log("Warning: Internal Server Error Code: Path not found at " + DateTime.Now);
                 }
 
                 context.Response.OutputStream.Close();
-                Console.WriteLine("Info: Stream.Closed\n");
+                DuoLogger.Logger.Log("Info: Stream.Closed\n");
 
             }
 
@@ -220,25 +220,25 @@ namespace DuoServer
             {
                 Stopwatch sw = Stopwatch.StartNew();
                 ThreadStart childref = new ThreadStart(CallToChildThread);
-                Console.WriteLine("Loading Duo Server Pre-Alpha 1.00\n");
+                DuoLogger.Logger.Log("Loading Duo Server Pre-Alpha 1.00\n");
                 this._rootDirectory = path;
                 this._port = port;
-                Console.WriteLine("Server Starting with parameters: " + _port + " " + _rootDirectory);
+                DuoLogger.Logger.Log("Server Starting with parameters: " + _port + " " + _rootDirectory);
                 _serverThread = new Thread(this.Listen);
                 _serverThread.Start();
-                Console.WriteLine("Server Thread Started Succsesfully");
+                DuoLogger.Logger.Log("Server Thread Started Succsesfully");
                 Thread childThread = new Thread(childref);
                 childThread.Start();
                 void CallToChildThread()
                 {
-                    Console.WriteLine("Input Thread Started");
+                    DuoLogger.Logger.Log("Input Thread Started");
                     while (1 == 1)
                     {
                         string input = Console.ReadLine();
 
-if (input == "ip")
+                        if (input == "ip")
                         {
-                            Console.WriteLine(Console.Title);
+                            DuoLogger.Logger.Log(Console.Title);
                         }
                         else if (input == "stop")
                         {
@@ -250,11 +250,11 @@ if (input == "ip")
                         }
                         else if (input == "starttime")
                         {
-                            Console.WriteLine(sw.Elapsed);
+                            DuoLogger.Logger.Log(Convert.ToString(sw.Elapsed));
                         }
                         else
                         {
-                            Console.WriteLine("Not a Command. Check case sensitivity");
+                            DuoLogger.Logger.Log("Not a Command. Check case sensitivity");
                         }
                     }
                 }

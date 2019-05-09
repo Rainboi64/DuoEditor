@@ -83,7 +83,59 @@ namespace DuoEditor.Forms.SubForms.OptionDialogs
 
         private void MainConfigs_Load(object sender, EventArgs e)
         {
+            tbDefaultStartDirectory.Text = Settings.StartDirectory;
+            tbDefaultStartip.Text = Settings.StartIP;
+            tbDefaultStartPort.Text = Settings.StartPort;
+            ListDirectory(treeView1,"Logs");
+                string eventLogName = "DuoEditor";
 
+                EventLog eventLog = new EventLog();
+                eventLog.Log = eventLogName;
+
+                foreach (EventLogEntry log in eventLog.Entries)
+                {
+                listBox1.Items.Add(log.Message);
+                }
+            
+        }
+
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            tbDefaultStartDirectory.Text = "www";
+            tbDefaultStartip.Text = "localhost";
+            tbDefaultStartPort.Text = "8080";
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+          FolderBrowserDialog openFileDialog = new FolderBrowserDialog();
+           var Result = openFileDialog.ShowDialog();
+            if (Result == DialogResult.OK)
+            {
+                tbDefaultStartDirectory.Text = openFileDialog.SelectedPath;
+            }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            DuoDatabase.WRITE.CreateData(tbDefaultStartip.Text,"//Configuration//", "StartIP");
+            DuoDatabase.WRITE.CreateData(tbDefaultStartDirectory.Text, "//Configuration//", "StartDirectory");
+            DuoDatabase.WRITE.CreateData(tbDefaultStartPort.Text, "//Configuration//", "StartPort");
+            this.Close();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure?","Exit?",MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }

@@ -14,6 +14,21 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,14 +50,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>DuoEditor.MainServer</StartupObject>
+    <StartupObject>DuoEditor.MainStart</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>FormatFactoryDuologoNoBack.ico</ApplicationIcon>
+    <ApplicationIcon>logo2_idw_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConsoleControl, Version=1.2.1.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
@@ -50,6 +71,14 @@
     </Reference>
     <Reference Include="ConsoleControlAPI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=7c86b8a36b9c33e2, processorArchitecture=MSIL">
       <HintPath>..\packages\ConsoleControlAPI.1.2.1\lib\net40\ConsoleControlAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="DSLogVeiwer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DSLogVeiwer\bin\Debug\DSLogVeiwer.exe</HintPath>
+    </Reference>
+    <Reference Include="DuoServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DuoServer\bin\Debug\DuoServer.exe</HintPath>
     </Reference>
     <Reference Include="DuoServerLib">
       <HintPath>C:\Users\Yaman\source\repos\DuoServerLib\DuoServerLib\bin\Debug\netstandard2.0\DuoServerLib.dll</HintPath>
@@ -61,12 +90,18 @@
       <HintPath>..\..\..\..\DSold\DuoEditor\DuoEditor\bin\Debug\Interop.SHDocVw.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SplashScreen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SplashScreen.Winforms.1.0.0\lib\SplashScreen.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -115,7 +150,7 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\MainServer.cs" />
+    <Compile Include="Classes\MainStart.cs" />
     <Compile Include="Forms\MainJSEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,7 +205,6 @@
     <Compile Include="Forms\SubForms\Inserters\ParagraphInserter.Designer.cs">
       <DependentUpon>ParagraphInserter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Sides\Logger.cs" />
     <Compile Include="Forms\MainBrowserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +220,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Sides\PublicFuncs.cs" />
     <Compile Include="Classes\Settings.cs" />
+    <Compile Include="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\MainBrowserForm.resx">
       <DependentUpon>MainBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -234,6 +274,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -268,6 +311,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DuoLogger\DuoLogger.csproj">
+      <Project>{05a2adb6-8a32-4351-bb59-239e06eddee0}</Project>
+      <Name>DuoLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\Yaman\source\repos\DuoDatabase\DuoDatabase\DuoDatabase.csproj">
       <Project>{2d12183b-7054-4061-b169-4029db4ed5d0}</Project>
       <Name>DuoDatabase</Name>
@@ -277,9 +324,26 @@
     <Content Include="Console.ico" />
     <Content Include="FormatFactoryDuologoblackback.ico" />
     <Content Include="FormatFactoryDuologoNoBack.ico" />
+    <Content Include="logo2_idw_icon.ico" />
+    <None Include="Resources\SplashScreenIcon.bmp" />
+    <None Include="Resources\SplashScreenLogo.bmp" />
+    <None Include="Resources\Logo2.png" />
+    <None Include="Resources\Logo3.png" />
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\Untitled.png" />
     <None Include="Resources\DuologoNoBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,20 +1,11 @@
 ﻿#region References
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Sockets;
-using System.Net;
 using System.IO;
 using System.Threading;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Text.RegularExpressions;
+using DuoLogger;
 using FastColoredTextBoxNS;
 using Microsoft.VisualBasic;
 #endregion
@@ -71,8 +62,10 @@ namespace DuoEditor
         public MainChildForm(string filename)
         {
             InitializeComponent();
-            ReceivedFileName = filename;
-
+            if (filename != null)
+            {
+                ReceivedFileName = Path.Combine(Path.GetDirectoryName(Settings.StartDirectory) + "\\" + filename);
+            }
         }
    
 
@@ -97,19 +90,22 @@ namespace DuoEditor
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\n" + " Form Report: A Child Form was launched" + "\n");
             Console.ResetColor();
-            if (ReceivedFileName != null)
-            {
-                Thread.Sleep(500);
-                using (StreamReader sr = new StreamReader(ReceivedFileName))
+
+         
+                if (ReceivedFileName != null)
                 {
-                    HTMLCodeTextBox1.Text = sr.ReadToEnd();
-                    sr.Close();
+                    Thread.Sleep(500);
+                    using (StreamReader sr = new StreamReader(ReceivedFileName))
+                    {
+                        HTMLCodeTextBox1.Text = sr.ReadToEnd();
+                        sr.Close();
+                    }
+                    Filename = ReceivedFileName;
+                SafeFilename = Path.GetFullPath(Filename).Replace(Settings.StartDirectory,"").Replace("\\","/") ;
+                    URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
+                    this.NormalVeiwWB.Navigate(URLTextBox1.Text);
                 }
-                Filename = ReceivedFileName;
-                SafeFilename = "/" + Path.GetFileName(Filename);
-                URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
-                this.NormalVeiwWB.Navigate(URLTextBox1.Text);
-            }
+      
         }
 
 
@@ -138,7 +134,7 @@ namespace DuoEditor
                 if (Filename == null)
                 {
                     string safefileName = Interaction.InputBox("Choose file name", "Save", "File", -1, -1);
-                    string savefile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\"+Settings.StartDirectory+"\\" + safefileName + ".html");
+                    string savefile = System.IO.Path.Combine(Settings.StartDirectory+"\\" + safefileName + ".html");
                     if (!(safefileName == "")) { 
                     StreamWriter txtoutput = new StreamWriter(savefile);
                     txtoutput.Write(HTMLCodeTextBox1.Text);

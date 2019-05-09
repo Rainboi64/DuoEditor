@@ -40,10 +40,8 @@
             this.tileVeritcalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showHideConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newServerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.logVeiwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logVeiwerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.liveConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportLogsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,18 +55,22 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newJavaScriptEditorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.newServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logsVeiwerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logsVeiwerLiveConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.consoleControl1 = new ConsoleControl.ConsoleControl();
             this.splitter2 = new System.Windows.Forms.Splitter();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -155,48 +157,31 @@
             // consoleToolStripMenuItem
             // 
             this.consoleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showHideConsoleToolStripMenuItem,
-            this.newServerToolStripMenuItem1,
             this.logVeiwerToolStripMenuItem,
-            this.logVeiwerToolStripMenuItem1,
+            this.liveConsoleToolStripMenuItem,
             this.exportLogsToolStripMenuItem1});
             this.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
-            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
-            this.consoleToolStripMenuItem.Text = "Server Console";
-            // 
-            // showHideConsoleToolStripMenuItem
-            // 
-            this.showHideConsoleToolStripMenuItem.Name = "showHideConsoleToolStripMenuItem";
-            this.showHideConsoleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.showHideConsoleToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.showHideConsoleToolStripMenuItem.Text = "Show/Hide Console";
-            this.showHideConsoleToolStripMenuItem.Click += new System.EventHandler(this.ShowHideServerToolStripMenuItem_Click);
-            // 
-            // newServerToolStripMenuItem1
-            // 
-            this.newServerToolStripMenuItem1.Name = "newServerToolStripMenuItem1";
-            this.newServerToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
-            this.newServerToolStripMenuItem1.Text = "New Server";
-            this.newServerToolStripMenuItem1.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
+            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.consoleToolStripMenuItem.Text = "Console";
             // 
             // logVeiwerToolStripMenuItem
             // 
             this.logVeiwerToolStripMenuItem.Name = "logVeiwerToolStripMenuItem";
-            this.logVeiwerToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.logVeiwerToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.logVeiwerToolStripMenuItem.Text = "Log Veiwer";
             this.logVeiwerToolStripMenuItem.Click += new System.EventHandler(this.LogViewerToolStripMenuItem_Click);
             // 
-            // logVeiwerToolStripMenuItem1
+            // liveConsoleToolStripMenuItem
             // 
-            this.logVeiwerToolStripMenuItem1.Name = "logVeiwerToolStripMenuItem1";
-            this.logVeiwerToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
-            this.logVeiwerToolStripMenuItem1.Text = "Log Veiwer (Live Console)";
-            this.logVeiwerToolStripMenuItem1.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
+            this.liveConsoleToolStripMenuItem.Name = "liveConsoleToolStripMenuItem";
+            this.liveConsoleToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.liveConsoleToolStripMenuItem.Text = "Live Console";
+            this.liveConsoleToolStripMenuItem.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
             // 
             // exportLogsToolStripMenuItem1
             // 
             this.exportLogsToolStripMenuItem1.Name = "exportLogsToolStripMenuItem1";
-            this.exportLogsToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
+            this.exportLogsToolStripMenuItem1.Size = new System.Drawing.Size(141, 22);
             this.exportLogsToolStripMenuItem1.Text = "Export Logs";
             this.exportLogsToolStripMenuItem1.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
             // 
@@ -213,6 +198,7 @@
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             this.configurationToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.configurationToolStripMenuItem.Text = "Configuration";
+            this.configurationToolStripMenuItem.Click += new System.EventHandler(this.ConfigurationToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -232,7 +218,7 @@
             this.exportFilesToolStripMenuItem1,
             this.endToolStripMenuItem1,
             this.creditsToolStripMenuItem1});
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.Image = global::DuoEditor.Properties.Resources.Logo2;
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
@@ -278,72 +264,57 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newWindowToolStripMenuItem1,
             this.newJavaScriptEditorToolStripMenuItem1,
-            this.newServerToolStripMenuItem,
-            this.showConsoleToolStripMenuItem,
-            this.logsVeiwerToolStripMenuItem,
-            this.logsVeiwerLiveConsoleToolStripMenuItem,
             this.clearLogsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(215, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(188, 70);
             this.contextMenuStrip1.Text = "DuoEditor Parent";
             // 
             // newWindowToolStripMenuItem1
             // 
             this.newWindowToolStripMenuItem1.Name = "newWindowToolStripMenuItem1";
-            this.newWindowToolStripMenuItem1.Size = new System.Drawing.Size(214, 22);
+            this.newWindowToolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
             this.newWindowToolStripMenuItem1.Text = "New HTML Editor";
             this.newWindowToolStripMenuItem1.Click += new System.EventHandler(this.newWindowToolStripMenuItem_Click);
             // 
             // newJavaScriptEditorToolStripMenuItem1
             // 
             this.newJavaScriptEditorToolStripMenuItem1.Name = "newJavaScriptEditorToolStripMenuItem1";
-            this.newJavaScriptEditorToolStripMenuItem1.Size = new System.Drawing.Size(214, 22);
+            this.newJavaScriptEditorToolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
             this.newJavaScriptEditorToolStripMenuItem1.Text = "New JavaScript Editor";
-            // 
-            // newServerToolStripMenuItem
-            // 
-            this.newServerToolStripMenuItem.Name = "newServerToolStripMenuItem";
-            this.newServerToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.newServerToolStripMenuItem.Text = "New Server";
-            this.newServerToolStripMenuItem.Click += new System.EventHandler(this.newServerToolStripMenuItem_Click);
-            // 
-            // showConsoleToolStripMenuItem
-            // 
-            this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
-            this.showConsoleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.showConsoleToolStripMenuItem.Text = "Show Console";
-            this.showConsoleToolStripMenuItem.Click += new System.EventHandler(this.ShowHideServerToolStripMenuItem_Click);
-            // 
-            // logsVeiwerToolStripMenuItem
-            // 
-            this.logsVeiwerToolStripMenuItem.Name = "logsVeiwerToolStripMenuItem";
-            this.logsVeiwerToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.logsVeiwerToolStripMenuItem.Text = "Logs Veiwer";
-            this.logsVeiwerToolStripMenuItem.Click += new System.EventHandler(this.LogViewerToolStripMenuItem_Click);
-            // 
-            // logsVeiwerLiveConsoleToolStripMenuItem
-            // 
-            this.logsVeiwerLiveConsoleToolStripMenuItem.Name = "logsVeiwerLiveConsoleToolStripMenuItem";
-            this.logsVeiwerLiveConsoleToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.logsVeiwerLiveConsoleToolStripMenuItem.Text = "Logs Veiwer (Live Console)";
-            this.logsVeiwerLiveConsoleToolStripMenuItem.Click += new System.EventHandler(this.LogViewerOnlyConsoleToolStripMenuItem_Click);
             // 
             // clearLogsToolStripMenuItem
             // 
             this.clearLogsToolStripMenuItem.Name = "clearLogsToolStripMenuItem";
-            this.clearLogsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.clearLogsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.clearLogsToolStripMenuItem.Text = "Export Logs";
             this.clearLogsToolStripMenuItem.Click += new System.EventHandler(this.ExportLogsToolStripMenuItem_Click);
             // 
             // treeView1
             // 
+            this.treeView1.AllowDrop = true;
+            this.treeView1.ContextMenuStrip = this.contextMenuStrip2;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Right;
             this.treeView1.Location = new System.Drawing.Point(1693, 69);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(151, 787);
             this.treeView1.TabIndex = 6;
+            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.TreeView1_DragDrop);
+            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TreeView1_MouseDoubleClick);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(114, 26);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.RefreshToolStripMenuItem_Click);
             // 
             // splitter1
             // 
@@ -374,13 +345,37 @@
             this.splitter2.TabIndex = 10;
             this.splitter2.TabStop = false;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 710);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1690, 22);
+            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.toolStripStatusLabel1.Image = global::DuoEditor.Properties.Resources.Logo2;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(61, 17);
+            this.toolStripStatusLabel1.Text = "  Ready";
+            // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(1844, 856);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.consoleControl1);
             this.Controls.Add(this.splitter1);
@@ -388,19 +383,25 @@
             this.Controls.Add(this.tabForms);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DuoEditor Parent";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,19 +422,12 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripMenuItem endToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem creditsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem showHideConsoleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem logVeiwerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logVeiwerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportLogsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exportFilesToolStripMenuItem1;
         private System.Windows.Forms.TabControl tabForms;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem newServerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showConsoleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logsVeiwerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logsVeiwerLiveConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newJavaScriptEditorToolStripMenuItem;
         private System.Windows.Forms.TreeView treeView1;
@@ -444,6 +438,12 @@
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
         private ConsoleControl.ConsoleControl consoleControl1;
         private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.ToolStripMenuItem liveConsoleToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 
