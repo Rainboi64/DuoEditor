@@ -116,6 +116,7 @@ namespace DuoEditor.Forms
 
         private void MainJSEditor_Load(object sender, EventArgs e)
         {
+            this.Icon = new Icon(this.Icon, new Size(16, 16));
             fastColoredTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "/Files/JSDesc.xml");
         }
 

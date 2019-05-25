@@ -89,6 +89,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConsoleControl, Version=1.2.1.0, Culture=neutral, PublicKeyToken=7edd23586f5e297f, processorArchitecture=MSIL">
       <HintPath>..\packages\ConsoleControl.1.2.1\lib\net40-client\ConsoleControl.dll</HintPath>
@@ -102,7 +122,7 @@
     </Reference>
     <Reference Include="DuoServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DuoServer\bin\Debug\DuoServer.exe</HintPath>
+      <HintPath>..\DuoServer\bin\x64\Debug\DuoServer.exe</HintPath>
     </Reference>
     <Reference Include="DuoServerLib">
       <HintPath>C:\Users\Yaman\source\repos\DuoServerLib\DuoServerLib\bin\Debug\netstandard2.0\DuoServerLib.dll</HintPath>
@@ -358,6 +378,11 @@
     <Content Include="FormatFactoryDuologoblackback.ico" />
     <Content Include="FormatFactoryDuologoNoBack.ico" />
     <Content Include="logo2_idw_icon.ico" />
+    <None Include="Resources\5112x5112.png" />
+    <None Include="Resources\5112x512.png" />
+    <None Include="Resources\512x5112.png" />
+    <None Include="Resources\Red_Icon.png" />
+    <None Include="Resources\Green_Icon.png" />
     <None Include="Resources\SplashScreenIcon.bmp" />
     <None Include="Resources\SplashScreenLogo.bmp" />
     <None Include="Resources\Logo2.png" />

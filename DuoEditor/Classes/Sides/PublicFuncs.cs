@@ -12,7 +12,7 @@ namespace DuoEditor
     public class PublicFuncs
     {
         #region Defines
-        public static string APPVERSION = "0.1.3";
+        public static string APPVERSION = "0.2";
         public static string ip { get; set; }
         public static string CleanIp { get; set; }
         public static string port { get; set; }

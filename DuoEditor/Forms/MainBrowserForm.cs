@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -53,14 +47,14 @@ namespace DuoEditor
         }
         private void MainBrowserForm_Load(object sender, EventArgs e)
         {
+            this.Icon = new Icon(this.Icon, new Size(16, 16));
             if (URL != null)
             {
                 chromeBrowser.Load(URL);
             }
             else
             {
-                textBox1.Text = PublicFuncs.ip;
-                chromeBrowser.Load(textBox1.Text);
+                chromeBrowser.Load(PublicFuncs.CleanIp);
             }
         }
 
@@ -72,28 +66,59 @@ namespace DuoEditor
             // Initialize cef with the provided settings
            // Cef.Initialize(settings);
             // Create a browser component
-            chromeBrowser = new ChromiumWebBrowser(Settings.StartIP);
+            chromeBrowser = new ChromiumWebBrowser(PublicFuncs.CleanIp);
             // Add it to the form and fill it to the form window.
-            this.splitContainer1.Panel2.Controls.Add(chromeBrowser);
+            this.panel1.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
-            chromeBrowser.IsBrowserInitializedChanged += ChromeBrowser_IsBrowserInitializedChanged;
-            chromeBrowser.LoadingStateChanged += ChromeBrowser_LoadingStateChanged;
+            chromeBrowser.AddressChanged += ChromeBrowser_AddressChanged;
             chromeBrowser.FrameLoadEnd += ChromeBrowser_FrameLoadEnd;
+            chromeBrowser.StatusMessage += ChromeBrowser_StatusMessage;
+            chromeBrowser.Load(PublicFuncs.CleanIp);
+        }
+
+        private void ChromeBrowser_StatusMessage(object sender, StatusMessageEventArgs e)
+        {
+            if (e.Browser.IsLoading)
+            {
+                toolStripStatusLabel1.Text = "Loading...";
+                toolStripStatusLabel1.Image = Properties.Resources.Red_Icon;
+            }
         }
 
         private void ChromeBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-          //  textBox1.Text = e.Url;
+            if (e.HttpStatusCode != 200 && e.HttpStatusCode != 0)
+            {
+                toolStripStatusLabel1.Text = "Error Code: " + e.HttpStatusCode;
+                toolStripStatusLabel1.Image = Properties.Resources.Red_Icon;
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Ready..";
+                toolStripStatusLabel1.Image = Properties.Resources.Green_Icon;
+            }
         }
+        delegate void SetTextCallback(string text);
 
-        private void ChromeBrowser_IsBrowserInitializedChanged(object sender, IsBrowserInitializedChangedEventArgs e)
+        private void SetText(string text)
         {
-        
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.textBox1.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.textBox1.Text = text;
+            }
         }
-
-        private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        private void ChromeBrowser_AddressChanged(object sender, AddressChangedEventArgs e)
         {
-        
+
+            SetText(e.Address);
         }
 
         private void ActiveMdiChild_FormClosed(object sender,
@@ -107,20 +132,9 @@ namespace DuoEditor
             }
         }
 
-        private void GoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                chromeBrowser.Load(textBox1.Text);
-            }
-            catch (Exception)
-            {
-
-            }
-        }
         private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            chromeBrowser.Refresh();
+            chromeBrowser.Reload();
         }
         private void BackToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -134,15 +148,19 @@ namespace DuoEditor
         {
             chromeBrowser.Stop();
         }
-
-        private void MainBrowserForm_Activated(object sender, EventArgs e)
+        private void TextBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            splitContainer2.Panel1Collapsed = true;
+            try
+            {
+                if (e.KeyCode == Keys.Enter)
+                { chromeBrowser.Load(textBox1.Text); }
+            }
+            catch { }
         }
 
-        private void MainBrowserForm_Deactivate(object sender, EventArgs e)
+        private void ToolStripButton5_Click(object sender, EventArgs e)
         {
-            splitContainer2.Panel1Collapsed = false;
+            chromeBrowser.ShowDevTools();
         }
     }
 }

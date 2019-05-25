@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
@@ -56,7 +51,14 @@ namespace DuoEditor
                     CefSharp.Cef.Shutdown();
                     Logger.CleanLogs();
                     consoleControl1.StopProcess();
-                    Environment.Exit(1);
+                    Application.Exit();
+                    try
+                    {
+                        Environment.Exit(0);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
                 e.Cancel = true;             // Disable Form closing
             }
@@ -113,7 +115,7 @@ namespace DuoEditor
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-           
+            this.Icon = new Icon(this.Icon, new Size(16,16));
             this.Activate(); 
             consoleControl1.StartProcess("DuoServer.exe", "");
         
@@ -143,7 +145,7 @@ namespace DuoEditor
             
         }
         ImageList myImageList = new ImageList();
-        Icon icon = DuoEditor.Properties.Resources.FileIcon;
+        Icon icon = Properties.Resources.FileIcon;
         private void ListDirectory(TreeView treeView, string Path)
         {
             treeView.Nodes.Clear();
@@ -198,38 +200,7 @@ namespace DuoEditor
 
         private void fileSetupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string File1 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" + Settings.StartDirectory + "\\");
-            string File2 = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" + Settings.StartDirectory + "\\uploaded_images");
-            if (!System.IO.Directory.Exists(File1))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Logger.Log("\n" + "Creating File" + File1 + "\n");
-                Console.ResetColor();
 
-                System.IO.Directory.CreateDirectory(File1);
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Logger.Log("\n" + " Main Form : File: " + File1 + " already exists." + "\n");
-                Console.ResetColor();
-
-            }
-            if (!System.IO.Directory.Exists(File2))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Logger.Log("\n" + "Main Form : Creating File:" + File2 + "\n");
-                Console.ResetColor();
-
-                System.IO.Directory.CreateDirectory(File2);
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Logger.Log("\n" + "Main Form : File : " + File2 + " already exists." + "\n");
-                Console.ResetColor();
-                return;
-            }
         }
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -314,7 +285,7 @@ namespace DuoEditor
         }
         private void EndToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Environment.Exit(1);
+            this.Close();
         }
 
         private void ExportLogsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -448,10 +419,10 @@ namespace DuoEditor
             }
             catch (Exception) { }
         }
-
+        int BrowserCount = 0;
         private void NewWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WindowCount++;
+            BrowserCount++;
             Form childForm = new Form();
             MainBrowserForm newMDIChild = new MainBrowserForm(null);
             // Set the Parent Form of the Child window.  
@@ -459,7 +430,7 @@ namespace DuoEditor
             // Display the new form.  
             newMDIChild.Show();
             newMDIChild.TabCtrl = tabForms;
-            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+            newMDIChild.Text = newMDIChild.Text + " " + BrowserCount;
            
             //Add a Tabpage and enables it
             TabPage tp = new TabPage();
@@ -615,6 +586,8 @@ namespace DuoEditor
                 catch (Exception) { }
             }
         }
+
+ 
     }
     
 }

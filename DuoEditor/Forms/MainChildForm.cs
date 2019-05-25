@@ -10,6 +10,8 @@ using FastColoredTextBoxNS;
 using Microsoft.VisualBasic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using CefSharp;
+using CefSharp.WinForms;
 #endregion
 namespace DuoEditor
 {
@@ -22,6 +24,63 @@ namespace DuoEditor
         string Filename;
         string SafeFilename;
         #endregion
+        ChromiumWebBrowser LiveBrowserWB;
+        public void InitializeLiveChromium()
+        {
+
+            //   CefSettings settings = new CefSettings();
+            // Initialize cef with the provided settings
+            // Cef.Initialize(settings);
+            // Create a browser component
+            LiveBrowserWB = new ChromiumWebBrowser(Settings.StartIP);
+            // Add it to the form and fill it to the form window.
+            this.tabPageLive.Controls.Add(LiveBrowserWB);
+
+            LiveBrowserWB.Dock = DockStyle.Fill;
+        }
+        ChromiumWebBrowser NormalVeiwWB;
+        public void InitializeChromium()
+        {
+
+            //   CefSettings settings = new CefSettings();
+            // Initialize cef with the provided settings
+            // Cef.Initialize(settings);
+            // Create a browser component
+            NormalVeiwWB = new ChromiumWebBrowser(Settings.StartIP);
+            // Add it to the form and fill it to the form window.
+            this.tabPageNView.Controls.Add(NormalVeiwWB);
+      
+            NormalVeiwWB.Dock = DockStyle.Fill;
+            NormalVeiwWB.StatusMessage += NormalVeiwWB_StatusMessage;
+            NormalVeiwWB.FrameLoadEnd += NormalVeiwWB_FrameLoadEnd;
+       
+        }
+
+        private void NormalVeiwWB_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        {
+            if (e.HttpStatusCode != 200 && e.HttpStatusCode != 0)
+            {
+                StatusLabel1.Text = "Error Code: " + e.HttpStatusCode;
+                StatusLabel1.Image = Properties.Resources.Red_Icon;
+            }
+            else
+            {
+                StatusLabel1.Text = "Ready..";
+                StatusLabel1.Image = Properties.Resources.Green_Icon;
+            }
+        }
+
+        private void NormalVeiwWB_StatusMessage(object sender, StatusMessageEventArgs e)
+        {
+
+            if (e.Browser.IsLoading)
+            {
+                StatusLabel1.Text = "Loading...";
+                StatusLabel1.Image = Properties.Resources.Red_Icon;
+            }
+    
+        }
+
         private TabControl tabCtrl;
         private TabPage tabPag;
         public TabPage TabPag
@@ -63,6 +122,11 @@ namespace DuoEditor
         public MainChildForm(string filename)
         {
             InitializeComponent();
+            InitializeLiveChromium();
+            InitializeChromium();
+            this.tabPageNView.Controls.Add(this.menuStrip2);
+            this.tabPageLive.Controls.Add(this.menuStrip4);
+            this.tabPageNView.Controls.Add(this.toolStrip2);
             if (filename != null)
             {
                 ReceivedFileName = Path.Combine(Path.GetDirectoryName(Settings.StartDirectory) + "\\" + filename);
@@ -72,8 +136,18 @@ namespace DuoEditor
 
         private void MainChildForm_Load(object sender, EventArgs e)
         {
+            this.Icon = new Icon(this.Icon, new Size(16, 16));
             this.WindowState = FormWindowState.Maximized;
-            foreach (string file in Directory.GetDirectories(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters")))CreateTool(file);
+            try
+            {
+                foreach (string file in Directory.GetDirectories(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters"))) CreateTool(file);
+
+            }
+            catch (Exception)
+            {
+
+
+            }            
             /// <summary>
             /// This is the prelaunch setup
             /// </summary>
@@ -84,18 +158,15 @@ namespace DuoEditor
             HTMLCodeTextBox1.Text = "<! DuoEditor Version Alpha "+PublicFuncs.APPVERSION+" \n Credits: Main Tasks Then Credits>";
             ///This Code below Assigns The DocumentMap1 To The HTMLCodeTextBox1
             documentMap1.Target = HTMLCodeTextBox1;
-            ///This Code below Disables WebBrowsers Script Errors
-            NormalVeiwWB.ScriptErrorsSuppressed = true;
-            LiveBrowserWB.ScriptErrorsSuppressed = true;
             ///This Code below Add Sets The Text Of URLTextBox1
             URLTextBox1.Text = "http://" + PublicFuncs.CleanIp;
             ///This Code below Reports Status to the Console
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\n" + " Form Report: A Child Form was launched" + "\n");
             Console.ResetColor();
+            this.Icon = new Icon(this.Icon, new Size(16, 16));
 
-         
-                if (ReceivedFileName != null)
+            if (ReceivedFileName != null)
                 {
                     Thread.Sleep(500);
                     using (StreamReader sr = new StreamReader(ReceivedFileName))
@@ -106,7 +177,7 @@ namespace DuoEditor
                     Filename = ReceivedFileName;
                 SafeFilename = Path.GetFullPath(Filename).Replace(Settings.StartDirectory,"").Replace("\\","/") ;
                     URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
-                    this.NormalVeiwWB.Navigate(URLTextBox1.Text);
+                    this.NormalVeiwWB.Load(URLTextBox1.Text);
                 }
       
         }
@@ -240,7 +311,7 @@ namespace DuoEditor
                     SafeFilename = "/" + Path.GetFileName(Filename);
                     URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + SafeFilename;
                 }
-                this.NormalVeiwWB.Navigate(URLTextBox1.Text);
+                this.NormalVeiwWB.Load(URLTextBox1.Text);
             }
             catch (Exception i) { Logger.LogEx(i); }
         }
@@ -276,7 +347,7 @@ namespace DuoEditor
                 }
                 SafeFilename = openfile.SafeFileName;
                 URLTextBox1.Text = "http://" + PublicFuncs.CleanIp + "/" + SafeFilename;
-                this.NormalVeiwWB.Navigate(URLTextBox1.Text);
+                NormalVeiwWB.Load(URLTextBox1.Text);
 
             }
         }
@@ -318,7 +389,7 @@ namespace DuoEditor
         /// //Refreshes WebBrowser
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NormalVeiwWB.Refresh();
+            NormalVeiwWB.Reload();
         }
         //Stops WebBrowser
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -329,12 +400,12 @@ namespace DuoEditor
         //Go back WebBrowser
         private void backToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NormalVeiwWB.GoBack();
+            NormalVeiwWB.Back();
         }
         //Go Forward WebBrowser
         private void forwardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NormalVeiwWB.GoForward();
+            NormalVeiwWB.Forward();
         }
         //Updates WebBrowser
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -344,23 +415,23 @@ namespace DuoEditor
         //Prints WebBrowser
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NormalVeiwWB.ShowPrintDialog();
+            NormalVeiwWB.Print();
         }
         /// This is for the Live Browser
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
-            LiveBrowserWB.Refresh();
+            LiveBrowserWB.LoadHtml( HTMLCodeTextBox1.Text);
+            LiveBrowserWB.Reload();
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            LiveBrowserWB.GoBack();
+            LiveBrowserWB.Back();
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            LiveBrowserWB.GoForward();
+            LiveBrowserWB.Forward();
         }
 
         private void toolStripMenuItem6_Click(object sender, EventArgs e)
@@ -375,7 +446,7 @@ namespace DuoEditor
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            LiveBrowserWB.ShowPrintDialog();
+            LiveBrowserWB.Print();
         }
         #endregion
         #region RTB Commands
@@ -458,7 +529,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnParagraph);
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml( HTMLCodeTextBox1.Text);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -472,7 +543,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnHyperLink);
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml ( HTMLCodeTextBox1.Text);
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -486,7 +557,7 @@ namespace DuoEditor
                     HTMLCodeTextBox1.InsertText(Hinsert.ReturnImage);
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml( HTMLCodeTextBox1.Text);
         }
         private void headerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -499,7 +570,7 @@ namespace DuoEditor
               
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml ( HTMLCodeTextBox1.Text);
         }
 
         private void paragraphToolStripMenuItem_Click(object sender, EventArgs e)
@@ -513,7 +584,7 @@ namespace DuoEditor
               
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml( HTMLCodeTextBox1.Text);
         }
 
         private void hyperLinkToolStripMenuItem_Click(object sender, EventArgs e)
@@ -527,7 +598,7 @@ namespace DuoEditor
                  
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml( HTMLCodeTextBox1.Text);
         }
 
         private void imageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -541,7 +612,7 @@ namespace DuoEditor
           
                 }
             }
-            LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+            LiveBrowserWB.LoadHtml(HTMLCodeTextBox1.Text);
         }
         #endregion
         #region Misc
@@ -568,7 +639,7 @@ namespace DuoEditor
         {
             try
             {
-                LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+                LiveBrowserWB.Text = HTMLCodeTextBox1.Text;
 
 
             }
@@ -627,7 +698,7 @@ namespace DuoEditor
         {
             try
             {
-                LiveBrowserWB.DocumentText = HTMLCodeTextBox1.Text;
+                LiveBrowserWB.LoadHtml ( HTMLCodeTextBox1.Text);
             }
             catch (Exception) { }
             }
@@ -769,6 +840,28 @@ namespace DuoEditor
                 {
 
                 }
+            }
+        }
+
+        private void ToolStripButton3_Click_1(object sender, EventArgs e)
+        {
+            NormalVeiwWB.Reload();
+        }
+
+        private void ToolStripButton2_Click_1(object sender, EventArgs e)
+        {
+            NormalVeiwWB.Stop();
+        }
+
+        private void ToolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                NormalVeiwWB.ShowDevTools();
+            }
+            catch (Exception)
+            {
+
             }
         }
     }
