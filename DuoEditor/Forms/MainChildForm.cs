@@ -8,6 +8,8 @@ using System.Threading;
 using DuoLogger;
 using FastColoredTextBoxNS;
 using Microsoft.VisualBasic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 #endregion
 namespace DuoEditor
 {
@@ -43,13 +45,10 @@ namespace DuoEditor
             }
             catch (Exception)
             {
-            }            this.tabPag.Dispose();
-
-            //If no Tabpage left
-            if (!tabCtrl.HasChildren)
-            {
-                tabCtrl.Visible = false;
             }
+            this.tabPag.Dispose();
+
+            
         }
         public TabControl TabCtrl
         {
@@ -59,6 +58,8 @@ namespace DuoEditor
             }
         }
       public static string ReceivedFileName;
+        [DllImport("user32.dll")]
+        static extern IntPtr SetParent(IntPtr hwc, IntPtr hwp);
         public MainChildForm(string filename)
         {
             InitializeComponent();
@@ -71,6 +72,8 @@ namespace DuoEditor
 
         private void MainChildForm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
+            foreach (string file in Directory.GetDirectories(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters")))CreateTool(file);
             /// <summary>
             /// This is the prelaunch setup
             /// </summary>
@@ -106,6 +109,91 @@ namespace DuoEditor
                     this.NormalVeiwWB.Navigate(URLTextBox1.Text);
                 }
       
+        }
+
+        private void CreateTool(string file)
+        {
+            ToolStripButton toolStripButton = new ToolStripButton(Path.GetFileName(file));
+            toolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton.Tag = Path.GetFileName(file);
+           toolStripButton.Image = Image.FromFile(Path.Combine(file + "\\icon"));
+            toolStripButton.ImageAlign = ContentAlignment.MiddleCenter;
+            toolStripButton.ImageScaling = ToolStripItemImageScaling.SizeToFit;
+            toolStripButton.Click += ToolStripButton_Click;
+            toolStrip1.Items.Add(toolStripButton);
+        }
+        private const int SW_MAXIMIZE = 3;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private void ToolStripButton_Click(object sender, EventArgs e)
+        {
+            string filename = (Path.Combine(Directory.GetCurrentDirectory()+ "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString()+("\\"+sender.ToString()+".exe")));
+            Process process = new Process();
+            process.StartInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString());
+            process.StartInfo.FileName = filename;
+            process.Start();
+            process.WaitForExit();
+  
+            int trials = 0;
+            Thread.Sleep(500);
+            while (true)
+            {
+                try
+                {
+                    using (StreamReader sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString() + "\\Return")))
+                    {
+                        HTMLCodeTextBox1.InsertText(sr.ReadToEnd());
+                        sr.Close();
+
+                        File.Delete(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString() + "\\Return"));
+                        break;
+                    }
+
+                }
+                catch (Exception exp)
+                {
+                    if (exp.Message.Contains("file")|| exp.Message.Contains("File"))
+                    {
+                        if (trials == 25)
+                        {
+                          var result =  MessageBox.Show("Couldn't Get Result after 25 trials, You can try again or, Abort The Plugin","Response Not Found",MessageBoxButtons.AbortRetryIgnore,MessageBoxIcon.Error);
+                            if (result == DialogResult.Abort)
+                            {
+                                process.Close();
+                                break;
+                            }
+                            else if (result == DialogResult.Retry)
+                            {
+                                try
+                                {
+                                    using (StreamReader sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString() + "\\Return")))
+                                    {
+                                        HTMLCodeTextBox1.InsertText(sr.ReadToEnd());
+                                        sr.Close();
+
+                                        File.Delete(Path.Combine(Directory.GetCurrentDirectory() + "\\Plugins\\MainHTMLEditor\\Inserters\\" + sender.ToString() + "\\Return"));
+                                        break;
+                                    }
+
+
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Failed");
+                                    break;
+                                }
+
+                            }
+                            else if (result == DialogResult.Cancel)
+                            {
+                                break;
+                            }
+                            else { break; }
+                        }
+                        trials++;
+                    }
+                } 
+            }
         }
 
 
@@ -620,6 +708,68 @@ namespace DuoEditor
         private void HTMLCodeTextBox1_TextChanging(object sender, TextChangingEventArgs e)
         {
             timer1.Stop();
+        }
+
+        private void ToolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, uint wMsg, int wParam, uint lParam);
+
+        private static uint EM_LINEINDEX = 0xbb;
+
+        private void URLTextBox1_SizeChanged(object sender, EventArgs e)
+        {
+            SizeLabelFont(URLTextBox1);
+        }
+        // Copy this text into the Label using
+        // the biggest font that will fit.
+        private void SizeLabelFont(TextBox lbl)
+        {
+            // Only bother if there's text.
+            string txt = lbl.Text;
+            if (txt.Length > 0)
+            {
+                int best_size = 100;
+
+                // See how much room we have, allowing a bit
+                // for the Label's internal margin.
+                int wid = lbl.DisplayRectangle.Width - 3;
+                int hgt = lbl.DisplayRectangle.Height - 3;
+
+                // Make a Graphics object to measure the text.
+                using (Graphics gr = lbl.CreateGraphics())
+                {
+                    for (int i = 1; i <= 100; i++)
+                    {
+                        using (Font test_font =
+                            new Font(lbl.Font.FontFamily, i))
+                        {
+                            // See how much space the text would
+                            // need, specifying a maximum width.
+                            SizeF text_size =
+                                gr.MeasureString(txt, test_font);
+                            if ((text_size.Width > wid) ||
+                                (text_size.Height > hgt))
+                            {
+                                best_size = i - 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Use that font size.
+                try
+                {
+                    lbl.Font = new Font(lbl.Font.FontFamily, best_size);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
         }
     }
 }

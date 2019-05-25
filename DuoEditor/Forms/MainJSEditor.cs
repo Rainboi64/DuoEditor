@@ -370,5 +370,10 @@ namespace DuoEditor.Forms
             }
             catch (Exception) { }
         }
+
+        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

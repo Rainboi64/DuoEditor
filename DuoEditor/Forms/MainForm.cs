@@ -53,7 +53,8 @@ namespace DuoEditor
 
                 if (x == DialogResult.Yes)
                 {
-                    Logger.Log("\n_______BEGIN SERVER LOG_______" + "AT____" + DateTime.Now + "\n" + consoleControl1.InternalRichTextBox.Text + "\n_______END SERVER LOG_______" + "AT____" + DateTime.Now + "/n");
+                    CefSharp.Cef.Shutdown();
+                    Logger.CleanLogs();
                     consoleControl1.StopProcess();
                     Environment.Exit(1);
                 }
@@ -450,6 +451,7 @@ namespace DuoEditor
 
         private void NewWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            WindowCount++;
             Form childForm = new Form();
             MainBrowserForm newMDIChild = new MainBrowserForm(null);
             // Set the Parent Form of the Child window.  
@@ -458,6 +460,7 @@ namespace DuoEditor
             newMDIChild.Show();
             newMDIChild.TabCtrl = tabForms;
             newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+           
             //Add a Tabpage and enables it
             TabPage tp = new TabPage();
             tp.Parent = tabForms;

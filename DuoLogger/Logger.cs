@@ -65,7 +65,6 @@ namespace DuoLogger
             catch (Exception i)
             {
                 LogEx(i);
-                throw;
             }
         }
         static String cLog = String.Empty;
@@ -79,9 +78,8 @@ namespace DuoLogger
                 StreamWriter txt = new StreamWriter(FileLocation);
                 txt.Write(DuoEditor.Encryption.Encrypt(cLog));
                 txt.Close();
-                StreamWriter txt1 = new StreamWriter("Logs.DSLF");
-                txt1.Write("");
-                txt1.Close();
+                File.Delete("Log.DSLF");
+                ClearLogs();
             }
             catch (Exception i)
             {
@@ -112,11 +110,7 @@ namespace DuoLogger
         {
             try
             {
-
-                if (cLog.Length >= 1000)
-                {
-                    CleanLogs();
-                }
+              
                 Thread childThread = new Thread(childref);
                 childThread.Start();
 
@@ -125,8 +119,21 @@ namespace DuoLogger
                     while (true)
                     {
                         Thread.Sleep(30000);
-
                         DoSaveLogs();
+
+                        try
+                        {
+                            if (LogBunk.Length == 5000)
+                            {
+                                CleanLogs();
+                            }
+                        }
+                        catch (Exception)
+                        {
+
+                           
+                        }
+                        
                     }
                 }
 

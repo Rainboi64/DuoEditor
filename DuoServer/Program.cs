@@ -254,7 +254,7 @@ namespace DuoServer
                         }
                         else
                         {
-                            DuoLogger.Logger.Log("Not a Command. Check case sensitivity");
+                            Console.WriteLine("Not a Command. Check case sensitivity");
                         }
                     }
                 }

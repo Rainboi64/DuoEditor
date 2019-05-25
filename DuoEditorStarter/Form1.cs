@@ -58,19 +58,32 @@ namespace DuoEditorStarter
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           webBrowser1.ScriptErrorsSuppressed = true;
-            ListDirectory(treeView1, "Logs");
-            string eventLogName = "DuoEditor";
-
-            EventLog eventLog = new EventLog
+            if (!File.Exists("Logs.DSLF"))
             {
-                Log = eventLogName
-            };
-
-            foreach (EventLogEntry log in eventLog.Entries)
-            {
-                metroListView2.Items.Add(log.Message);
+                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+                txtoutput.Write("");
+                txtoutput.Close();
             }
+            webBrowser1.ScriptErrorsSuppressed = true;
+            ListDirectory(treeView1, "Logs");
+            try
+            {
+                string eventLogName = "DuoEditor";
+
+                EventLog eventLog = new EventLog
+                {
+                    Log = eventLogName
+                };
+                foreach (EventLogEntry log in eventLog.Entries)
+                {
+                    metroListView2.Items.Add(log.Message);
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+           
             metroTabControl1.ImageList = imageList1;
             metroListView1.LargeImageList = imageList1;
             if (System.IO.Directory.Exists("Database//projects") )

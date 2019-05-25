@@ -57,9 +57,10 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Maroon;
             this.pictureBox1.BackgroundImage = global::DuoEditor.Properties.Resources.Logo3;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(47, 32);
+            this.pictureBox1.Location = new System.Drawing.Point(63, 39);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(750, 209);
+            this.pictureBox1.Size = new System.Drawing.Size(1000, 257);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -67,10 +68,11 @@
             // 
             this.metroProgressSpinner1.BackColor = System.Drawing.Color.Maroon;
             this.metroProgressSpinner1.Backwards = true;
-            this.metroProgressSpinner1.Location = new System.Drawing.Point(377, 267);
+            this.metroProgressSpinner1.Location = new System.Drawing.Point(503, 329);
+            this.metroProgressSpinner1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.metroProgressSpinner1.Maximum = 100;
             this.metroProgressSpinner1.Name = "metroProgressSpinner1";
-            this.metroProgressSpinner1.Size = new System.Drawing.Size(75, 75);
+            this.metroProgressSpinner1.Size = new System.Drawing.Size(100, 92);
             this.metroProgressSpinner1.Speed = 2F;
             this.metroProgressSpinner1.Style = MetroFramework.MetroColorStyle.Teal;
             this.metroProgressSpinner1.TabIndex = 1;
@@ -80,27 +82,31 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox2.Location = new System.Drawing.Point(23, 302);
+            this.pictureBox2.Location = new System.Drawing.Point(31, 372);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(228, 75);
+            this.pictureBox2.Size = new System.Drawing.Size(304, 92);
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox3.Location = new System.Drawing.Point(646, -8);
+            this.pictureBox3.Location = new System.Drawing.Point(861, -10);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(238, 385);
+            this.pictureBox3.Size = new System.Drawing.Size(317, 474);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
             // 
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox4.Location = new System.Drawing.Point(-34, -8);
+            this.pictureBox4.Location = new System.Drawing.Point(-45, -10);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(259, 385);
+            this.pictureBox4.Size = new System.Drawing.Size(345, 474);
             this.pictureBox4.TabIndex = 4;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.PictureBox4_Click);
@@ -108,45 +114,50 @@
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox5.Location = new System.Drawing.Point(231, 339);
+            this.pictureBox5.Location = new System.Drawing.Point(308, 417);
+            this.pictureBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(420, 66);
+            this.pictureBox5.Size = new System.Drawing.Size(560, 81);
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
             // 
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox6.Location = new System.Drawing.Point(220, -8);
+            this.pictureBox6.Location = new System.Drawing.Point(293, -10);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(438, 45);
+            this.pictureBox6.Size = new System.Drawing.Size(584, 55);
             this.pictureBox6.TabIndex = 6;
             this.pictureBox6.TabStop = false;
             // 
             // pictureBox7
             // 
             this.pictureBox7.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox7.Location = new System.Drawing.Point(449, 247);
+            this.pictureBox7.Location = new System.Drawing.Point(599, 304);
+            this.pictureBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(200, 95);
+            this.pictureBox7.Size = new System.Drawing.Size(267, 117);
             this.pictureBox7.TabIndex = 7;
             this.pictureBox7.TabStop = false;
             // 
             // pictureBox8
             // 
             this.pictureBox8.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox8.Location = new System.Drawing.Point(220, 247);
+            this.pictureBox8.Location = new System.Drawing.Point(293, 304);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(157, 106);
+            this.pictureBox8.Size = new System.Drawing.Size(209, 130);
             this.pictureBox8.TabIndex = 8;
             this.pictureBox8.TabStop = false;
             // 
             // pictureBox9
             // 
             this.pictureBox9.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox9.Location = new System.Drawing.Point(206, 237);
+            this.pictureBox9.Location = new System.Drawing.Point(275, 292);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(443, 31);
+            this.pictureBox9.Size = new System.Drawing.Size(591, 38);
             this.pictureBox9.TabIndex = 9;
             this.pictureBox9.TabStop = false;
             // 
@@ -156,9 +167,10 @@
             this.metroLabel1.BackColor = System.Drawing.Color.Maroon;
             this.metroLabel1.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel1.ForeColor = System.Drawing.Color.Crimson;
-            this.metroLabel1.Location = new System.Drawing.Point(8, 339);
+            this.metroLabel1.Location = new System.Drawing.Point(11, 417);
+            this.metroLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(141, 25);
+            this.metroLabel1.Size = new System.Drawing.Size(146, 25);
             this.metroLabel1.TabIndex = 10;
             this.metroLabel1.Text = "%APPVERSION%";
             this.metroLabel1.UseCustomBackColor = true;
@@ -172,12 +184,12 @@
             // SplashScreen
             // 
             this.ApplyImageInvert = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::DuoEditor.Properties.Resources.Logo3;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BackImage = global::DuoEditor.Properties.Resources.Logo3;
-            this.ClientSize = new System.Drawing.Size(859, 376);
+            this.ClientSize = new System.Drawing.Size(1145, 463);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.pictureBox9);
             this.Controls.Add(this.pictureBox8);
@@ -190,10 +202,12 @@
             this.Controls.Add(this.metroProgressSpinner1);
             this.Controls.Add(this.pictureBox1);
             this.Cursor = System.Windows.Forms.Cursors.AppStarting;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Movable = false;
             this.Name = "SplashScreen";
+            this.Padding = new System.Windows.Forms.Padding(27, 74, 27, 25);
             this.Resizable = false;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
