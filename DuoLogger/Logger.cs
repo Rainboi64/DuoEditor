@@ -30,9 +30,11 @@ namespace DuoLogger
                     eventLog.WriteEntry(LogDetail, EventLogEntryType.Error, 101, 1);
                 }
             }
-            catch (Exception i)
+
+            catch (Exception )
+
             {
-                LogEx(i);
+            
                 throw;
             }
         }
@@ -48,6 +50,12 @@ namespace DuoLogger
         }
         private static void LogWorker(string LogDetail)
         {
+            if (!File.Exists("Logs.DSLF"))
+            {
+                StreamWriter txtoutput = new StreamWriter("Logs.DSLF");
+                txtoutput.Write("");
+                txtoutput.Close();
+            }
             Console.WriteLine(LogDetail);
 
             try
@@ -62,9 +70,11 @@ namespace DuoLogger
             {
                 LogBunk = null;
             }
-            catch (Exception i)
+#pragma warning disable CS0168 // The variable 'i' is declared but never used
+            catch (Exception )
+#pragma warning restore CS0168 // The variable 'i' is declared but never used
             {
-                LogEx(i);
+                throw;
             }
         }
         static String cLog = String.Empty;
@@ -73,6 +83,23 @@ namespace DuoLogger
 
             try
             {
+               
+                if (!File.Exists("Logs"))
+                {
+                    Directory.CreateDirectory("Logs");
+                }
+                if (!File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\")))
+                {
+                    Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Directory.GetCurrentDirectory()) + "\\Logs\\" + DateTime.Now.Year + "\\"));
+                }
+                if (!File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month)))
+                {
+                    Directory.CreateDirectory(System.IO.Path.Combine(Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\"));
+                }
+                if (!File.Exists(System.IO.Path.Combine(Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.DayOfWeek + "\\")))
+                {
+                    Directory.CreateDirectory(System.IO.Path.Combine(Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\"));
+                }
                 string FileLocation = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory() + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 Log("Did a Log export at " + DateTime.Now + " Called " + "\\Logs\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day + "_" + DateTime.Now.DayOfWeek + "\\" + DateTime.Now.Ticks + ".DSLF");
                 StreamWriter txt = new StreamWriter(FileLocation);
@@ -81,10 +108,11 @@ namespace DuoLogger
                 File.Delete("Log.DSLF");
                 ClearLogs();
             }
+#pragma warning disable CS0168 // The variable 'i' is declared but never used
             catch (Exception i)
+#pragma warning restore CS0168 // The variable 'i' is declared but never used
             {
-
-                LogEx(i);
+                throw;
             }
         }
         private static void DoSaveLogsWorker()
@@ -101,9 +129,11 @@ namespace DuoLogger
                 txtoutput.Close();
                 ClearLogs();
             }
+#pragma warning disable CS0168 // The variable 'i' is declared but never used
             catch (Exception i)
+#pragma warning restore CS0168 // The variable 'i' is declared but never used
             {
-                LogEx(i);
+                throw;
             }
         }
         private static void ProccesLogsWorker()
@@ -138,9 +168,11 @@ namespace DuoLogger
                 }
 
             }
+#pragma warning disable CS0168 // The variable 'i' is declared but never used
             catch (Exception i)
+#pragma warning restore CS0168 // The variable 'i' is declared but never used
             {
-                LogEx(i);
+               
                 throw;
             }
         }

@@ -480,7 +480,7 @@
         '\"',
         '\'',
         '\''};
-            this.HTMLCodeTextBox1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.HTMLCodeTextBox1.AutoScrollMinSize = new System.Drawing.Size(2, 14);
             this.HTMLCodeTextBox1.BackBrush = null;
             this.HTMLCodeTextBox1.CharHeight = 14;
             this.HTMLCodeTextBox1.CharWidth = 8;
@@ -488,6 +488,7 @@
             this.HTMLCodeTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.HTMLCodeTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.HTMLCodeTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HTMLCodeTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.HTMLCodeTextBox1.HighlightingRangeType = FastColoredTextBoxNS.HighlightingRangeType.AllTextRange;
             this.HTMLCodeTextBox1.IsReplaceMode = false;
             this.HTMLCodeTextBox1.Location = new System.Drawing.Point(0, 0);

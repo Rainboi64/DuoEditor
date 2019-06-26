@@ -17,6 +17,7 @@ namespace DuoEditor
 {
     class MainStart
     {
+        [STAThread]
         static void OnProcessExit(object sender, EventArgs e)
         {
            
@@ -24,30 +25,16 @@ namespace DuoEditor
         }
         public static void FormStarter()
         {
-           SplashScreen frm = new SplashScreen();
+           MainForm frm = new MainForm();
             Application.Run(frm);
         }
 
         static void Main(string[] args)
         {
-            DuoLogger.Logger.ProccesLogs();
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory() + "//Database//Configuration//StartDirectory.ddb")))
-            {
-                DuoDatabase.WRITE.CreateData("www", "Configuration//", "StartDirectory");
-            }
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory() + "//Database//Configuration//StartPort.ddb")))
-            {
-                DuoDatabase.WRITE.CreateData("8080", "Configuration//", "StartPort");
-            }
-            if (!File.Exists(Path.Combine( Directory.GetCurrentDirectory() + "//Database//Configuration//StartIP.ddb")))
-            {
-                DuoDatabase.WRITE.CreateData("localhost", "Configuration//", "StartIP");
-            }
-            PublicFuncs.CleanIp =Settings.StartIP+":" + Settings.StartPort;
-            PublicFuncs.ip = Settings.StartIP;
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
-            FormStarter();
-
+          
+            Thread main = new Thread(() => FormStarter());
+            main.SetApartmentState(ApartmentState.STA);
+            main.Start();
         }
 
     }

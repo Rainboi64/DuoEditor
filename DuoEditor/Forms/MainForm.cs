@@ -11,7 +11,7 @@ using DuoLogger;
 namespace DuoEditor
 {
 
-    public partial class MainForm : Form
+    public partial class MainForm : RibbonForm
     {
         public static string WORKINGFILENAME()
         {
@@ -24,22 +24,22 @@ namespace DuoEditor
                 return Settings.StartDirectory;
             }
         }
-        int WindowCount = 0;
 
-        int JSWindowCount = 0;
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
-
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        public const int SW_HIDE = 0;
-        public const int SW_SHOW = 5;
+        private const int sW_HIDE = 0;
+        private const int sW_SHOW = 5;
+        static Loading_Screen loadingscreen = new Loading_Screen();
         public MainForm()
         {
+    
             InitializeComponent();
             FormClosing += form_FormClosing;
-
         }
+    
+
         private void form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -49,7 +49,8 @@ namespace DuoEditor
                 if (x == DialogResult.Yes)
                 {
                     CefSharp.Cef.Shutdown();
-                    Logger.CleanLogs();
+                    Logger.CleanLogs(); 
+                    
                     consoleControl1.StopProcess();
                     Application.Exit();
                     try
@@ -115,35 +116,190 @@ namespace DuoEditor
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.Icon = new Icon(this.Icon, new Size(16,16));
-            this.Activate(); 
+            DuoLogger.Logger.ProccesLogs();
+            ribbonButton48.Click += RibbonButton48_Click;
+            Update();
+            Left = Top = 0;
+            Width = Screen.PrimaryScreen.WorkingArea.Width;
+            Height = Screen.PrimaryScreen.WorkingArea.Height;
+            LoadUserPrefrences();
+            this.Icon = new Icon(this.Icon, new Size(16, 16));
+
             consoleControl1.StartProcess("DuoServer.exe", "");
-        
-                ListDirectory(treeView1, WORKINGFILENAME());
-                WindowCount++;
-                Form childForm = new Form();
-                MainChildForm newMDIChild = new MainChildForm(null);
-                // Set the Parent Form of the Child window.  
-                newMDIChild.MdiParent = this;
-                // Display the new form.  
-                newMDIChild.Show();
-                newMDIChild.TabCtrl = tabForms;
-                newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
-                //Add a Tabpage and enables it
-                TabPage tp = new TabPage();
-                tp.Parent = tabForms;
-                tp.Text = newMDIChild.Text;
-                tp.Show();
 
-                //child Form will now hold a reference value to a tabpage
-                newMDIChild.TabPag = tp;
+            ListDirectory(treeView1, WORKINGFILENAME());
+            WindowCount1++;
+            Form childForm = new Form();
+            MainChildForm newMDIChild = new MainChildForm(null);
+            // Set the Parent Form of the Child window.  
+            newMDIChild.MdiParent = this; 
+            // Display the new form.  
+            newMDIChild.Show();
+            newMDIChild.TabCtrl = tabForms;
+            newMDIChild.Text = newMDIChild.Text + " " + WindowCount1;
+            //Add a Tabpage and enables it
+            TabPage tp = new TabPage();
+            tp.Parent = tabForms;
+            tp.Text = newMDIChild.Text;
+            tp.Show();
+
+            //child Form will now hold a reference value to a tabpage
+            newMDIChild.TabPag = tp;
 
 
-                //Activate the newly created Tabpage
-                tabForms.SelectedTab = tp;
-
-            
+            //Activate the newly created Tabpage
+            tabForms.SelectedTab = tp;
+            this.Activate();
+           
+          
         }
+
+        private void RibbonButton48_Click(object sender, EventArgs e)
+        {
+            if (ribbon1.Minimized)
+            {
+                ribbon1.Minimized = false;
+                ribbonButton48.Checked = ribbon1.Minimized;
+                DuoDatabase.WRITE.CreateData("0","\\Configuration\\", "\\RibbonAutoHide");
+                Update();
+            }
+            else
+            {
+                ribbon1.Minimized = true;
+                ribbonButton48.Checked = ribbon1.Minimized;
+                DuoDatabase.WRITE.CreateData("1", "\\Configuration\\", "\\RibbonAutoHide");
+                Update();
+            }
+        }
+
+        private void LoadUserPrefrences()
+        {
+            #region RibbonVisibility
+            try
+            {
+                var AutoHide = DuoDatabase.READ.ReadData("\\Configuration\\", "\\RibbonAutoHide");
+                if (AutoHide == "0")
+                {
+                    ribbon1.Minimized = false;
+                    ribbonButton48.Checked = ribbon1.Minimized; Update();
+                }
+                else
+                {
+                    ribbon1.Minimized = true;
+                    ribbonButton48.Checked = ribbon1.Minimized; Update();
+                }
+            } catch (Exception) { }
+            #endregion
+            #region ThemeStyle
+            try
+            {
+                var ThemeStyle = DuoDatabase.READ.ReadData("\\Configuration\\", "\\ThemeStyle");
+                if (ThemeStyle == "2013")
+                {
+                    ribbon1.OrbStyle = RibbonOrbStyle.Office_2013; Update(); ribbon1.OrbImage = null;
+                }
+                else if (ThemeStyle == "2010")
+                {
+                    ribbon1.OrbStyle = RibbonOrbStyle.Office_2010; Update();
+                    ribbon1.OrbImage = null;
+                }
+                else if (ThemeStyle == "2007")
+                {
+                    ribbon1.OrbStyle = RibbonOrbStyle.Office_2007; Update();
+                    ribbon1.OrbImage = Properties.Resources.Webp_net_resizeimage__4_;
+                }
+            } 
+          
+            catch (Exception) { }
+            #endregion
+            #region TreeViewVisibilty
+            try
+            {
+                var TreeViewVisibility = DuoDatabase.READ.ReadData("\\Configuration\\", "\\TreeViewVisibility");
+                if (TreeViewVisibility == "0")
+                {
+                    treeView1.Visible = false; splitter1.Visible = treeView1.Visible;
+                    ribbonButton37.Text = "Show TreeView";
+                }
+                else
+                {
+                    treeView1.Visible = true; splitter1.Visible = treeView1.Visible;
+                    ribbonButton37.Text = "Hide TreeView";
+                }
+            }
+            catch (Exception) { }
+            #endregion
+            #region ConsoleVisibility
+            try
+            {
+                var ConsoleVisibility = DuoDatabase.READ.ReadData("\\Configuration\\", "\\ConsoleVisibility");
+                if (ConsoleVisibility == "0")
+                {
+                    consoleControl1.Visible = false;
+                    ribbonButton25.LargeImage = Properties.Resources.icons8_eye_filled_50;
+                    splitter2.Visible = consoleControl1.Visible;
+                    ribbonButton25.Text = "Show Console";
+                }
+                else
+                {
+                    consoleControl1.Visible = true;
+                    ribbonButton25.LargeImage = Properties.Resources.icons8_hide_filled_50;
+                    splitter2.Visible = consoleControl1.Visible;
+                    ribbonButton25.Text = "Hide Console";
+                }
+
+            }
+            catch (Exception) { }
+            #endregion
+            #region ThemeColor
+            try
+            {
+                var RibbonColorCode = DuoDatabase.READ.ReadData("\\Configuration\\", "\\ThemeColor");
+                if (RibbonColorCode == "1")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.JellyBelly;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "2")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Blue;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "3")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Green;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "4")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Purple;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "5")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Blue_2010;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "6")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Halloween;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "7")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Black;
+                    this.Update();
+                }
+                else if (RibbonColorCode == "8")
+                {
+                    ribbon1.ThemeColor = RibbonTheme.Normal;
+                    this.Update();
+                }
+            }
+            catch (Exception) { } 
+            #endregion
+        }
+
         ImageList myImageList = new ImageList();
         Icon icon = Properties.Resources.FileIcon;
         private void ListDirectory(TreeView treeView, string Path)
@@ -151,14 +307,14 @@ namespace DuoEditor
             treeView.Nodes.Clear();
             var rootDirectoryInfo = new DirectoryInfo(Path);
             var _ = treeView.Nodes.Add(this.CreateDirectoryNode(rootDirectoryInfo));
-            myImageList.Images.Add(icon);
-            treeView.ImageList = myImageList;
+            MyImageList.Images.Add(Icon1);
+            treeView.ImageList = MyImageList;
         }
 
         private TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
 
-            myImageList.Images.Clear();
+            MyImageList.Images.Clear();
             var directorynode = new TreeNode(directoryInfo.Name);
             foreach (var directory in directoryInfo.GetDirectories())
             {
@@ -204,7 +360,7 @@ namespace DuoEditor
         }
         private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WindowCount++;
+            WindowCount1++;
             Form childForm = new Form();
             MainChildForm newMDIChild = new MainChildForm(null);
             // Set the Parent Form of the Child window.  
@@ -212,7 +368,7 @@ namespace DuoEditor
             // Display the new form.  
             newMDIChild.Show();
             newMDIChild.TabCtrl = tabForms;
-            newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+            newMDIChild.Text = newMDIChild.Text + " " + WindowCount1;
             //Add a Tabpage and enables it
             TabPage tp = new TabPage();
             tp.Parent = tabForms;
@@ -340,7 +496,7 @@ namespace DuoEditor
             catch (Exception)
             {
             }
-            JSWindowCount++;
+            JSWindowCount1++;
             Form childForm = new Form();
             Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(FILENAME);
             // Set the Parent Form of the Child window.  
@@ -348,7 +504,7 @@ namespace DuoEditor
             // Display the new form.  
             newMDIChild.Show();
             newMDIChild.TabCtrl = tabForms;
-            newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+            newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount1;
             //Add a Tabpage and enables it
             TabPage tp = new TabPage();
             tp.Parent = tabForms;
@@ -370,7 +526,7 @@ namespace DuoEditor
                 string TreeNodeNameAndParents = treeView1.SelectedNode.FullPath;
                 if (System.IO.Path.GetExtension(TreeNodeNameAndParents) == ".js")
                 {
-                    JSWindowCount++;
+                    JSWindowCount1++;
                     Form childForm = new Form();
                     Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(TreeNodeNameAndParents);
                     // Set the Parent Form of the Child window.  
@@ -378,7 +534,7 @@ namespace DuoEditor
                     // Display the new form.  
                     newMDIChild.Show();
                     newMDIChild.TabCtrl = tabForms;
-                    newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+                    newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount1;
                     //Add a Tabpage and enables it
                     TabPage tp = new TabPage();
                     tp.Parent = tabForms;
@@ -394,7 +550,7 @@ namespace DuoEditor
                 }
                 else if (System.IO.Path.GetExtension(TreeNodeNameAndParents) == ".html")
                 {
-                    WindowCount++;
+                    WindowCount1++;
                     Form childForm = new Form();
                     MainChildForm newMDIChild = new MainChildForm(TreeNodeNameAndParents);
                     // Set the Parent Form of the Child window.  
@@ -402,7 +558,7 @@ namespace DuoEditor
                     // Display the new form.  
                     newMDIChild.Show();
                     newMDIChild.TabCtrl = tabForms;
-                    newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                    newMDIChild.Text = newMDIChild.Text + " " + WindowCount1;
                     //Add a Tabpage and enables it
                     TabPage tp = new TabPage();
                     tp.Parent = tabForms;
@@ -420,9 +576,21 @@ namespace DuoEditor
             catch (Exception) { }
         }
         int BrowserCount = 0;
+
+        public int WindowCount1 { get; set; } = 0;
+        public int JSWindowCount1 { get; set; } = 0;
+
+        public static int SW_HIDE => sW_HIDE;
+
+        public static int SW_SHOW => sW_SHOW;
+
+        public ImageList MyImageList { get => myImageList; set => myImageList = value; }
+        public Icon Icon1 { get => icon; set => icon = value; }
+        public int BrowserCount1 { get => BrowserCount; set => BrowserCount = value; }
+
         private void NewWebBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BrowserCount++;
+            BrowserCount1++;
             Form childForm = new Form();
             MainBrowserForm newMDIChild = new MainBrowserForm(null);
             // Set the Parent Form of the Child window.  
@@ -430,7 +598,7 @@ namespace DuoEditor
             // Display the new form.  
             newMDIChild.Show();
             newMDIChild.TabCtrl = tabForms;
-            newMDIChild.Text = newMDIChild.Text + " " + BrowserCount;
+            newMDIChild.Text = newMDIChild.Text + " " + BrowserCount1;
            
             //Add a Tabpage and enables it
             TabPage tp = new TabPage();
@@ -470,7 +638,7 @@ namespace DuoEditor
                 {
                     if (System.IO.Path.GetExtension(Filename) == ".js")
                     {
-                        JSWindowCount++;
+                        JSWindowCount1++;
                         Form childForm = new Form();
                         Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(Path.Combine(Filename));
                         // Set the Parent Form of the Child window.  
@@ -478,7 +646,7 @@ namespace DuoEditor
                         // Display the new form.  
                         newMDIChild.Show();
                         newMDIChild.TabCtrl = tabForms;
-                        newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+                        newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount1;
                         //Add a Tabpage and enables it
                         TabPage tp = new TabPage();
                         tp.Parent = tabForms;
@@ -494,7 +662,7 @@ namespace DuoEditor
                     }
                     else if (System.IO.Path.GetExtension(Filename) == ".html")
                     {
-                        WindowCount++;
+                        WindowCount1++;
                         Form childForm = new Form();
                         MainChildForm newMDIChild = new MainChildForm(Path.Combine(Filename));
                         // Set the Parent Form of the Child window.  
@@ -502,7 +670,7 @@ namespace DuoEditor
                         // Display the new form.  
                         newMDIChild.Show();
                         newMDIChild.TabCtrl = tabForms;
-                        newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                        newMDIChild.Text = newMDIChild.Text + " " + WindowCount1;
                         //Add a Tabpage and enables it
                         TabPage tp = new TabPage();
                         tp.Parent = tabForms;
@@ -536,7 +704,7 @@ namespace DuoEditor
                 {
                     if (System.IO.Path.GetExtension(Filename) == ".js")
                     {
-                        JSWindowCount++;
+                        JSWindowCount1++;
                         Form childForm = new Form();
                         Forms.MainJSEditor newMDIChild = new Forms.MainJSEditor(Path.Combine(Filename));
                         // Set the Parent Form of the Child window.  
@@ -544,7 +712,7 @@ namespace DuoEditor
                         // Display the new form.  
                         newMDIChild.Show();
                         newMDIChild.TabCtrl = tabForms;
-                        newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount;
+                        newMDIChild.Text = newMDIChild.Text + " " + JSWindowCount1;
                         //Add a Tabpage and enables it
                         TabPage tp = new TabPage();
                         tp.Parent = tabForms;
@@ -560,7 +728,7 @@ namespace DuoEditor
                     }
                     else if (System.IO.Path.GetExtension(Filename) == ".html")
                     {
-                        WindowCount++;
+                        WindowCount1++;
                         Form childForm = new Form();
                         MainChildForm newMDIChild = new MainChildForm(Path.Combine(Filename));
                         // Set the Parent Form of the Child window.  
@@ -568,7 +736,7 @@ namespace DuoEditor
                         // Display the new form.  
                         newMDIChild.Show();
                         newMDIChild.TabCtrl = tabForms;
-                        newMDIChild.Text = newMDIChild.Text + " " + WindowCount;
+                        newMDIChild.Text = newMDIChild.Text + " " + WindowCount1;
                         //Add a Tabpage and enables it
                         TabPage tp = new TabPage();
                         tp.Parent = tabForms;
@@ -587,7 +755,183 @@ namespace DuoEditor
             }
         }
 
- 
+        private void DebugLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.SubForms.LogViewers.Logs_Debugger x = new Forms.SubForms.LogViewers.Logs_Debugger();
+            x.Show();
+        }
+
+        private void RibbonButton21_Click(object sender, EventArgs e)
+        {
+            this.ActiveMdiChild.WindowState = FormWindowState.Minimized;
+        }
+
+        private void RibbonButton22_Click(object sender, EventArgs e)
+        {
+            this.ActiveMdiChild.WindowState = FormWindowState.Maximized;
+        }
+
+        private void RibbonButton23_Click(object sender, EventArgs e)
+        {
+            this.ActiveMdiChild.WindowState = FormWindowState.Normal;
+        }
+
+        private void RibbonButton24_Click(object sender, EventArgs e)
+        {
+            this.ActiveMdiChild.Close();
+        }
+
+        private void RibbonButton25_Click(object sender, EventArgs e)
+        {
+            if (consoleControl1.Visible)
+            {
+                consoleControl1.Visible = false; splitter2.Visible = consoleControl1.Visible;
+                ribbonButton25.LargeImage = Properties.Resources.icons8_eye_filled_50;
+                ribbonButton25.Text = "Show Console";
+                DuoDatabase.WRITE.CreateData("0","\\Configuration\\","\\ConsoleVisibility");
+            }
+            else
+            {
+                consoleControl1.Visible = true; splitter2.Visible = consoleControl1.Visible;
+                ribbonButton25.LargeImage = Properties.Resources.icons8_hide_filled_50;
+                ribbonButton25.Text = "Hide Console";
+                DuoDatabase.WRITE.CreateData("1", "\\Configuration\\", "\\ConsoleVisibility");
+            }
+        }
+
+        private void MenuStrip1_ItemRemoved(object sender, ToolStripItemEventArgs e)
+        {
+          
+                menuStrip1.Visible = false;
+            
+        }
+
+        private void MenuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
+        {
+            menuStrip1.Visible = true;
+        }
+
+        private void Ribbon1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RibbonButton29_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.JellyBelly;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("1","\\Configuration\\","\\ThemeColor");
+        }
+
+        private void RibbonButton30_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Blue;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("2", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton31_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Green;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("3", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton32_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Purple;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("4", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton33_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Blue_2010;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("5", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton34_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Halloween;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("6", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton35_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Black;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("7", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton36_Click(object sender, EventArgs e)
+        {
+            ribbon1.ThemeColor = RibbonTheme.Normal;
+            this.Update();
+            DuoDatabase.WRITE.CreateData("8", "\\Configuration\\", "\\ThemeColor");
+        }
+
+        private void RibbonButton37_Click(object sender, EventArgs e)
+        {
+            if (treeView1.Visible)
+            {
+                treeView1.Visible = false;
+                splitter1.Visible = treeView1.Visible;
+                ribbonButton37.Text = "Show TreeView";
+                DuoDatabase.WRITE.CreateData("0", "\\Configuration\\", "\\TreeViewVisibility");
+            }
+            else
+            {
+                treeView1.Visible = true;
+                splitter1.Visible = treeView1.Visible;
+                ribbonButton37.Text = "Hide TreeView";
+                DuoDatabase.WRITE.CreateData("1", "\\Configuration\\", "\\TreeViewVisibility");
+            }
+
+        }
+
+        private void RibbonButton38_Click(object sender, EventArgs e)
+        {
+            ribbon1.OrbStyle = RibbonOrbStyle.Office_2013; Update(); ribbon1.OrbImage = null;
+            DuoDatabase.WRITE.CreateData("2013", "\\Configuration\\", "\\ThemeStyle");
+        }
+
+        private void RibbonButton39_Click(object sender, EventArgs e)
+        {
+            ribbon1.OrbStyle = RibbonOrbStyle.Office_2010; Update(); ribbon1.OrbImage = null;
+            DuoDatabase.WRITE.CreateData("2010", "\\Configuration\\", "\\ThemeStyle");
+        }
+
+        private void RibbonButton40_Click(object sender, EventArgs e)
+        {
+            ribbon1.OrbStyle = RibbonOrbStyle.Office_2007;
+            Update();
+            ribbon1.OrbImage = Properties.Resources.Webp_net_resizeimage__4_;
+            DuoDatabase.WRITE.CreateData("2007", "\\Configuration\\", "\\ThemeStyle");
+        }
+
+        private void RibbonButton41_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void RibbonButton42_Click(object sender, EventArgs e)
+        {
+            Left = Top = 0;
+            Width = Screen.PrimaryScreen.WorkingArea.Width;
+            Height = Screen.PrimaryScreen.WorkingArea.Height;
+        }
+
+        private void RibbonButton72_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void MainForm_Layout(object sender, LayoutEventArgs e)
+        {
+    
+        }
     }
     
 }

@@ -56,25 +56,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DSLogVeiwer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DSLogVeiwer\bin\Debug\DSLogVeiwer.exe</HintPath>
-    </Reference>
-    <Reference Include="DuoEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DuoEditor\bin\Debug\DuoEditor.exe</HintPath>
-    </Reference>
-    <Reference Include="DuoServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DuoServer\bin\Debug\DuoServer.exe</HintPath>
-    </Reference>
-    <Reference Include="DuoTCP">
-      <HintPath>..\DuoTCP\bin\Debug\netstandard2.0\DuoTCP.dll</HintPath>
-    </Reference>
-    <Reference Include="FastColoredTextBox, Version=2.16.24.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\DSold\DuoEditor\DuoEditor\bin\Debug\FastColoredTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
     </Reference>
@@ -88,6 +69,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Windows.Forms.Ribbon">
+      <HintPath>C:\Users\Yaman\Desktop\System.Windows.Forms.Ribbon.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -162,6 +146,26 @@
     <Content Include="logo2_idw_icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DuoEditor\DuoEditor.csproj">
+      <Project>{38bdd688-8d50-4e89-8148-5ef3c98f2ae8}</Project>
+      <Name>DuoEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuoLogger\DuoLogger.csproj">
+      <Project>{05a2adb6-8a32-4351-bb59-239e06eddee0}</Project>
+      <Name>DuoLogger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuoServer\DuoServer.csproj">
+      <Project>{112ce240-0818-4dfd-93ea-b9e60fc212b2}</Project>
+      <Name>DuoServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NodeRequester\Requster.csproj">
+      <Project>{b2586928-8ff2-4fce-b92b-48b306bb0212}</Project>
+      <Name>Requster</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenY Studio\OpenY Studio.csproj">
+      <Project>{3ee70785-812f-4a36-94cb-884d1f7b4076}</Project>
+      <Name>OpenY Studio</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\Yaman\source\repos\DuoDatabase\DuoDatabase\DuoDatabase.csproj">
       <Project>{2d12183b-7054-4061-b169-4029db4ed5d0}</Project>
       <Name>DuoDatabase</Name>

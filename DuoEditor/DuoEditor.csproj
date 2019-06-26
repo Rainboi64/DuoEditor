@@ -9,7 +9,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{38BDD688-8D50-4E89-8148-5EF3C98F2AE8}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>DuoEditor</RootNamespace>
     <AssemblyName>DuoEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -54,15 +54,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>DuoEditor.MainStart</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
     <ApplicationIcon>logo2_idw_icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
@@ -149,6 +148,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
@@ -159,6 +159,9 @@
       <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms.Ribbon">
+      <HintPath>C:\Users\Yaman\Desktop\System.Windows.Forms.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -195,6 +198,18 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\MainStart.cs" />
+    <Compile Include="Forms\SubForms\LogViewers\LogsDebugger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\LogViewers\LogsDebugger.Designer.cs">
+      <DependentUpon>LogsDebugger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loading_Screen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loading_Screen.Designer.cs">
+      <DependentUpon>Loading_Screen.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,12 +285,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Sides\PublicFuncs.cs" />
     <Compile Include="Classes\Settings.cs" />
-    <Compile Include="SplashScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SplashScreen.Designer.cs">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Forms\MainBrowserForm.resx">
       <DependentUpon>MainBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -307,6 +316,9 @@
     <EmbeddedResource Include="Forms\SubForms\Inserters\ImageInserter.resx">
       <DependentUpon>ImageInserter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\LogViewers\LogsDebugger.resx">
+      <DependentUpon>LogsDebugger.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\LogViewers\LogVeiwer1.resx">
       <DependentUpon>LogVeiwer1.cs</DependentUpon>
     </EmbeddedResource>
@@ -319,6 +331,9 @@
     <EmbeddedResource Include="Forms\SubForms\OptionDialogs\MainConfigs.resx">
       <DependentUpon>MainConfigs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Loading_Screen.resx">
+      <DependentUpon>Loading_Screen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainHostForm.resx">
       <DependentUpon>MainHostForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,9 +341,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SplashScreen.resx">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
@@ -378,6 +390,10 @@
     <Content Include="FormatFactoryDuologoblackback.ico" />
     <Content Include="FormatFactoryDuologoNoBack.ico" />
     <Content Include="logo2_idw_icon.ico" />
+    <None Include="Resources\mirage-waiting.png" />
+    <None Include="Resources\Webp.net-resizeimage %284%29.png" />
+    <None Include="Resources\icons8-hide-filled-50.png" />
+    <None Include="Resources\icons8-eye-filled-50.png" />
     <None Include="Resources\5112x5112.png" />
     <None Include="Resources\5112x512.png" />
     <None Include="Resources\512x5112.png" />

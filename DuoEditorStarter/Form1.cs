@@ -64,20 +64,9 @@ namespace DuoEditorStarter
                 txtoutput.Write("");
                 txtoutput.Close();
             }
-            webBrowser1.ScriptErrorsSuppressed = true;
-            ListDirectory(treeView1, "Logs");
             try
             {
-                string eventLogName = "DuoEditor";
-
-                EventLog eventLog = new EventLog
-                {
-                    Log = eventLogName
-                };
-                foreach (EventLogEntry log in eventLog.Entries)
-                {
-                    metroListView2.Items.Add(log.Message);
-                }
+           
             }
             catch (Exception)
             {
@@ -160,7 +149,8 @@ namespace DuoEditorStarter
             if (newProjects.DialogResult == DialogResult.OK)
             {
                 this.Hide();
-                Process.Start("DuoEditor.exe");
+                DuoEditor.MainForm main = new DuoEditor.MainForm();
+                main.Show();
             }
         }
 
@@ -171,7 +161,8 @@ namespace DuoEditorStarter
             if (newProjects.DialogResult == DialogResult.OK)
             {
                 this.Hide();
-                Process.Start("DuoEditor.exe");
+                DuoEditor.MainForm main = new DuoEditor.MainForm();
+                main.Show();
             }
         }
 
@@ -179,14 +170,46 @@ namespace DuoEditorStarter
         {
             try
             {
+                this.Hide();
                 string filename = metroListView1.SelectedItems[0].Text;
-             string path =   DuoDatabase.READ.ReadData("\\Projects\\" + filename +"\\","\\Path");
-             string port =    DuoDatabase.READ.ReadData("\\Projects\\" + filename + "\\", "\\Port");
+             string path = DuoDatabase.READ.ReadData("\\Projects\\" + filename +"\\","\\Path");
+             string port = DuoDatabase.READ.ReadData("\\Projects\\" + filename + "\\", "\\Port");
                 DuoDatabase.WRITE.CreateData(path, "\\Configuration\\", "StartDirectory");
                 DuoDatabase.WRITE.CreateData(port, "\\Configuration\\", "StartPort");
-                Process.Start("DuoEditor.exe");
-                this.Close();
+                DuoDatabase.WRITE.CreateData("localhost", "\\Configuration\\", "StartIp");
+                DuoEditor.MainForm main = new DuoEditor.MainForm();
+                main.Show();
+          
             } catch { }
+        }
+
+        private void MetroTile13_Click(object sender, EventArgs e)
+        {
+            OpenY_Studio.Form1 form = new OpenY_Studio.Form1();
+            form.Show();
+            Hide();
+        }
+
+        private void MetroTile4_Click(object sender, EventArgs e)
+        {
+          
+            DuoEditor.MainForm main = new DuoEditor.MainForm();
+            main.Show();
+        }
+
+        private void MetroTile6_Click(object sender, EventArgs e)
+        {
+            metroTabControl1.SelectTab( metroTabPage1);
+        }
+
+        private void MetroTile7_Click(object sender, EventArgs e)
+        {
+            metroTabControl1.SelectTab(metroTabPage4);
+        }
+
+        private void MetroTabPage4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

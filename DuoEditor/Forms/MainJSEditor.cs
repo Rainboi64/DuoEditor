@@ -75,14 +75,22 @@ namespace DuoEditor.Forms
         public MainJSEditor(string filename)
         {
             InitializeComponent();
-            if (filename != null)
+
+            try
             {
-                using (StreamReader sr = new StreamReader(filename))
+                if (filename != null)
                 {
-                    fastColoredTextBox1.Text = sr.ReadToEnd();
-                    sr.Close();
+                    using (StreamReader sr = new StreamReader(filename))
+                    {
+                        fastColoredTextBox1.Text = sr.ReadToEnd();
+                        sr.Close();
+                    }
+                    SafeFileName = filename;
                 }
-                SafeFileName = filename;
+            }
+            catch (Exception)
+            {
+
             }
         }
         [DllImport("user32.dll")]
@@ -117,7 +125,7 @@ namespace DuoEditor.Forms
         private void MainJSEditor_Load(object sender, EventArgs e)
         {
             this.Icon = new Icon(this.Icon, new Size(16, 16));
-            fastColoredTextBox1.DescriptionFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "/Files/JSDesc.xml");
+            fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.JS;
         }
 
         private void MainJSEditor_Deactivate(object sender, EventArgs e)

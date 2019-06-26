@@ -61,10 +61,8 @@ namespace DuoEditor
         ChromiumWebBrowser chromeBrowser;
         public void InitializeChromium()
         {
-              
-     //   CefSettings settings = new CefSettings();
-            // Initialize cef with the provided settings
-           // Cef.Initialize(settings);
+
+
             // Create a browser component
             chromeBrowser = new ChromiumWebBrowser(PublicFuncs.CleanIp);
             // Add it to the form and fill it to the form window.
@@ -150,10 +148,13 @@ namespace DuoEditor
         }
         private void TextBox1_KeyDown(object sender, KeyEventArgs e)
         {
+       
             try
             {
                 if (e.KeyCode == Keys.Enter)
-                { chromeBrowser.Load(textBox1.Text); }
+                { 
+                System.Media.SystemSounds.Question.Play(); e.SuppressKeyPress = true; chromeBrowser.Load(textBox1.Text);
+                }
             }
             catch { }
         }
@@ -161,6 +162,11 @@ namespace DuoEditor
         private void ToolStripButton5_Click(object sender, EventArgs e)
         {
             chromeBrowser.ShowDevTools();
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

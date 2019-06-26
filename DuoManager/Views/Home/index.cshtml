@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Dashboard - " + DuoDatabase.READ.ReadData("\\Configurations\\", "\\Project_Name");
+}
+<h2>@ViewData["Title"]</h2><hr />
+<h2>Take Control</h2>
+<table style="width:100%;"><tr><td>Host's Ip</td></tr><tr><td><input id="Text1" type="text" /><input type="button" value="Connect" onClick="window.location.href = 'http://' + Text1.value +':'+ 8808"></td></tr></table>
+<h2>Statistics: <input type="button" value="Refresh Info" onClick="document.location.reload(true)"></h2>
+<table style="width:100%;"><tr><td>Project Name:</td><td>Working Port:</td><td>Authentication Code:</td><td>Connected Users Count:</td><td>Server Status:</td></tr><tr><td>@DuoDatabase.READ.ReadData("\\Configurations\\", "\\Project_Name")</td><td>@DuoDatabase.READ.ReadData("\\Configurations\\", "\\Port")</td><td>@DuoDatabase.READ.ReadData("\\Configurations\\", "\\Auth_Code")</td><td>@DuoDatabase.READ.ReadData("\\Stats\\", "\\Connected_Count")</td><td><p>@DuoDatabase.READ.ReadData("\\Stats\\", "\\ServerStatus")</p></td></tr></table>
+<table style="width:100%;"><tr><td><h2>Logs:</h2></td><td><h2>Connected Ips:</h2></td></tr><tr><td><textarea id="TextAreaLogs1" rows="30" cols="70" readonly="readonly"> @DuoLogger.Logger.ViewLogfile()</textarea></td><td><textarea id="TextAreaUsers1" rows="30" cols="70" readonly="readonly"> @DuoDatabase.READ.ReadData("\\Stats\\","ConnectedIps")</textarea></td></table>
+
+<hr />
+<address>
+    <strong>Support:</strong> <a href="mailto:Support@DuoManager.tk">Support@DuoManager.tk</a><br />
+</address>

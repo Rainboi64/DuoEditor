@@ -10,11 +10,21 @@ namespace DuoEditor
     {
         
 
+#pragma warning disable CS0649 // Field 'Settings.EnableEventViewerLogs' is never assigned to, and will always have its default value null
         public static readonly string EnableEventViewerLogs;
+#pragma warning restore CS0649 // Field 'Settings.EnableEventViewerLogs' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Settings.EnableServerLogs' is never assigned to, and will always have its default value null
         public static readonly string EnableServerLogs;
+#pragma warning restore CS0649 // Field 'Settings.EnableServerLogs' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Settings.LogsEncryptionKey' is never assigned to, and will always have its default value null
         public static readonly string LogsEncryptionKey;
+#pragma warning restore CS0649 // Field 'Settings.LogsEncryptionKey' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Settings.EnableFormLogs' is never assigned to, and will always have its default value null
         public static readonly string EnableFormLogs;
+#pragma warning restore CS0649 // Field 'Settings.EnableFormLogs' is never assigned to, and will always have its default value null
+#pragma warning disable CS0649 // Field 'Settings.HideServer' is never assigned to, and will always have its default value null
         public static readonly string HideServer;
+#pragma warning restore CS0649 // Field 'Settings.HideServer' is never assigned to, and will always have its default value null
         #region StartIP
         public static string StartIP => StartIPProvider();
         private static string GottenStartIp = null;

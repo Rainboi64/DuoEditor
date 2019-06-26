@@ -42,9 +42,6 @@ namespace DuoEditor
         public void InitializeChromium()
         {
 
-            //   CefSettings settings = new CefSettings();
-            // Initialize cef with the provided settings
-            // Cef.Initialize(settings);
             // Create a browser component
             NormalVeiwWB = new ChromiumWebBrowser(Settings.StartIP);
             // Add it to the form and fill it to the form window.
@@ -60,13 +57,27 @@ namespace DuoEditor
         {
             if (e.HttpStatusCode != 200 && e.HttpStatusCode != 0)
             {
-                StatusLabel1.Text = "Error Code: " + e.HttpStatusCode;
-                StatusLabel1.Image = Properties.Resources.Red_Icon;
+                try
+                {
+                    StatusLabel1.Text = "Error Code: " + e.HttpStatusCode;
+                    StatusLabel1.Image = Properties.Resources.Red_Icon;
+                }
+                catch (Exception)
+                {
+
+                }
             }
             else
             {
-                StatusLabel1.Text = "Ready..";
-                StatusLabel1.Image = Properties.Resources.Green_Icon;
+                try
+                {
+                    StatusLabel1.Text = "Ready..";
+                    StatusLabel1.Image = Properties.Resources.Green_Icon;
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
 
@@ -788,7 +799,9 @@ namespace DuoEditor
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, uint wMsg, int wParam, uint lParam);
 
+#pragma warning disable CS0414 // The field 'MainChildForm.EM_LINEINDEX' is assigned but its value is never used
         private static uint EM_LINEINDEX = 0xbb;
+#pragma warning restore CS0414 // The field 'MainChildForm.EM_LINEINDEX' is assigned but its value is never used
 
         private void URLTextBox1_SizeChanged(object sender, EventArgs e)
         {
