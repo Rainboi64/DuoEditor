@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 namespace OpenY_Compiler
 {
     public class Compiler
     {
-        Dictionary<string, int> Integers32dict = new Dictionary<string, int>();
-        Dictionary<string, string> Stringsdict = new Dictionary<string, string>();
+     public static   Dictionary<string, int> Integers32dict = new Dictionary<string, int>();
+     public static Dictionary<string, string> Stringsdict = new Dictionary<string, string>();
         string workString = string.Empty;
         string stringConstructer = string.Empty;
         bool haltPadding = false;
@@ -22,6 +23,8 @@ namespace OpenY_Compiler
         string StringVarName = string.Empty;
         string StringVarValue = string.Empty;
         string TitleBuilder = string.Empty;
+        string CMDValue = string.Empty;
+
         public void Lexxer(string Lex)
         {
             foreach (char LexChar in Lex)
@@ -41,33 +44,7 @@ namespace OpenY_Compiler
                         try
                         {
                             stringConstructer = stringConstructer + Lex[charnum + 1];
-                            if (stringConstructer.Contains("<String>"))
-                            {
-                                StringVarName += Lex[charnum + 1];
-                                if (StringVarName.Contains("</String>"))
-                                {
-                                    StringVarName = StringVarName.Replace("</String>", string.Empty);
-                                    StringVarName = StringVarName.Replace(">", string.Empty);
-                                    string VarValue =
-                                    Stringsdict[StringVarName];
-                                    stringConstructer = stringConstructer.Replace(("<String>" + StringVarName + "</String>"), VarValue);
-                                    StringVarName = string.Empty;
-                                }
-                            }
-                            if (stringConstructer.Contains("<Int32>"))
-                            {
-                                Int32VarName += Lex[charnum + 1];
-                                if (Int32VarName.Contains("</Int32>"))
-                                {
-                                    Int32VarName = Int32VarName.Replace("</Int32>", string.Empty);
-                                    Int32VarName = Int32VarName.Replace(">", string.Empty);
-                                    int VarValue =
-                                    Integers32dict[Int32VarName];
-                                    stringConstructer = stringConstructer.Replace(("<Int32>" + Int32VarName + "</Int32>"), Convert.ToString(VarValue));
-                                    Int32VarName = string.Empty;
-                                }
-
-                            }
+                           
                         }
                         catch (OverflowException)
                         {
@@ -79,6 +56,7 @@ namespace OpenY_Compiler
                     }
                     else
                     {
+                        stringConstructer = stringConstructer.Replace("</Screen>", string.Empty);
                         stringConstructer = ProccessText(stringConstructer);
                         Parse(stringConstructer, "PRINT");
                         workString = string.Empty;
@@ -92,7 +70,16 @@ namespace OpenY_Compiler
                 if (workString.Contains("<ClearScreen>"))
                 {
                     haltPadding = true;
-                    Console.Clear();
+                    try
+                    {
+
+                        Console.Clear();
+
+                    }
+                    catch (IOException)
+                    {
+                        Console.WriteLine("CLEARING SCREEN ISN'T SUPPORTED\n");
+                    }
                     workString = string.Empty;
                     haltPadding = false;
                 }
@@ -140,6 +127,24 @@ namespace OpenY_Compiler
                         IncludeResult = string.Empty;
                     }
                 }
+                if (workString.Contains("<CMD>"))
+                {
+
+                    if (!CMDValue.Contains("</CMD>"))
+                    {
+
+                        CMDValue += Lex[charnum + 1];
+
+                    }
+                    else
+                    {
+                        CMDValue = CMDValue.Replace("</CMD>", string.Empty);
+                        CMDValue = ProccessText(CMDValue);
+                        ExecuteCommand(CMDValue);
+                        CMDValue = string.Empty;
+                        workString = string.Empty;
+                    }
+                }
                 if (workString.Contains("<Title>"))
                 {
 
@@ -152,6 +157,7 @@ namespace OpenY_Compiler
                     else
                     {
                         TitleBuilder = TitleBuilder.Replace("</Title>", string.Empty);
+                        TitleBuilder = ProccessText(TitleBuilder);
                         Console.Title = TitleBuilder;
                         TitleBuilder = string.Empty;
                         workString = string.Empty;
@@ -270,11 +276,54 @@ namespace OpenY_Compiler
             }
 
         }
-
+  
         private static string ProccessText(string stringConstructer)
         {
+            string Int32VarName = string.Empty;
+            string Int32VarValue = string.Empty;
+            string StringVarBuilder = string.Empty;
+            bool IsStringBuildingName = true;
+            string StringVarName = string.Empty;
+            string StringVarValue = string.Empty;
+            int charnum = -1;
+            string workString = string.Empty;
             stringConstructer = stringConstructer.Replace("<nl>", "\n");
-            stringConstructer = stringConstructer.Replace("</Screen>", string.Empty);
+            foreach (char LexChar in stringConstructer)
+            {
+                charnum++;
+                workString = workString + LexChar;
+                workString = workString.Replace("\n", "");
+                if (workString.Contains("<rString>"))
+                {
+                    StringVarName += workString[charnum + 1];
+                    if (StringVarName.Contains("</rString>"))
+                    {
+                        StringVarName = StringVarName.Replace("</rString>", string.Empty);
+                        StringVarName = StringVarName.Replace(">", string.Empty);
+                        StringVarName = StringVarName.Replace("rString", string.Empty);
+                        string VarValue =
+                        Stringsdict[StringVarName];
+                        workString = workString.Replace(("<rString>" + StringVarName + "</rString>"), VarValue);
+                        StringVarName = string.Empty;
+                    }
+                }
+                if (workString.Contains("<rInt32>"))
+                {
+                    Int32VarName += workString[charnum + 1];
+                    if (Int32VarName.Contains("</rInt32>"))
+                    {
+                        Int32VarName = Int32VarName.Replace("</rInt32>", string.Empty);
+                        Int32VarName = Int32VarName.Replace(">", string.Empty);
+                        StringVarName = StringVarName.Replace("rInt32", string.Empty);
+                        int VarValue =
+                        Integers32dict[Int32VarName];
+                        workString = workString.Replace(("<rInt32>" + Int32VarName + "</rInt32>"), Convert.ToString(VarValue));
+                        Int32VarName = string.Empty;
+                    }
+
+                }
+            }
+            
             if (stringConstructer.Contains("<InputChar>"))
             {
                 Console.ReadKey();
@@ -288,7 +337,28 @@ namespace OpenY_Compiler
 
             return stringConstructer;
         }
+        private static void ExecuteCommand(string command)
+        {
+            var processInfo = new ProcessStartInfo("cmd.exe", "/k " + command);
+            processInfo.CreateNoWindow = true;
+            processInfo.UseShellExecute = false;
+            processInfo.RedirectStandardError = true;
+            processInfo.RedirectStandardOutput = true;
 
+            var process = Process.Start(processInfo);
+
+            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
+                Console.WriteLine( e.Data);
+            process.BeginOutputReadLine();
+
+            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
+                Console.WriteLine( e.Data);
+            process.BeginErrorReadLine();
+
+            process.WaitForExit();
+
+            process.Close();
+        }
         private static void Parse(string workingString, string Action)
         {
             if (Action == "PRINT")

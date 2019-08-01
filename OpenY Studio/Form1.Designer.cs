@@ -40,6 +40,8 @@
             this.ribbonOrbMenuItem3 = new System.Windows.Forms.RibbonOrbMenuItem();
             this.ribbonButton30 = new System.Windows.Forms.RibbonButton();
             this.ribbonButton31 = new System.Windows.Forms.RibbonButton();
+            this.ribbonButton32 = new System.Windows.Forms.RibbonButton();
+            this.ribbonSeparator5 = new System.Windows.Forms.RibbonSeparator();
             this.ribbonLabel1 = new System.Windows.Forms.RibbonLabel();
             this.ribbonTextBox4 = new System.Windows.Forms.RibbonTextBox();
             this.ribbonButton19 = new System.Windows.Forms.RibbonButton();
@@ -110,8 +112,6 @@
             this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
             this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
             this.ribbonOrbMenuItem4 = new System.Windows.Forms.RibbonOrbMenuItem();
-            this.ribbonButton32 = new System.Windows.Forms.RibbonButton();
-            this.ribbonSeparator5 = new System.Windows.Forms.RibbonSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -253,6 +253,20 @@
             this.ribbonButton31.Name = "ribbonButton31";
             this.ribbonButton31.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton31.SmallImage")));
             this.ribbonButton31.Text = "Auto-Hide Test Panel";
+            // 
+            // ribbonButton32
+            // 
+            this.ribbonButton32.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.Image")));
+            this.ribbonButton32.LargeImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.LargeImage")));
+            this.ribbonButton32.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton32.Name = "ribbonButton32";
+            this.ribbonButton32.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.SmallImage")));
+            this.ribbonButton32.Click += new System.EventHandler(this.RibbonButton32_Click);
+            // 
+            // ribbonSeparator5
+            // 
+            this.ribbonSeparator5.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonSeparator5.Name = "ribbonSeparator5";
             // 
             // ribbonLabel1
             // 
@@ -446,6 +460,7 @@
             this.ribbonButton14.Name = "ribbonButton14";
             this.ribbonButton14.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton14.SmallImage")));
             this.ribbonButton14.Text = "Build";
+            this.ribbonButton14.Click += new System.EventHandler(this.RibbonButton14_Click);
             // 
             // ribbonPanel4
             // 
@@ -642,7 +657,6 @@
             this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.fastColoredTextBox1.IsReplaceMode = false;
             this.fastColoredTextBox1.LineNumberColor = System.Drawing.Color.Silver;
@@ -895,20 +909,6 @@
             this.ribbonOrbMenuItem4.Name = "ribbonOrbMenuItem4";
             this.ribbonOrbMenuItem4.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonOrbMenuItem4.SmallImage")));
             this.ribbonOrbMenuItem4.Text = "ribbonOrbMenuItem4";
-            // 
-            // ribbonButton32
-            // 
-            this.ribbonButton32.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.Image")));
-            this.ribbonButton32.LargeImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.LargeImage")));
-            this.ribbonButton32.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton32.Name = "ribbonButton32";
-            this.ribbonButton32.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton32.SmallImage")));
-            this.ribbonButton32.Click += new System.EventHandler(this.RibbonButton32_Click);
-            // 
-            // ribbonSeparator5
-            // 
-            this.ribbonSeparator5.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonSeparator5.Name = "ribbonSeparator5";
             // 
             // Form1
             // 

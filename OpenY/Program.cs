@@ -11,7 +11,7 @@ namespace OpenY
         static void Main(string[] args)
         {
             OpenY_Compiler.Compiler compiler = new OpenY_Compiler.Compiler();
-            compiler.Lexxer(System.IO.File.ReadAllText("temp"));
+            compiler.Lexxer(System.IO.File.ReadAllText(args[0]));
         }
 
       

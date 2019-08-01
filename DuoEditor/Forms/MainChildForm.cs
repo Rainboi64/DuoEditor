@@ -401,6 +401,18 @@ namespace DuoEditor
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NormalVeiwWB.Reload();
+            try
+            {
+                using (StreamReader sr = new StreamReader(Filename))
+                {
+                    HTMLCodeTextBox1.Text = sr.ReadToEnd();
+                    sr.Close();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
         //Stops WebBrowser
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)

@@ -12,9 +12,11 @@ namespace OpenY_Prompt
         {
             Console.WriteLine("OpenY Prompt : ");
             OpenY_Compiler.Compiler compiler = new OpenY_Compiler.Compiler();
+
             while (true)
             {
-                compiler.Lexxer(Console.ReadLine()); 
+                var input = Console.ReadLine();
+                compiler.Lexxer(input); 
             }
         }
     }

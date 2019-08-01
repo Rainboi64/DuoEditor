@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1882EA25-7AE2-4888-A652-D216CC00097A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>OpenY_Prompt</RootNamespace>
     <AssemblyName>OpenY Prompt</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>

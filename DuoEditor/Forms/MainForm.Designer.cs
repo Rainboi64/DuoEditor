@@ -1308,6 +1308,7 @@
             this.tabForms.Size = new System.Drawing.Size(1844, 23);
             this.tabForms.TabIndex = 25;
             this.tabForms.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabForms.DoubleClick += new System.EventHandler(this.TabForms_DoubleClick);
             // 
             // treeView1
             // 
@@ -1317,7 +1318,6 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(186, 540);
             this.treeView1.TabIndex = 27;
-            this.treeView1.DoubleClick += new System.EventHandler(this.TabForms_DoubleClick);
             this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TreeView1_MouseDoubleClick);
             // 
             // splitter1
@@ -1371,6 +1371,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DuoEditor Parent";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);

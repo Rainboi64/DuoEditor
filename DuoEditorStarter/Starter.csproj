@@ -166,6 +166,10 @@
       <Project>{3ee70785-812f-4a36-94cb-884d1f7b4076}</Project>
       <Name>OpenY Studio</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenY\OpenY.csproj">
+      <Project>{610636c6-edfe-4693-8f90-96b90f35bc55}</Project>
+      <Name>OpenY</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\Yaman\source\repos\DuoDatabase\DuoDatabase\DuoDatabase.csproj">
       <Project>{2d12183b-7054-4061-b169-4029db4ed5d0}</Project>
       <Name>DuoDatabase</Name>

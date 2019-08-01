@@ -476,15 +476,6 @@ namespace DuoEditor
 
 
 
-        private void TabForms_DoubleClick(object sender, EventArgs e)
-        {
-            string NewTabname = Interaction.InputBox("Enter a new name for your tab please:\nNote: Changing this wont effect any outcome.", "Change The Tab's name.", tabForms.SelectedTab.Text);
-            if (!(NewTabname == ""))
-            {
-                tabForms.SelectedTab.Text = NewTabname;
-                this.ActiveMdiChild.Text = NewTabname;
-            }
-        }
 
         private void NewJavaScriptEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -931,6 +922,21 @@ namespace DuoEditor
         private void MainForm_Layout(object sender, LayoutEventArgs e)
         {
     
+        }
+
+        private void TabForms_DoubleClick(object sender, EventArgs e)
+        {
+            string NewTabname = Interaction.InputBox("Enter a new name for your tab please:\nNote: Changing this wont effect any outcome.", "Change The Tab's name.", tabForms.SelectedTab.Text);
+            if (!(NewTabname == ""))
+            {
+                tabForms.SelectedTab.Text = NewTabname;
+                this.ActiveMdiChild.Text = NewTabname;
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
     

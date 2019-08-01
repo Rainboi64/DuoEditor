@@ -103,6 +103,14 @@
       <Project>{77ae61d0-8452-4c6d-a25a-1174bb87c12a}</Project>
       <Name>OpenY Compiler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenY Prompt\OpenY Prompt.csproj">
+      <Project>{1882ea25-7ae2-4888-a652-d216cc00097a}</Project>
+      <Name>OpenY Prompt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenY\OpenY.csproj">
+      <Project>{610636c6-edfe-4693-8f90-96b90f35bc55}</Project>
+      <Name>OpenY</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Console.ico" />

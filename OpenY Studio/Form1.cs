@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualBasic;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace OpenY_Studio
 {
@@ -22,7 +23,7 @@ namespace OpenY_Studio
      
         private void Form1_Load(object sender, EventArgs e)
         {
-            consoleControl1.StartProcess("OpenY Prompt", "");
+            consoleControl1.StartProcess("OpenY Prompt.exe", "");
            popupMenu = new FastColoredTextBoxNS.AutocompleteMenu(fastColoredTextBox1);
             popupMenu.MinFragmentLength = 2;
             popupMenu.SearchPattern = @"[\w\.:=!<>]";
@@ -165,9 +166,10 @@ namespace OpenY_Studio
 
         private void RibbonButton12_Click(object sender, EventArgs e)
         {
-            System.IO.File.AppendAllText("temp",fastColoredTextBox1.Text);
-            consoleControl2.ResetText();
-            consoleControl2.StartProcess("OpenY","");
+            consoleControl2.InternalRichTextBox.Clear();
+            Console.SetOut(new ControlWriter(consoleControl2.InternalRichTextBox));
+            OpenY_Compiler.Compiler compiler = new OpenY_Compiler.Compiler();
+            compiler.Lexxer(fastColoredTextBox1.Text);
         }
 
         private void RibbonButton27_Click(object sender, EventArgs e)
@@ -207,6 +209,14 @@ namespace OpenY_Studio
         {
             Hide();
             Show();
+        }
+
+        private void RibbonButton14_Click(object sender, EventArgs e)
+        {
+            StreamWriter txtoutput = new StreamWriter("temp");
+            txtoutput.Write(fastColoredTextBox1.Text);
+            txtoutput.Close();
+            Process.Start("PowerShell","-NoExit -Command ./OpenY.exe temp");
         }
     }
 }

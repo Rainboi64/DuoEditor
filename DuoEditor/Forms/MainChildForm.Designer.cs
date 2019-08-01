@@ -480,7 +480,7 @@
         '\"',
         '\'',
         '\''};
-            this.HTMLCodeTextBox1.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.HTMLCodeTextBox1.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.HTMLCodeTextBox1.BackBrush = null;
             this.HTMLCodeTextBox1.CharHeight = 14;
             this.HTMLCodeTextBox1.CharWidth = 8;
